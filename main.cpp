@@ -16,22 +16,22 @@ void gamesStory();
 void gamePlay();
 void resetArea();
 void resetAreaColors();
-void resetVirtualAreaColors(); // virtual
+void resetVirtualAreaColors();      // virtual
 void resetCastling();
 void refreshArea();
-void refreshVirtualArea(); // virtual
+void refreshVirtualArea();          // virtual
 
-void refreshAreaID();
-void refreshAreaPosition();
-void refreshAreaNR();
+void refreshAreaID();           // preview of chessboard with id
+void refreshAreaPosition();     // preview of chessboard with position
+void refreshAreaNR();           // preview of chessboard witn rows and columns
 
 void checkingMoveFigures();
 void moveFigures();
-void moveFigures_VirtualArea(); // virtual
+void moveFigures_VirtualArea();     // virtual
 void whoWins();
 
-void showAreaStats();
-void showBools();
+void showAreaStats();           // preview of variables
+void showBools();               // preview of variables
 
 void paintAreaColors();
 void paintAreaColorsPawn();
@@ -68,8 +68,6 @@ short old_position_object_nr{};
 short new_position_object_nr{};
 short virtual_position_object_nr{};
 
-short temp_old_position_object_bg_color{};
-
 char winner{' '};
 bool active_game{false};
 
@@ -84,6 +82,7 @@ bool black_left_rook_move{false};
 bool black_right_rook_move{false};
 bool white_king_move{false};
 bool black_king_move{false};
+
 bool check_king{false};
 
 HANDLE hOut;
@@ -1566,7 +1565,7 @@ void paintAreaColorsBishop()
             }
             if (old_position_object_nr >= 9)
                 area[old_position_object_nr - 9 * i].bg_color = 3;
-            if (virtual_area[virtual_position_object_nr - 9 * i].row == 1 || virtual_area[virtual_position_object_nr - 9 * i].column == 1)
+            if (area[old_position_object_nr - 9 * i].row == 1 || area[old_position_object_nr - 9 * i].column == 1)
                 break;
         }
 
@@ -1587,7 +1586,7 @@ void paintAreaColorsBishop()
             }
             if (old_position_object_nr >= 8)
                 area[old_position_object_nr - 7 * i].bg_color = 3;
-            if (virtual_area[virtual_position_object_nr - 7 * i].row == 1 || virtual_area[virtual_position_object_nr - 7 * i].column == 8)
+            if (area[old_position_object_nr - 7 * i].row == 1 || area[old_position_object_nr - 7 * i].column == 8)
                 break;
         }
 
@@ -1608,7 +1607,7 @@ void paintAreaColorsBishop()
             }
             if (old_position_object_nr <= 55)
                 area[old_position_object_nr + 7 * i].bg_color = 3;
-            if (virtual_area[virtual_position_object_nr + 7 * i].row == 8 || virtual_area[virtual_position_object_nr + 7 * i].column == 1)
+            if (area[old_position_object_nr + 7 * i].row == 8 || area[old_position_object_nr + 7 * i].column == 1)
                 break;
         }
 
@@ -1629,7 +1628,7 @@ void paintAreaColorsBishop()
             }
             if (old_position_object_nr <= 54)
                 area[old_position_object_nr + 9 * i].bg_color = 3;
-            if (virtual_area[virtual_position_object_nr + 9 * i].row == 8 || virtual_area[virtual_position_object_nr + 9 * i].column == 8)
+            if (area[old_position_object_nr + 9 * i].row == 8 || area[old_position_object_nr + 9 * i].column == 8)
                 break;
         }
     }
@@ -1654,7 +1653,7 @@ void paintAreaColorsBishop()
             }
             if (old_position_object_nr >= 9)
                 area[old_position_object_nr - 9 * i].bg_color = 3;
-            if (virtual_area[virtual_position_object_nr - 9 * i].row == 1 || virtual_area[virtual_position_object_nr - 9 * i].column == 1)
+            if (area[old_position_object_nr - 9 * i].row == 1 || area[old_position_object_nr - 9 * i].column == 1)
                 break;
         }
 
@@ -1675,7 +1674,7 @@ void paintAreaColorsBishop()
             }
             if (old_position_object_nr >= 8)
                 area[old_position_object_nr - 7 * i].bg_color = 3;
-            if (virtual_area[virtual_position_object_nr - 7 * i].row == 1 || virtual_area[virtual_position_object_nr - 7 * i].column == 8)
+            if (area[old_position_object_nr - 7 * i].row == 1 || area[old_position_object_nr - 7 * i].column == 8)
                 break;
         }
 
@@ -1696,7 +1695,7 @@ void paintAreaColorsBishop()
             }
             if (old_position_object_nr <= 55)
                 area[old_position_object_nr + 7 * i].bg_color = 3;
-            if (virtual_area[virtual_position_object_nr + 7 * i].row == 8 || virtual_area[virtual_position_object_nr + 7 * i].column == 1)
+            if (area[old_position_object_nr + 7 * i].row == 8 || area[old_position_object_nr + 7 * i].column == 1)
                 break;
         }
 
@@ -1717,7 +1716,7 @@ void paintAreaColorsBishop()
             }
             if (old_position_object_nr <= 54)
                 area[old_position_object_nr + 9 * i].bg_color = 3;
-            if (virtual_area[virtual_position_object_nr + 9 * i].row == 8 || virtual_area[virtual_position_object_nr + 9 * i].column == 8)
+            if (area[old_position_object_nr + 9 * i].row == 8 || area[old_position_object_nr + 9 * i].column == 8)
                 break;
         }
     }
@@ -2008,7 +2007,7 @@ void paintAreaColorsQueen()
             }
             if (old_position_object_nr >= 9)
                 area[old_position_object_nr - 9 * i].bg_color = 3;
-            if (virtual_area[virtual_position_object_nr - 9 * i].row == 1 || virtual_area[virtual_position_object_nr - 9 * i].column == 1)
+            if (area[old_position_object_nr - 9 * i].row == 1 || area[old_position_object_nr - 9 * i].column == 1)
                 break;
         }
 
@@ -2029,7 +2028,7 @@ void paintAreaColorsQueen()
             }
             if (old_position_object_nr >= 8)
                 area[old_position_object_nr - 7 * i].bg_color = 3;
-            if (virtual_area[virtual_position_object_nr - 7 * i].row == 1 || virtual_area[virtual_position_object_nr - 7 * i].column == 8)
+            if (area[old_position_object_nr - 7 * i].row == 1 || area[old_position_object_nr - 7 * i].column == 8)
                 break;
         }
 
@@ -2050,7 +2049,7 @@ void paintAreaColorsQueen()
             }
             if (old_position_object_nr <= 55)
                 area[old_position_object_nr + 7 * i].bg_color = 3;
-            if (virtual_area[virtual_position_object_nr + 7 * i].row == 8 || virtual_area[virtual_position_object_nr + 7 * i].column == 1)
+            if (area[old_position_object_nr + 7 * i].row == 8 || area[old_position_object_nr + 7 * i].column == 1)
                 break;
         }
 
@@ -2071,7 +2070,7 @@ void paintAreaColorsQueen()
             }
             if (old_position_object_nr <= 54)
                 area[old_position_object_nr + 9 * i].bg_color = 3;
-            if (virtual_area[virtual_position_object_nr + 9 * i].row == 8 || virtual_area[virtual_position_object_nr + 9 * i].column == 8)
+            if (area[old_position_object_nr + 9 * i].row == 8 || area[old_position_object_nr + 9 * i].column == 8)
                 break;
         }
     }
@@ -2180,7 +2179,7 @@ void paintAreaColorsQueen()
             }
             if (old_position_object_nr >= 9)
                 area[old_position_object_nr - 9 * i].bg_color = 3;
-            if (virtual_area[virtual_position_object_nr - 9 * i].row == 1 || virtual_area[virtual_position_object_nr - 9 * i].column == 1)
+            if (area[old_position_object_nr - 9 * i].row == 1 || area[old_position_object_nr - 9 * i].column == 1)
                 break;
         }
 
@@ -2201,7 +2200,7 @@ void paintAreaColorsQueen()
             }
             if (old_position_object_nr >= 8)
                 area[old_position_object_nr - 7 * i].bg_color = 3;
-            if (virtual_area[virtual_position_object_nr - 7 * i].row == 1 || virtual_area[virtual_position_object_nr - 7 * i].column == 8)
+            if (area[old_position_object_nr - 7 * i].row == 1 || area[old_position_object_nr - 7 * i].column == 8)
                 break;
         }
 
@@ -2222,7 +2221,7 @@ void paintAreaColorsQueen()
             }
             if (old_position_object_nr <= 55)
                 area[old_position_object_nr + 7 * i].bg_color = 3;
-            if (virtual_area[virtual_position_object_nr + 7 * i].row == 8 || virtual_area[virtual_position_object_nr + 7 * i].column == 1)
+            if (area[old_position_object_nr + 7 * i].row == 8 || area[old_position_object_nr + 7 * i].column == 1)
                 break;
         }
 
@@ -2243,7 +2242,7 @@ void paintAreaColorsQueen()
             }
             if (old_position_object_nr <= 54)
                 area[old_position_object_nr + 9 * i].bg_color = 3;
-            if (virtual_area[virtual_position_object_nr + 9 * i].row == 8 || virtual_area[virtual_position_object_nr + 9 * i].column == 8)
+            if (area[old_position_object_nr + 9 * i].row == 8 || area[old_position_object_nr + 9 * i].column == 8)
                 break;
         }
     }
