@@ -813,7 +813,7 @@ void checkingMoveFigures()
 
                     else
                     {
-                        /////////////////////////////////////// PRAWIDLOWO WYBRANA FIGURA ///////////////////////////////////////
+                        /////////////////////////////////////// PRAWIDLOWO WYBRANA STARA POZYCJA ///////////////////////////////////////
 
                         old_position_object_nr = i;
                         paintAreaColors();
@@ -838,7 +838,7 @@ void checkingMoveFigures()
 
     do
     {
-        if (old_position == "pause" || old_position == "PAUSE" || old_position == "exit" || old_position == "EXIT" || old_position == "how" || old_position == "HOW")
+        if (check == "pause" || old_position == "PAUSE" || old_position == "exit" || old_position == "EXIT" || old_position == "how" || old_position == "HOW")
         {
             break;
         }
@@ -911,7 +911,7 @@ void checkingMoveFigures()
                         }
                         else
                         {
-                            /////////////////////////////////////// PRAWIDLOWO WYBRANA FIGURA ///////////////////////////////////////
+                            /////////////////////////////////////// PRAWIDLOWO WYBRANA NOWA POZYCJA ///////////////////////////////////////
                             new_position_object_nr = i;
 
                             if (area[i].bg_color == 3 || area[i].bg_color == 4)
