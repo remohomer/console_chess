@@ -16,22 +16,22 @@ void gamesStory();
 void gamePlay();
 void resetArea();
 void resetAreaColors();
-void resetVirtualAreaColors();      // virtual
+void resetVirtualAreaColors(); // virtual
 void resetCastling();
 void refreshArea();
-void refreshVirtualArea();          // virtual
+void refreshVirtualArea(); // virtual
 
-void refreshAreaID();           // preview of chessboard with id
-void refreshAreaPosition();     // preview of chessboard with position
-void refreshAreaNR();           // preview of chessboard witn rows and columns
+void refreshAreaID();       // preview of chessboard with id
+void refreshAreaPosition(); // preview of chessboard with position
+void refreshAreaNR();       // preview of chessboard witn rows and columns
 
 void checkingMoveFigures();
 void moveFigures();
-void moveFigures_VirtualArea();     // virtual
+void moveFigures_VirtualArea(); // virtual
 void whoWins();
 
-void showAreaStats();           // preview of variables
-void showBools();               // preview of variables
+void showAreaStats(); // preview of variables
+void showBools();     // preview of variables
 
 void paintAreaColors();
 void paintAreaColorsPawn();
@@ -244,7 +244,11 @@ void mainMenu()
             textColorStandard();
         }
         else if (winner == 'E')
+        {
+            textColorBlue();
             cout << "2. REWANZ\n";
+            textColorStandard();
+        }
         else
         {
             textColorRed();
@@ -347,7 +351,7 @@ void howToPlay()
     textColorRed();
     cout << " \"Gdzie postawic figure\" ";
     textColorStandard();
-    cout << "nalezy\nwpisac polozenie na szachownicy, na ktora chcemy \nprzesunac figure. (np.";
+    cout << "nalezy\nwpisac polozenie na szachownicy, na ktora chcemy \nprzesunac figure (np.";
     textColorYellow();
     cout << " e4 ";
     textColorStandard();
@@ -558,13 +562,25 @@ void refreshArea()
     textColorStandard();
     cout << "\twyjdz z gry";
 
+    textColorYellow();
+    cout << "\n\nDEV COMMANDS: ";
+
+    textColorRed();
+    cout << "\nshowb";
+    textColorStandard();
+    cout << "\twyswietla zawartosc zmiennych typu 'bool'";
+
+    textColorRed();
+    cout << "\nshowv";
+    textColorStandard();
+    cout << "\twyswietla podglad virtualnej szachownicy";
+
     textColorStandard();
 }
 
 void refreshVirtualArea()
 {
-    cout << endl
-         << endl;
+    cout << endl;
 
     int nr = 8;
 
@@ -711,10 +727,6 @@ void checkingMoveFigures()
 {
     string check{""};
 
-    refreshVirtualArea();
-    cout << endl;
-    system("pause");
-
     refreshArea();
 
     // CHECKING OLD POSITION
@@ -758,6 +770,16 @@ void checkingMoveFigures()
         else if (old_position == "showb" || old_position == "SHOWB")
         {
             showBools();
+            system("pause");
+            refreshArea();
+            check = "again";
+        }
+
+        else if (old_position == "showv" || old_position == "SHOWV")
+        {
+            system("cls");
+            refreshVirtualArea();
+            cout << endl;
             system("pause");
             refreshArea();
             check = "again";
@@ -853,6 +875,24 @@ void checkingMoveFigures()
                 check = "exit";
             }
 
+            else if (old_position == "showb" || old_position == "SHOWB")
+            {
+                showBools();
+                system("pause");
+                refreshArea();
+                check = "again";
+            }
+
+            else if (old_position == "showv" || old_position == "SHOWV")
+            {
+                system("cls");
+                refreshVirtualArea();
+                cout << endl;
+                system("pause");
+                refreshArea();
+                check = "again";
+            }
+
             else
             {
                 for (int i = 0; i < 65; i++)
@@ -901,7 +941,7 @@ void checkingMoveFigures()
                 }
             }
         }
-    } while (check == "bad_position" || check == "friendly_figure");
+    } while (check == "bad_position" || check == "friendly_figure" || check == "again");
     textColorStandard();
 }
 
@@ -1240,6 +1280,7 @@ void showAreaStats()
 
 void showBools()
 {
+    textColorStandard();
     cout << "\n\nWLC " << active_white_left_castling;
     cout << " | WRC " << active_white_right_castling;
     cout << " | BLC " << active_black_left_castling;
@@ -1250,7 +1291,8 @@ void showBools()
     cout << " | BLRM " << black_left_rook_move;
     cout << " | BRRM " << black_right_rook_move;
     cout << " | WKM " << white_king_move;
-    cout << " | BKM " << black_king_move << endl;
+    cout << " | BKM " << black_king_move << endl
+         << endl;
 }
 
 void paintAreaColors()
