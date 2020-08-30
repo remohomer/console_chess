@@ -25,6 +25,9 @@ void refreshAreaID();       // preview of chessboard with id
 void refreshAreaPosition(); // preview of chessboard with position
 void refreshAreaNR();       // preview of chessboard witn rows and columns
 
+void whiteKingCheck();
+void blackKingCheck();
+
 void checkingMoveFigures();
 void moveFigures();
 void moveFigures_VirtualArea(); // virtual
@@ -41,13 +44,21 @@ void paintAreaColorsRook();
 void paintAreaColorsQueen();
 void paintAreaColorsKing();
 
-void paintVirtualAreaColors();       // virtual
-void paintVirtualAreaColorsPawn();   // virtual
-void paintVirtualAreaColorsKnight(); // virtual
-void paintVirtualAreaColorsBishop(); // virtual
-void paintVirtualAreaColorsRook();   // virtual
-void paintVirtualAreaColorsQueen();  // virtual
-void paintVirtualAreaColorsKing();   // virtual
+void paintVirtualAreaWhiteColors();       // virtual
+void paintVirtualAreaColorsWhitePawn();   // virtual
+void paintVirtualAreaColorsWhiteKnight(); // virtual
+void paintVirtualAreaColorsWhiteBishop(); // virtual
+void paintVirtualAreaColorsWhiteRook();   // virtual
+void paintVirtualAreaColorsWhiteQueen();  // virtual
+void paintVirtualAreaColorsWhiteKing();   // virtual
+
+void paintVirtualAreaBlackColors();       // virtual
+void paintVirtualAreaColorsBlackPawn();   // virtual
+void paintVirtualAreaColorsBlackKnight(); // virtual
+void paintVirtualAreaColorsBlackBishop(); // virtual
+void paintVirtualAreaColorsBlackRook();   // virtual
+void paintVirtualAreaColorsBlackQueen();  // virtual
+void paintVirtualAreaColorsBlackKing();   // virtual
 
 void textColorStandard();
 void textColorBlue();
@@ -83,7 +94,8 @@ bool black_right_rook_move{false};
 bool white_king_move{false};
 bool black_king_move{false};
 
-bool check_king{false};
+bool white_king_check{false};
+bool black_king_check{false};
 
 HANDLE hOut;
 
@@ -400,9 +412,20 @@ void gamePlay()
         resetVirtualAreaColors();
         for (int j = 0; j < 64; j++)
         {
-            virtual_position_object_nr = j;
-            paintVirtualAreaColors();
+            if (whith_player % 2 == 1)
+            {
+                virtual_position_object_nr = j;
+                paintVirtualAreaWhiteColors();
+            }
+            else
+            {
+                virtual_position_object_nr = j;
+                paintVirtualAreaBlackColors();
+            }
         }
+
+        whiteKingCheck();
+        blackKingCheck();
 
         checkingMoveFigures();
         if (winner != 'E' && winner != 'P')
@@ -455,7 +478,8 @@ void resetCastling()
     black_right_rook_move = false;
     white_king_move = false;
     black_king_move = false;
-    check_king = false;
+    white_king_check = false;
+    black_king_check = false;
 }
 
 void refreshArea()
@@ -721,6 +745,30 @@ void refreshAreaNR()
             cout << "    a  b  c  d  e  f  g  h  " << endl;
     }
     textColorStandard();
+}
+
+void whiteKingCheck()
+{
+    for (int j = 0; j < 64; j++)
+    {
+        if (virtual_area[j].big_figure == "whiteKing" && virtual_area[j].bg_color == 4)
+        {
+            white_king_check = true;
+            break;
+        }
+    }
+}
+
+void blackKingCheck()
+{
+    for (int j = 0; j < 64; j++)
+    {
+        if (virtual_area[j].big_figure == "blackKing" && virtual_area[j].bg_color == 4)
+        {
+            black_king_check = true;
+            break;
+        }
+    }
 }
 
 void checkingMoveFigures()
@@ -1083,7 +1131,7 @@ void moveFigures()
         resetAreaColors();
     }
 
-    // WHITE LEFT CASTLING
+    // WHITE - QUEEN SIDE CASTLING
     else if (area[old_position_object_nr].big_figure == "whiteKing" && area[new_position_object_nr].position == "c1" && active_white_left_castling == true)
     {
         area[58].big_figure = "whiteKing";
@@ -1104,7 +1152,7 @@ void moveFigures()
         active_white_right_castling = false;
     }
 
-    // WHITE RIGHT CASTLING
+    // WHITE - KING SIDE CASTLING
     else if (area[old_position_object_nr].big_figure == "whiteKing" && area[new_position_object_nr].position == "g1" && active_white_right_castling == true)
     {
         area[62].big_figure = "whiteKing";
@@ -1125,7 +1173,7 @@ void moveFigures()
         active_white_right_castling = false;
     }
 
-    // BLACK LEFT CASTLING
+    // BLACK - QUEEN SIDE CASTLING
     else if (area[old_position_object_nr].big_figure == "blackKing" && area[new_position_object_nr].position == "c8" && active_black_left_castling == true)
     {
         area[2].big_figure = "blackKing";
@@ -1146,7 +1194,7 @@ void moveFigures()
         active_black_right_castling = false;
     }
 
-    // BLACK RIGHT CASTLING
+    // BLACK - KING SIDE CASTLING
     else if (area[old_position_object_nr].big_figure == "blackKing" && area[new_position_object_nr].position == "g8" && active_black_right_castling == true)
     {
         area[6].big_figure = "blackKing";
@@ -1281,7 +1329,9 @@ void showAreaStats()
 void showBools()
 {
     textColorStandard();
-    cout << "\n\nWLC " << active_white_left_castling;
+    cout << "\n\nWKC " << white_king_check;
+    cout << " | BKC " << black_king_check;
+    cout << "\nWLC " << active_white_left_castling;
     cout << " | WRC " << active_white_right_castling;
     cout << " | BLC " << active_black_left_castling;
     cout << " | BRC " << active_black_right_castling;
@@ -1319,29 +1369,31 @@ void paintAreaColorsPawn()
         /////////// STARTED POSITION ///////////
         if (area[old_position_object_nr].row == 7)
         {
-            ///// RED AREA COLOR /////
-            if (area[old_position_object_nr - 7].figure_color == 'B')
-                area[old_position_object_nr - 7].bg_color = 4;
-            if (area[old_position_object_nr - 9].figure_color == 'B')
+            // TOP LEFT
+            if (area[old_position_object_nr - 9].figure_color == 'B' && area[old_position_object_nr].column > 1)
                 area[old_position_object_nr - 9].bg_color = 4;
+            // TOP RIGHT
+            if (area[old_position_object_nr - 7].figure_color == 'B' && area[old_position_object_nr].column < 8)
+                area[old_position_object_nr - 7].bg_color = 4;
 
-            ///// GREEN AREA COLOR /////
-            if (area[old_position_object_nr - 8].figure_color == 'E')
-                area[old_position_object_nr - 8].bg_color = 3;
+            // TOP
             if (area[old_position_object_nr - 16].figure_color == 'E')
                 area[old_position_object_nr - 16].bg_color = 3;
+            if (area[old_position_object_nr - 8].figure_color == 'E')
+                area[old_position_object_nr - 8].bg_color = 3;
         }
 
         /////////// OTHER POSITION ///////////
         else
         {
-            ///// RED AREA COLOR /////
-            if (area[old_position_object_nr - 7].figure_color == 'B')
-                area[old_position_object_nr - 7].bg_color = 4;
-            if (area[old_position_object_nr - 9].figure_color == 'B')
+            // TOP LEFT
+            if (area[old_position_object_nr - 9].figure_color == 'B' && area[old_position_object_nr].column > 1)
                 area[old_position_object_nr - 9].bg_color = 4;
+            // TOP RIGHT
+            if (area[old_position_object_nr - 7].figure_color == 'B' && area[old_position_object_nr].column < 8)
+                area[old_position_object_nr - 7].bg_color = 4;
 
-            ///// GREEN AREA COLOR /////
+            // TOP
             if (area[old_position_object_nr - 8].figure_color == 'E')
                 area[old_position_object_nr - 8].bg_color = 3;
         }
@@ -1353,13 +1405,14 @@ void paintAreaColorsPawn()
         /////////// STARTED POSITION ///////////
         if (area[old_position_object_nr].row == 2)
         {
-            ///// RED AREA COLOR /////
-            if (area[old_position_object_nr + 7].figure_color == 'W')
+            // BOTTOM LEFT
+            if (area[old_position_object_nr + 7].figure_color == 'W' && area[old_position_object_nr].column > 1)
                 area[old_position_object_nr + 7].bg_color = 4;
-            if (area[old_position_object_nr + 9].figure_color == 'W')
+            // BOTTOM RIGHT
+            if (area[old_position_object_nr + 9].figure_color == 'W' && area[old_position_object_nr].column < 8)
                 area[old_position_object_nr + 9].bg_color = 4;
 
-            ///// GREEN AREA COLOR /////
+            // BOTTOM
             if (area[old_position_object_nr + 8].figure_color == 'E')
                 area[old_position_object_nr + 8].bg_color = 3;
             if (area[old_position_object_nr + 16].figure_color == 'E')
@@ -1369,13 +1422,14 @@ void paintAreaColorsPawn()
         /////////// OTHER POSITION ///////////
         else
         {
-            ///// RED AREA COLOR /////
-            if (area[old_position_object_nr + 7].figure_color == 'W')
+            // BOTTOM LEFT
+            if (area[old_position_object_nr + 7].figure_color == 'W' && area[old_position_object_nr].column > 1)
                 area[old_position_object_nr + 7].bg_color = 4;
-            if (area[old_position_object_nr + 9].figure_color == 'W')
+            // BOTTOM RIGHT
+            if (area[old_position_object_nr + 9].figure_color == 'W' && area[old_position_object_nr].column < 8)
                 area[old_position_object_nr + 9].bg_color = 4;
 
-            ///// GREEN AREA COLOR /////
+            // BOTTOM
             if (area[old_position_object_nr + 8].figure_color == 'E')
                 area[old_position_object_nr + 8].bg_color = 3;
         }
@@ -2366,15 +2420,15 @@ void paintAreaColorsKing()
         else if (area[old_position_object_nr + 9].figure_color == 'E')
             area[old_position_object_nr + 9].bg_color = 3;
 
-        // KING SIDE CASTLING
-        if (active_white_left_castling == true)
+        // QUEEN SIDE CASTLING
+        if (active_white_left_castling == true && white_king_check == false && virtual_area[58].bg_color != 4 && virtual_area[59].bg_color != 4)
         {
             if (area[58].figure_color == 'E')
                 area[58].bg_color = 3;
         }
 
-        // QUEEN SIDE CASTLING
-        if (active_white_right_castling == true)
+        // KING SIDE CASTLING
+        if (active_white_right_castling == true && white_king_check == false && virtual_area[61].bg_color != 4 && virtual_area[62].bg_color != 4)
         {
             if (area[62].figure_color == 'E')
                 area[62].bg_color = 3;
@@ -2456,15 +2510,15 @@ void paintAreaColorsKing()
                 area[old_position_object_nr + 9].bg_color = 3;
         }
 
-        // KING SIDE CASTLING
-        if (active_black_left_castling == true)
+        // QUEEN SIDE CASTLING
+        if (active_black_left_castling == true && white_king_check == false && virtual_area[2].bg_color != 4 && virtual_area[3].bg_color != 4)
         {
             if (area[2].figure_color == 'E')
                 area[2].bg_color = 3;
         }
 
-        // QUEEN SIDE CASTLING
-        if (active_black_right_castling == true)
+        // KING SIDE CASTLING
+        if (active_black_right_castling == true && white_king_check == false && virtual_area[5].bg_color != 4 && virtual_area[6].bg_color != 4)
         {
             if (area[6].figure_color == 'E')
                 area[6].bg_color = 3;
@@ -2472,239 +2526,757 @@ void paintAreaColorsKing()
     }
 }
 
-void paintVirtualAreaColors()
+void paintVirtualAreaWhiteColors()
 {
     if (virtual_area[virtual_position_object_nr].figure == 'P')
-        paintVirtualAreaColorsPawn();
+        paintVirtualAreaColorsWhitePawn();
     else if (virtual_area[virtual_position_object_nr].figure == 'S')
-        paintVirtualAreaColorsKnight();
+        paintVirtualAreaColorsWhiteKnight();
     else if (virtual_area[virtual_position_object_nr].figure == 'G')
-        paintVirtualAreaColorsBishop();
+        paintVirtualAreaColorsWhiteBishop();
     else if (virtual_area[virtual_position_object_nr].figure == 'W')
-        paintVirtualAreaColorsRook();
+        paintVirtualAreaColorsWhiteRook();
     else if (virtual_area[virtual_position_object_nr].figure == 'H')
-        paintVirtualAreaColorsQueen();
+        paintVirtualAreaColorsWhiteQueen();
     else if (virtual_area[virtual_position_object_nr].figure == 'K')
-        paintVirtualAreaColorsKing();
+        paintVirtualAreaColorsWhiteKing();
 }
 
-void paintVirtualAreaColorsPawn()
+void paintVirtualAreaColorsWhitePawn()
 {
-    ///////////////// WHITE /////////////////
     if (virtual_area[virtual_position_object_nr].figure_color == 'W')
     {
         /////////// STARTED POSITION ///////////
         if (virtual_area[virtual_position_object_nr].row == 7)
         {
-            ///// RED virtual_area COLOR /////
-            if (virtual_area[virtual_position_object_nr - 7].figure_color == 'B')
-                virtual_area[virtual_position_object_nr - 7].bg_color = 4;
-            if (virtual_area[virtual_position_object_nr - 9].figure_color == 'B')
+            // TOP LEFT8
+            if (virtual_area[virtual_position_object_nr - 9].figure_color != 'W' && virtual_area[virtual_position_object_nr].column > 1)
                 virtual_area[virtual_position_object_nr - 9].bg_color = 4;
-
-            ///// GREEN virtual_area COLOR /////
-            if (virtual_area[virtual_position_object_nr - 8].figure_color == 'E')
-            {
-                if (virtual_area[virtual_position_object_nr - 8].bg_color != 4)
-                    virtual_area[virtual_position_object_nr - 8].bg_color = 3;
-            }
-            if (virtual_area[virtual_position_object_nr - 16].figure_color == 'E')
-            {
-                if (virtual_area[virtual_position_object_nr - 16].bg_color != 4)
-                    virtual_area[virtual_position_object_nr - 16].bg_color = 3;
-            }
+            // TOP RIGHT
+            if (virtual_area[virtual_position_object_nr - 7].figure_color != 'W' && virtual_area[virtual_position_object_nr].column < 8)
+                virtual_area[virtual_position_object_nr - 7].bg_color = 4;
         }
-
         /////////// OTHER POSITION ///////////
         else
         {
-            ///// RED virtual_area COLOR /////
-            if (virtual_area[virtual_position_object_nr - 7].figure_color == 'B')
-                virtual_area[virtual_position_object_nr - 7].bg_color = 4;
-            if (virtual_area[virtual_position_object_nr - 9].figure_color == 'B')
+            // TOP LEFT
+            if (virtual_area[virtual_position_object_nr - 9].figure_color != 'W' && virtual_area[virtual_position_object_nr].column > 1)
                 virtual_area[virtual_position_object_nr - 9].bg_color = 4;
 
-            ///// GREEN virtual_area COLOR /////
-            if (virtual_area[virtual_position_object_nr - 8].figure_color == 'E')
+            // TOP RIGHT
+            if (virtual_area[virtual_position_object_nr - 7].figure_color != 'W' && virtual_area[virtual_position_object_nr].column < 8)
+                virtual_area[virtual_position_object_nr - 7].bg_color = 4;
+        }
+    }
+}
+
+void paintVirtualAreaColorsWhiteKnight()
+{
+    if (virtual_area[virtual_position_object_nr].figure_color == 'W')
+    {
+        // TOP TOP LEFT
+        if (virtual_position_object_nr >= 17)
+        {
+            if (virtual_area[virtual_position_object_nr].column >= 2)
             {
-                if (virtual_area[virtual_position_object_nr - 8].bg_color != 4)
-                    virtual_area[virtual_position_object_nr - 8].bg_color = 3;
+                if (virtual_area[virtual_position_object_nr - 17].figure_color != 'W')
+                    virtual_area[virtual_position_object_nr - 17].bg_color = 4;
+            }
+        }
+
+        // TOP TOP RIGHT
+        if (virtual_position_object_nr >= 16)
+        {
+            if (virtual_area[virtual_position_object_nr].column <= 7)
+            {
+                if (virtual_area[virtual_position_object_nr - 15].figure_color != 'W')
+                    virtual_area[virtual_position_object_nr - 15].bg_color = 4;
+            }
+        }
+
+        // BOTTOM BOTTOM LEFT
+        if (virtual_position_object_nr <= 47)
+        {
+            if (virtual_area[virtual_position_object_nr].column >= 2)
+            {
+                if (virtual_area[virtual_position_object_nr + 15].figure_color != 'W')
+                    virtual_area[virtual_position_object_nr + 15].bg_color = 4;
+            }
+        }
+
+        // BOTTOM BOTTOM RIGHT
+        if (virtual_position_object_nr <= 46)
+        {
+            if (virtual_area[virtual_position_object_nr].column <= 7)
+            {
+                if (virtual_area[virtual_position_object_nr + 17].figure_color != 'W')
+                    virtual_area[virtual_position_object_nr + 17].bg_color = 4;
+            }
+        }
+
+        // LEFT LEFT TOP
+        if (virtual_position_object_nr >= 10)
+        {
+            if (virtual_area[virtual_position_object_nr].column >= 3)
+            {
+                if (virtual_area[virtual_position_object_nr - 10].figure_color != 'W')
+                    virtual_area[virtual_position_object_nr - 10].bg_color = 4;
+            }
+        }
+
+        // LEFT LEFT BOTTOM
+        if (virtual_position_object_nr <= 55)
+        {
+            if (virtual_area[virtual_position_object_nr].column >= 3)
+            {
+                if (virtual_area[virtual_position_object_nr + 6].figure_color != 'W')
+                    virtual_area[virtual_position_object_nr + 6].bg_color = 4;
+            }
+        }
+
+        // RIGH RIGHT TOP
+        if (virtual_position_object_nr >= 8)
+        {
+            if (virtual_area[virtual_position_object_nr].column <= 6)
+            {
+                if (virtual_area[virtual_position_object_nr - 6].figure_color != 'W')
+                    virtual_area[virtual_position_object_nr - 6].bg_color = 4;
+            }
+        }
+
+        // RIGH RIGHT BOTTOM
+        if (virtual_position_object_nr <= 53)
+        {
+            if (virtual_area[virtual_position_object_nr].column <= 6)
+            {
+                if (virtual_area[virtual_position_object_nr + 10].figure_color != 'W')
+                    virtual_area[virtual_position_object_nr + 10].bg_color = 4;
             }
         }
     }
+}
+void paintVirtualAreaColorsWhiteBishop()
+{
 
-    ///////////////// BLACK /////////////////
-    else
+    if (virtual_area[virtual_position_object_nr].figure_color == 'W')
+    {
+
+        // TOP LEFT SIDE
+        for (int i = 1; i <= 8; i++)
+        {
+            if (virtual_area[virtual_position_object_nr].row == 1 || virtual_area[virtual_position_object_nr].column == 1)
+                break;
+            if (virtual_area[virtual_position_object_nr - 9 * i].figure_color != 'E')
+            {
+                if (virtual_area[virtual_position_object_nr - 9 * i].figure_color == 'B')
+                {
+                    if (virtual_area[virtual_position_object_nr - 9 * (i + 1)].big_figure != "blackKing")
+                    {
+                        virtual_area[virtual_position_object_nr - 9 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                    {
+                        virtual_area[virtual_position_object_nr - 9 * i].bg_color = 5;
+                        break;
+                    }
+                }
+                else
+                    break;
+            }
+            if (virtual_position_object_nr >= 9)
+            {
+                virtual_area[virtual_position_object_nr - 9 * i].bg_color = 4;
+            }
+            if (virtual_area[virtual_position_object_nr - 9 * i].row == 1 || virtual_area[virtual_position_object_nr - 9 * i].column == 1)
+                break;
+        }
+
+        // TOP RIGHT SIDE
+        for (int i = 1; i <= 8; i++)
+        {
+            if (virtual_area[virtual_position_object_nr].row == 1 || virtual_area[virtual_position_object_nr].column == 8)
+                break;
+            if (virtual_area[virtual_position_object_nr - 7 * i].figure_color != 'E')
+            {
+                if (virtual_area[virtual_position_object_nr - 7 * i].figure_color == 'B')
+                {
+                    if (virtual_area[virtual_position_object_nr - 7 * (i + 1)].big_figure != "blackKing")
+                    {
+                        virtual_area[virtual_position_object_nr - 7 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                    {
+                        virtual_area[virtual_position_object_nr - 7 * i].bg_color = 5;
+                        break;
+                    }
+                }
+                else
+                    break;
+            }
+            if (virtual_position_object_nr >= 8)
+            {
+                virtual_area[virtual_position_object_nr - 7 * i].bg_color = 4;
+            }
+            if (virtual_area[virtual_position_object_nr - 7 * i].row == 1 || virtual_area[virtual_position_object_nr - 7 * i].column == 8)
+                break;
+        }
+
+        // BOTTOM LEFT SIDE
+        for (int i = 1; i <= 8; i++)
+        {
+            if (virtual_area[virtual_position_object_nr].row == 8 || virtual_area[virtual_position_object_nr].column == 1)
+                break;
+            if (virtual_area[virtual_position_object_nr + 7 * i].figure_color != 'E')
+            {
+                if (virtual_area[virtual_position_object_nr + 7 * i].figure_color == 'B')
+                {
+                    if (virtual_area[virtual_position_object_nr + 7 * (i + 1)].big_figure != "blackKing")
+                    {
+                        virtual_area[virtual_position_object_nr + 7 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                    {
+                        virtual_area[virtual_position_object_nr + 7 * i].bg_color = 5;
+                        break;
+                    }
+                }
+                else
+                    break;
+            }
+            if (virtual_position_object_nr <= 55)
+            {
+                virtual_area[virtual_position_object_nr + 7 * i].bg_color = 4;
+            }
+            if (virtual_area[virtual_position_object_nr + 7 * i].row == 8 || virtual_area[virtual_position_object_nr + 7 * i].column == 1)
+                break;
+        }
+
+        // BOTTOM RIGHT SIDE
+        for (int i = 1; i <= 8; i++)
+        {
+            if (virtual_area[virtual_position_object_nr].row == 8 || virtual_area[virtual_position_object_nr].column == 8)
+                break;
+            if (virtual_area[virtual_position_object_nr + 9 * i].figure_color != 'E')
+            {
+                if (virtual_area[virtual_position_object_nr + 9 * i].figure_color == 'B')
+                {
+                    if (virtual_area[virtual_position_object_nr + 9 * (i + 1)].big_figure != "blackKing")
+                    {
+                        virtual_area[virtual_position_object_nr + 9 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                    {
+                        virtual_area[virtual_position_object_nr + 9 * i].bg_color = 5;
+                        break;
+                    }
+                }
+                else
+                    break;
+            }
+            if (virtual_position_object_nr <= 54)
+            {
+                virtual_area[virtual_position_object_nr + 9 * i].bg_color = 4;
+            }
+            if (virtual_area[virtual_position_object_nr + 9 * i].row == 8 || virtual_area[virtual_position_object_nr + 9 * i].column == 8)
+                break;
+        }
+    }
+}
+void paintVirtualAreaColorsWhiteRook()
+{
+    if (virtual_area[virtual_position_object_nr].figure_color == 'W')
+    {
+
+        // TOP SIDE
+        for (int i = 1; i <= 8; i++)
+        {
+            if (virtual_area[virtual_position_object_nr].row == 1)
+                break;
+            if (virtual_area[virtual_position_object_nr - 8 * i].figure_color != 'E')
+            {
+                if (virtual_area[virtual_position_object_nr - 8 * i].figure_color == 'B')
+                {
+                    if (virtual_area[virtual_position_object_nr - 8 * (i + 1)].big_figure != "blackKing")
+                    {
+                        virtual_area[virtual_position_object_nr - 8 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                    {
+                        virtual_area[virtual_position_object_nr - 8 * i].bg_color = 5;
+                        break;
+                    }
+                }
+                else
+                    break;
+            }
+            if (virtual_position_object_nr >= 8)
+            {
+                virtual_area[virtual_position_object_nr - 8 * i].bg_color = 4;
+            }
+            if (virtual_area[virtual_position_object_nr - 8 * i].row == 1)
+                break;
+        }
+
+        // BOTTOM SIDE
+        for (int i = 1; i <= 8; i++)
+        {
+            if (virtual_area[virtual_position_object_nr].row == 8)
+                break;
+            if (virtual_area[virtual_position_object_nr + 8 * i].figure_color != 'E')
+            {
+                if (virtual_area[virtual_position_object_nr + 8 * i].figure_color == 'B')
+                {
+                    if (virtual_area[virtual_position_object_nr + 8 * (i + 1)].big_figure != "blackKing")
+                    {
+                        virtual_area[virtual_position_object_nr + 8 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                    {
+                        virtual_area[virtual_position_object_nr + 8 * i].bg_color = 5;
+                        break;
+                    }
+                }
+                else
+                    break;
+            }
+            if (virtual_position_object_nr <= 55)
+            {
+                virtual_area[virtual_position_object_nr + 8 * i].bg_color = 4;
+            }
+            if (virtual_area[virtual_position_object_nr + 8 * i].row == 8)
+                break;
+        }
+
+        // LEFT SIDE
+        for (int i = 1; i <= 8; i++)
+        {
+            if (virtual_area[virtual_position_object_nr].column == 1)
+                break;
+            if (virtual_area[virtual_position_object_nr - 1 * i].figure_color != 'E')
+            {
+                if (virtual_area[virtual_position_object_nr - 1 * i].figure_color == 'B')
+                {
+                    if (virtual_area[virtual_position_object_nr - 1 * (i + 1)].big_figure != "blackKing")
+                    {
+                        virtual_area[virtual_position_object_nr - 1 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                    {
+                        virtual_area[virtual_position_object_nr - 1 * i].bg_color = 5;
+                        break;
+                    }
+                }
+                else
+                    break;
+            }
+            if (virtual_position_object_nr >= 1)
+            {
+                virtual_area[virtual_position_object_nr - 1 * i].bg_color = 4;
+            }
+            if (virtual_area[virtual_position_object_nr - 1 * i].column == 1)
+                break;
+        }
+
+        // RIGHT SIDE
+        for (int i = 1; i <= 8; i++)
+        {
+            if (virtual_area[virtual_position_object_nr].column == 8)
+                break;
+            if (virtual_area[virtual_position_object_nr + 1 * i].figure_color != 'E')
+            {
+                if (virtual_area[virtual_position_object_nr + 1 * i].figure_color == 'B')
+                {
+                    if (virtual_area[virtual_position_object_nr + 1 * (i + 1)].big_figure != "blackKing")
+                    {
+                        virtual_area[virtual_position_object_nr + 1 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                    {
+                        virtual_area[virtual_position_object_nr + 1 * i].bg_color = 5;
+                        break;
+                    }
+                }
+                else
+                    break;
+            }
+            if (virtual_position_object_nr <= 62)
+            {
+                virtual_area[virtual_position_object_nr + 1 * i].bg_color = 4;
+            }
+            if (virtual_area[virtual_position_object_nr + 1 * i].column == 8)
+                break;
+        }
+    }
+}
+void paintVirtualAreaColorsWhiteQueen()
+{
+    if (virtual_area[virtual_position_object_nr].figure_color == 'W')
+    {
+
+        // TOP SIDE
+        for (int i = 1; i <= 8; i++)
+        {
+            if (virtual_area[virtual_position_object_nr].row == 1)
+                break;
+            if (virtual_area[virtual_position_object_nr - 8 * i].figure_color != 'E')
+            {
+                if (virtual_area[virtual_position_object_nr - 8 * i].figure_color == 'B')
+                {
+                    if (virtual_area[virtual_position_object_nr - 8 * (i + 1)].big_figure != "blackKing")
+                    {
+                        virtual_area[virtual_position_object_nr - 8 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                    {
+                        virtual_area[virtual_position_object_nr - 8 * i].bg_color = 5;
+                        break;
+                    }
+                }
+                else
+                    break;
+            }
+            if (virtual_position_object_nr >= 8)
+            {
+                virtual_area[virtual_position_object_nr - 8 * i].bg_color = 4;
+            }
+            if (virtual_area[virtual_position_object_nr - 8 * i].row == 1)
+                break;
+        }
+
+        // BOTTOM SIDE
+        for (int i = 1; i <= 8; i++)
+        {
+            if (virtual_area[virtual_position_object_nr].row == 8)
+                break;
+            if (virtual_area[virtual_position_object_nr + 8 * i].figure_color != 'E')
+            {
+                if (virtual_area[virtual_position_object_nr + 8 * i].figure_color == 'B')
+                {
+                    if (virtual_area[virtual_position_object_nr + 8 * (i + 1)].big_figure != "blackKing")
+                    {
+                        virtual_area[virtual_position_object_nr + 8 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                    {
+                        virtual_area[virtual_position_object_nr + 8 * i].bg_color = 5;
+                        break;
+                    }
+                }
+                else
+                    break;
+            }
+            if (virtual_position_object_nr <= 55)
+            {
+                virtual_area[virtual_position_object_nr + 8 * i].bg_color = 4;
+            }
+            if (virtual_area[virtual_position_object_nr + 8 * i].row == 8)
+                break;
+        }
+
+        // LEFT SIDE
+        for (int i = 1; i <= 8; i++)
+        {
+            if (virtual_area[virtual_position_object_nr].column == 1)
+                break;
+            if (virtual_area[virtual_position_object_nr - 1 * i].figure_color != 'E')
+            {
+                if (virtual_area[virtual_position_object_nr - 1 * i].figure_color == 'B')
+                {
+                    if (virtual_area[virtual_position_object_nr - 1 * (i + 1)].big_figure != "blackKing")
+                    {
+                        virtual_area[virtual_position_object_nr - 1 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                    {
+                        virtual_area[virtual_position_object_nr - 1 * i].bg_color = 5;
+                        break;
+                    }
+                }
+                else
+                    break;
+            }
+            if (virtual_position_object_nr >= 1)
+            {
+                virtual_area[virtual_position_object_nr - 1 * i].bg_color = 4;
+            }
+            if (virtual_area[virtual_position_object_nr - 1 * i].column == 1)
+                break;
+        }
+
+        // RIGHT SIDE
+        for (int i = 1; i <= 8; i++)
+        {
+            if (virtual_area[virtual_position_object_nr].column == 8)
+                break;
+            if (virtual_area[virtual_position_object_nr + 1 * i].figure_color != 'E')
+            {
+                if (virtual_area[virtual_position_object_nr + 1 * i].figure_color == 'B')
+                {
+                    if (virtual_area[virtual_position_object_nr + 1 * (i + 1)].big_figure != "blackKing")
+                    {
+                        virtual_area[virtual_position_object_nr + 1 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                    {
+                        virtual_area[virtual_position_object_nr + 1 * i].bg_color = 5;
+                        break;
+                    }
+                }
+                else
+                    break;
+            }
+            if (virtual_position_object_nr <= 62)
+            {
+                virtual_area[virtual_position_object_nr + 1 * i].bg_color = 4;
+            }
+            if (virtual_area[virtual_position_object_nr + 1 * i].column == 8)
+                break;
+        }
+
+        // TOP LEFT SIDE
+        for (int i = 1; i <= 8; i++)
+        {
+            if (virtual_area[virtual_position_object_nr].row == 1 || virtual_area[virtual_position_object_nr].column == 1)
+                break;
+            if (virtual_area[virtual_position_object_nr - 9 * i].figure_color != 'E')
+            {
+                if (virtual_area[virtual_position_object_nr - 9 * i].figure_color == 'B')
+                {
+                    if (virtual_area[virtual_position_object_nr - 9 * (i + 1)].big_figure != "blackKing")
+                    {
+                        virtual_area[virtual_position_object_nr - 9 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                    {
+                        virtual_area[virtual_position_object_nr - 9 * i].bg_color = 5;
+                        break;
+                    }
+                }
+                else
+                    break;
+            }
+            if (virtual_position_object_nr >= 9)
+            {
+                virtual_area[virtual_position_object_nr - 9 * i].bg_color = 4;
+            }
+            if (virtual_area[virtual_position_object_nr - 9 * i].row == 1 || virtual_area[virtual_position_object_nr - 9 * i].column == 1)
+                break;
+        }
+
+        // TOP RIGHT SIDE
+        for (int i = 1; i <= 8; i++)
+        {
+            if (virtual_area[virtual_position_object_nr].row == 1 || virtual_area[virtual_position_object_nr].column == 8)
+                break;
+            if (virtual_area[virtual_position_object_nr - 7 * i].figure_color != 'E')
+            {
+                if (virtual_area[virtual_position_object_nr - 7 * i].figure_color == 'B')
+                {
+                    if (virtual_area[virtual_position_object_nr - 7 * (i + 1)].big_figure != "blackKing")
+                    {
+                        virtual_area[virtual_position_object_nr - 7 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                    {
+                        virtual_area[virtual_position_object_nr - 7 * i].bg_color = 5;
+                        break;
+                    }
+                }
+                else
+                    break;
+            }
+            if (virtual_position_object_nr >= 8)
+            {
+                virtual_area[virtual_position_object_nr - 7 * i].bg_color = 4;
+            }
+            if (virtual_area[virtual_position_object_nr - 7 * i].row == 1 || virtual_area[virtual_position_object_nr - 7 * i].column == 8)
+                break;
+        }
+
+        // BOTTOM LEFT SIDE
+        for (int i = 1; i <= 8; i++)
+        {
+            if (virtual_area[virtual_position_object_nr].row == 8 || virtual_area[virtual_position_object_nr].column == 1)
+                break;
+            if (virtual_area[virtual_position_object_nr + 7 * i].figure_color != 'E')
+            {
+                if (virtual_area[virtual_position_object_nr + 7 * i].figure_color == 'B')
+                {
+                    if (virtual_area[virtual_position_object_nr + 7 * (i + 1)].big_figure != "blackKing")
+                    {
+                        virtual_area[virtual_position_object_nr + 7 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                    {
+                        virtual_area[virtual_position_object_nr + 7 * i].bg_color = 5;
+                        break;
+                    }
+                }
+                else
+                    break;
+            }
+            if (virtual_position_object_nr <= 55)
+            {
+                virtual_area[virtual_position_object_nr + 7 * i].bg_color = 4;
+            }
+            if (virtual_area[virtual_position_object_nr + 7 * i].row == 8 || virtual_area[virtual_position_object_nr + 7 * i].column == 1)
+                break;
+        }
+
+        // BOTTOM RIGHT SIDE
+        for (int i = 1; i <= 8; i++)
+        {
+            if (virtual_area[virtual_position_object_nr].row == 8 || virtual_area[virtual_position_object_nr].column == 8)
+                break;
+            if (virtual_area[virtual_position_object_nr + 9 * i].figure_color != 'E')
+            {
+                if (virtual_area[virtual_position_object_nr + 9 * i].figure_color == 'B')
+                {
+                    if (virtual_area[virtual_position_object_nr + 9 * (i + 1)].big_figure != "blackKing")
+                    {
+                        virtual_area[virtual_position_object_nr + 9 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                    {
+                        virtual_area[virtual_position_object_nr + 9 * i].bg_color = 5;
+                        break;
+                    }
+                }
+                else
+                    break;
+            }
+            if (virtual_position_object_nr <= 54)
+            {
+                virtual_area[virtual_position_object_nr + 9 * i].bg_color = 4;
+            }
+            if (virtual_area[virtual_position_object_nr + 9 * i].row == 8 || virtual_area[virtual_position_object_nr + 9 * i].column == 8)
+                break;
+        }
+    }
+}
+void paintVirtualAreaColorsWhiteKing()
+{
+    if (virtual_area[virtual_position_object_nr].figure_color == 'W')
+    {
+        // TOP SIDE
+        if (virtual_area[virtual_position_object_nr].row > 1)
+        {
+            if (virtual_area[virtual_position_object_nr - 8].figure_color != 'W')
+                virtual_area[virtual_position_object_nr - 8].bg_color = 4;
+        }
+
+        // BOTTOM SIDE
+        if (virtual_area[virtual_position_object_nr].row < 8)
+        {
+            if (virtual_area[virtual_position_object_nr + 8].figure_color != 'W')
+                virtual_area[virtual_position_object_nr + 8].bg_color = 4;
+        }
+
+        // LEFT SIDE
+        if (virtual_area[virtual_position_object_nr].column > 1)
+        {
+            if (virtual_area[virtual_position_object_nr - 1].figure_color != 'W')
+                virtual_area[virtual_position_object_nr - 1].bg_color = 4;
+        }
+
+        // RIGHT SIDE
+        if (virtual_area[virtual_position_object_nr].column < 8)
+        {
+            if (virtual_area[virtual_position_object_nr + 1].figure_color != 'W')
+                virtual_area[virtual_position_object_nr + 1].bg_color = 4;
+        }
+
+        // TOP LEFT SIDE
+        if (virtual_area[virtual_position_object_nr].row > 1 && virtual_area[virtual_position_object_nr].column > 1)
+        {
+            if (virtual_area[virtual_position_object_nr - 9].figure_color != 'W')
+                virtual_area[virtual_position_object_nr - 9].bg_color = 4;
+        }
+
+        // TOP RIGHT SIDE
+        if (virtual_area[virtual_position_object_nr].row > 1 && virtual_area[virtual_position_object_nr].column < 8)
+        {
+            if (virtual_area[virtual_position_object_nr - 7].figure_color != 'W')
+                virtual_area[virtual_position_object_nr - 7].bg_color = 4;
+        }
+
+        // BOTTOM LEFT SIDE
+        if (virtual_area[virtual_position_object_nr].row < 8 && virtual_area[virtual_position_object_nr].column > 1)
+        {
+            if (virtual_area[virtual_position_object_nr + 7].figure_color != 'W')
+                virtual_area[virtual_position_object_nr + 7].bg_color = 4;
+        }
+
+        // BOTTOM RIGHT SIDE
+        if (virtual_area[virtual_position_object_nr].row < 8 && virtual_area[virtual_position_object_nr].column < 8)
+        {
+            if (virtual_area[virtual_position_object_nr + 9].figure_color != 'W')
+                virtual_area[virtual_position_object_nr + 9].bg_color = 4;
+        }
+    }
+}
+
+void paintVirtualAreaBlackColors()
+{
+    if (virtual_area[virtual_position_object_nr].figure == 'P')
+        paintVirtualAreaColorsBlackPawn();
+    else if (virtual_area[virtual_position_object_nr].figure == 'S')
+        paintVirtualAreaColorsBlackKnight();
+    else if (virtual_area[virtual_position_object_nr].figure == 'G')
+        paintVirtualAreaColorsBlackBishop();
+    else if (virtual_area[virtual_position_object_nr].figure == 'W')
+        paintVirtualAreaColorsBlackRook();
+    else if (virtual_area[virtual_position_object_nr].figure == 'H')
+        paintVirtualAreaColorsBlackQueen();
+    else if (virtual_area[virtual_position_object_nr].figure == 'K')
+        paintVirtualAreaColorsBlackKing();
+}
+void paintVirtualAreaColorsBlackPawn()
+{
+    if (virtual_area[virtual_position_object_nr].figure_color == 'B')
     {
         /////////// STARTED POSITION ///////////
         if (virtual_area[virtual_position_object_nr].row == 2)
         {
-            ///// RED virtual_area COLOR /////
-            if (virtual_area[virtual_position_object_nr + 7].figure_color == 'W')
+            // TOP LEFT
+            if (virtual_area[virtual_position_object_nr + 7].figure_color != 'B' && virtual_area[virtual_position_object_nr].column > 1)
                 virtual_area[virtual_position_object_nr + 7].bg_color = 4;
-            if (virtual_area[virtual_position_object_nr + 9].figure_color == 'W')
+            // TOP RIGHT
+            if (virtual_area[virtual_position_object_nr + 9].figure_color != 'B' && virtual_area[virtual_position_object_nr].column < 8)
                 virtual_area[virtual_position_object_nr + 9].bg_color = 4;
-
-            ///// GREEN virtual_area COLOR /////
-            if (virtual_area[virtual_position_object_nr + 8].figure_color == 'E')
-            {
-                if (virtual_area[virtual_position_object_nr + 8].bg_color != 4)
-                    virtual_area[virtual_position_object_nr + 8].bg_color = 3;
-            }
-            if (virtual_area[virtual_position_object_nr + 16].figure_color == 'E')
-            {
-                if (virtual_area[virtual_position_object_nr + 16].bg_color != 4)
-                    virtual_area[virtual_position_object_nr + 16].bg_color = 3;
-            }
         }
-
         /////////// OTHER POSITION ///////////
         else
         {
-            ///// RED virtual_area COLOR /////
-            if (virtual_area[virtual_position_object_nr + 7].figure_color == 'W')
+            // TOP LEFT
+            if (virtual_area[virtual_position_object_nr + 7].figure_color != 'B' && virtual_area[virtual_position_object_nr].column > 1)
                 virtual_area[virtual_position_object_nr + 7].bg_color = 4;
-            if (virtual_area[virtual_position_object_nr + 9].figure_color == 'W')
-                virtual_area[virtual_position_object_nr + 9].bg_color = 4;
 
-            ///// GREEN virtual_area COLOR /////
-            if (virtual_area[virtual_position_object_nr + 8].figure_color == 'E')
-            {
-                if (virtual_area[virtual_position_object_nr + 8].bg_color != 4)
-                    virtual_area[virtual_position_object_nr + 8].bg_color = 3;
-            }
+            // TOP RIGHT
+            if (virtual_area[virtual_position_object_nr + 9].figure_color != 'B' && virtual_area[virtual_position_object_nr].column < 8)
+                virtual_area[virtual_position_object_nr + 9].bg_color = 4;
         }
     }
 }
 
-void paintVirtualAreaColorsKnight()
+void paintVirtualAreaColorsBlackKnight()
 {
-    ///////////////// WHITE /////////////////
-    if (virtual_area[virtual_position_object_nr].figure_color == 'W')
-    {
-
-        // TOP TOP LEFT
-        if (virtual_position_object_nr >= 17)
-        {
-            if (virtual_area[virtual_position_object_nr].column >= 2)
-            {
-                if (virtual_area[virtual_position_object_nr - 17].figure_color == 'B')
-                    virtual_area[virtual_position_object_nr - 17].bg_color = 4;
-                else if (virtual_area[virtual_position_object_nr - 17].figure_color == 'E')
-                {
-                    if (virtual_area[virtual_position_object_nr - 17].bg_color != 4)
-                        virtual_area[virtual_position_object_nr - 17].bg_color = 3;
-                }
-            }
-        }
-
-        // TOP TOP RIGHT
-        if (virtual_position_object_nr >= 16)
-        {
-            if (virtual_area[virtual_position_object_nr].column <= 7)
-            {
-                if (virtual_area[virtual_position_object_nr - 15].figure_color == 'B')
-                    virtual_area[virtual_position_object_nr - 15].bg_color = 4;
-                else if (virtual_area[virtual_position_object_nr - 15].figure_color == 'E')
-                {
-                    if (virtual_area[virtual_position_object_nr - 15].bg_color != 4)
-                        virtual_area[virtual_position_object_nr - 15].bg_color = 3;
-                }
-            }
-        }
-
-        // BOTTOM BOTTOM LEFT
-        if (virtual_position_object_nr <= 47)
-        {
-            if (virtual_area[virtual_position_object_nr].column >= 2)
-            {
-                if (virtual_area[virtual_position_object_nr + 15].figure_color == 'B')
-                    virtual_area[virtual_position_object_nr + 15].bg_color = 4;
-                else if (virtual_area[virtual_position_object_nr + 15].figure_color == 'E')
-                {
-                    if (virtual_area[virtual_position_object_nr + 15].bg_color != 4)
-                        virtual_area[virtual_position_object_nr + 15].bg_color = 3;
-                }
-            }
-        }
-
-        // BOTTOM BOTTOM RIGHT
-        if (virtual_position_object_nr <= 46)
-        {
-            if (virtual_area[virtual_position_object_nr].column <= 7)
-            {
-                if (virtual_area[virtual_position_object_nr + 17].figure_color == 'B')
-                    virtual_area[virtual_position_object_nr + 17].bg_color = 4;
-                else if (virtual_area[virtual_position_object_nr + 17].figure_color == 'E')
-                {
-                    if (virtual_area[virtual_position_object_nr + 17].bg_color != 4)
-                        virtual_area[virtual_position_object_nr + 17].bg_color = 3;
-                }
-            }
-        }
-
-        // LEFT LEFT TOP
-        if (virtual_position_object_nr >= 10)
-        {
-            if (virtual_area[virtual_position_object_nr].column >= 3)
-            {
-                if (virtual_area[virtual_position_object_nr - 10].figure_color == 'B')
-                    virtual_area[virtual_position_object_nr - 10].bg_color = 4;
-                else if (virtual_area[virtual_position_object_nr - 10].figure_color == 'E')
-                {
-                    if (virtual_area[virtual_position_object_nr - 10].bg_color != 4)
-                        virtual_area[virtual_position_object_nr - 10].bg_color = 3;
-                }
-            }
-        }
-
-        // LEFT LEFT BOTTOM
-        if (virtual_position_object_nr <= 55)
-        {
-            if (virtual_area[virtual_position_object_nr].column >= 3)
-            {
-                if (virtual_area[virtual_position_object_nr + 6].figure_color == 'B')
-                    virtual_area[virtual_position_object_nr + 6].bg_color = 4;
-                else if (virtual_area[virtual_position_object_nr + 6].figure_color == 'E')
-                {
-                    if (virtual_area[virtual_position_object_nr + 6].bg_color != 4)
-                        virtual_area[virtual_position_object_nr + 6].bg_color = 3;
-                }
-            }
-        }
-
-        // RIGH RIGHT TOP
-        if (virtual_position_object_nr >= 8)
-        {
-            if (virtual_area[virtual_position_object_nr].column <= 6)
-            {
-                if (virtual_area[virtual_position_object_nr - 6].figure_color == 'B')
-                    virtual_area[virtual_position_object_nr - 6].bg_color = 4;
-                else if (virtual_area[virtual_position_object_nr - 6].figure_color == 'E')
-                {
-                    if (virtual_area[virtual_position_object_nr - 6].bg_color != 4)
-                        virtual_area[virtual_position_object_nr - 6].bg_color = 3;
-                }
-            }
-        }
-
-        // RIGH RIGHT BOTTOM
-        if (virtual_position_object_nr <= 53)
-        {
-            if (virtual_area[virtual_position_object_nr].column <= 6)
-            {
-                if (virtual_area[virtual_position_object_nr + 10].figure_color == 'B')
-                    virtual_area[virtual_position_object_nr + 10].bg_color = 4;
-                else if (virtual_area[virtual_position_object_nr + 10].figure_color == 'E')
-                {
-                    if (virtual_area[virtual_position_object_nr + 10].bg_color != 4)
-                        virtual_area[virtual_position_object_nr + 10].bg_color = 3;
-                }
-            }
-        }
-    }
-
-    ///////////////// BLACK /////////////////
     if (virtual_area[virtual_position_object_nr].figure_color == 'B')
     {
         // TOP TOP LEFT
@@ -2712,13 +3284,8 @@ void paintVirtualAreaColorsKnight()
         {
             if (virtual_area[virtual_position_object_nr].column >= 2)
             {
-                if (virtual_area[virtual_position_object_nr - 17].figure_color == 'W')
+                if (virtual_area[virtual_position_object_nr - 17].figure_color != 'B')
                     virtual_area[virtual_position_object_nr - 17].bg_color = 4;
-                else if (virtual_area[virtual_position_object_nr - 17].figure_color == 'E')
-                {
-                    if (virtual_area[virtual_position_object_nr - 17].bg_color != 4)
-                        virtual_area[virtual_position_object_nr - 17].bg_color = 3;
-                }
             }
         }
 
@@ -2727,13 +3294,8 @@ void paintVirtualAreaColorsKnight()
         {
             if (virtual_area[virtual_position_object_nr].column <= 7)
             {
-                if (virtual_area[virtual_position_object_nr - 15].figure_color == 'W')
+                if (virtual_area[virtual_position_object_nr - 15].figure_color != 'B')
                     virtual_area[virtual_position_object_nr - 15].bg_color = 4;
-                else if (virtual_area[virtual_position_object_nr - 15].figure_color == 'E')
-                {
-                    if (virtual_area[virtual_position_object_nr - 15].bg_color != 4)
-                        virtual_area[virtual_position_object_nr - 15].bg_color = 3;
-                }
             }
         }
 
@@ -2742,13 +3304,8 @@ void paintVirtualAreaColorsKnight()
         {
             if (virtual_area[virtual_position_object_nr].column >= 2)
             {
-                if (virtual_area[virtual_position_object_nr + 15].figure_color == 'W')
+                if (virtual_area[virtual_position_object_nr + 15].figure_color != 'B')
                     virtual_area[virtual_position_object_nr + 15].bg_color = 4;
-                else if (virtual_area[virtual_position_object_nr + 15].figure_color == 'E')
-                {
-                    if (virtual_area[virtual_position_object_nr + 15].bg_color != 4)
-                        virtual_area[virtual_position_object_nr + 15].bg_color = 3;
-                }
             }
         }
 
@@ -2757,13 +3314,8 @@ void paintVirtualAreaColorsKnight()
         {
             if (virtual_area[virtual_position_object_nr].column <= 7)
             {
-                if (virtual_area[virtual_position_object_nr + 17].figure_color == 'W')
+                if (virtual_area[virtual_position_object_nr + 17].figure_color != 'B')
                     virtual_area[virtual_position_object_nr + 17].bg_color = 4;
-                else if (virtual_area[virtual_position_object_nr + 17].figure_color == 'E')
-                {
-                    if (virtual_area[virtual_position_object_nr + 17].bg_color != 4)
-                        virtual_area[virtual_position_object_nr + 17].bg_color = 3;
-                }
             }
         }
 
@@ -2772,13 +3324,8 @@ void paintVirtualAreaColorsKnight()
         {
             if (virtual_area[virtual_position_object_nr].column >= 3)
             {
-                if (virtual_area[virtual_position_object_nr - 10].figure_color == 'W')
+                if (virtual_area[virtual_position_object_nr - 10].figure_color != 'B')
                     virtual_area[virtual_position_object_nr - 10].bg_color = 4;
-                else if (virtual_area[virtual_position_object_nr - 10].figure_color == 'E')
-                {
-                    if (virtual_area[virtual_position_object_nr - 10].bg_color != 4)
-                        virtual_area[virtual_position_object_nr - 10].bg_color = 3;
-                }
             }
         }
 
@@ -2787,13 +3334,8 @@ void paintVirtualAreaColorsKnight()
         {
             if (virtual_area[virtual_position_object_nr].column >= 3)
             {
-                if (virtual_area[virtual_position_object_nr + 6].figure_color == 'W')
+                if (virtual_area[virtual_position_object_nr + 6].figure_color != 'B')
                     virtual_area[virtual_position_object_nr + 6].bg_color = 4;
-                else if (virtual_area[virtual_position_object_nr + 6].figure_color == 'E')
-                {
-                    if (virtual_area[virtual_position_object_nr + 6].bg_color != 4)
-                        virtual_area[virtual_position_object_nr + 6].bg_color = 3;
-                }
             }
         }
 
@@ -2802,13 +3344,8 @@ void paintVirtualAreaColorsKnight()
         {
             if (virtual_area[virtual_position_object_nr].column <= 6)
             {
-                if (virtual_area[virtual_position_object_nr - 6].figure_color == 'W')
+                if (virtual_area[virtual_position_object_nr - 6].figure_color != 'B')
                     virtual_area[virtual_position_object_nr - 6].bg_color = 4;
-                else if (virtual_area[virtual_position_object_nr - 6].figure_color == 'E')
-                {
-                    if (virtual_area[virtual_position_object_nr - 6].bg_color != 4)
-                        virtual_area[virtual_position_object_nr - 6].bg_color = 3;
-                }
             }
         }
 
@@ -2817,122 +3354,14 @@ void paintVirtualAreaColorsKnight()
         {
             if (virtual_area[virtual_position_object_nr].column <= 6)
             {
-                if (virtual_area[virtual_position_object_nr + 10].figure_color == 'W')
+                if (virtual_area[virtual_position_object_nr + 10].figure_color != 'B')
                     virtual_area[virtual_position_object_nr + 10].bg_color = 4;
-                else if (virtual_area[virtual_position_object_nr + 10].figure_color == 'E')
-                {
-                    if (virtual_area[virtual_position_object_nr + 10].bg_color != 4)
-                        virtual_area[virtual_position_object_nr + 10].bg_color = 3;
-                }
             }
         }
     }
 }
-void paintVirtualAreaColorsBishop()
+void paintVirtualAreaColorsBlackBishop()
 {
-
-    ///////////////// WHITE /////////////////
-    if (virtual_area[virtual_position_object_nr].figure_color == 'W')
-    {
-
-        // TOP LEFT SIDE
-        for (int i = 1; i <= 8; i++)
-        {
-            if (virtual_area[virtual_position_object_nr].row == 1 || virtual_area[virtual_position_object_nr].column == 1)
-                break;
-            if (virtual_area[virtual_position_object_nr - 9 * i].figure_color != 'E')
-            {
-                if (virtual_area[virtual_position_object_nr - 9 * i].figure_color == 'B')
-                {
-                    virtual_area[virtual_position_object_nr - 9 * i].bg_color = 4;
-                    break;
-                }
-                else
-                    break;
-            }
-            if (virtual_position_object_nr >= 9)
-            {
-                if (virtual_area[virtual_position_object_nr - 9 * i].bg_color != 4)
-                    virtual_area[virtual_position_object_nr - 9 * i].bg_color = 3;
-            }
-            if (virtual_area[virtual_position_object_nr - 9 * i].row == 1 || virtual_area[virtual_position_object_nr - 9 * i].column == 1)
-                break;
-        }
-
-        // TOP RIGHT SIDE
-        for (int i = 1; i <= 8; i++)
-        {
-            if (virtual_area[virtual_position_object_nr].row == 1 || virtual_area[virtual_position_object_nr].column == 8)
-                break;
-            if (virtual_area[virtual_position_object_nr - 7 * i].figure_color != 'E')
-            {
-                if (virtual_area[virtual_position_object_nr - 7 * i].figure_color == 'B')
-                {
-                    virtual_area[virtual_position_object_nr - 7 * i].bg_color = 4;
-                    break;
-                }
-                else
-                    break;
-            }
-            if (virtual_position_object_nr >= 8)
-            {
-                if (virtual_area[virtual_position_object_nr - 7 * i].bg_color != 4)
-                    virtual_area[virtual_position_object_nr - 7 * i].bg_color = 3;
-            }
-            if (virtual_area[virtual_position_object_nr - 7 * i].row == 1 || virtual_area[virtual_position_object_nr - 7 * i].column == 8)
-                break;
-        }
-
-        // BOTTOM LEFT SIDE
-        for (int i = 1; i <= 8; i++)
-        {
-            if (virtual_area[virtual_position_object_nr].row == 8 || virtual_area[virtual_position_object_nr].column == 1)
-                break;
-            if (virtual_area[virtual_position_object_nr + 7 * i].figure_color != 'E')
-            {
-                if (virtual_area[virtual_position_object_nr + 7 * i].figure_color == 'B')
-                {
-                    virtual_area[virtual_position_object_nr + 7 * i].bg_color = 4;
-                    break;
-                }
-                else
-                    break;
-            }
-            if (virtual_position_object_nr <= 55)
-            {
-                if (virtual_area[virtual_position_object_nr + 7 * i].bg_color != 4)
-                    virtual_area[virtual_position_object_nr + 7 * i].bg_color = 3;
-            }
-            if (virtual_area[virtual_position_object_nr + 7 * i].row == 8 || virtual_area[virtual_position_object_nr + 7 * i].column == 1)
-                break;
-        }
-
-        // BOTTOM RIGHT SIDE
-        for (int i = 1; i <= 8; i++)
-        {
-            if (virtual_area[virtual_position_object_nr].row == 8 || virtual_area[virtual_position_object_nr].column == 8)
-                break;
-            if (virtual_area[virtual_position_object_nr + 9 * i].figure_color != 'E')
-            {
-                if (virtual_area[virtual_position_object_nr + 9 * i].figure_color == 'B')
-                {
-                    virtual_area[virtual_position_object_nr + 9 * i].bg_color = 4;
-                    break;
-                }
-                else
-                    break;
-            }
-            if (virtual_position_object_nr <= 54)
-            {
-                if (virtual_area[virtual_position_object_nr + 9 * i].bg_color != 4)
-                    virtual_area[virtual_position_object_nr + 9 * i].bg_color = 3;
-            }
-            if (virtual_area[virtual_position_object_nr + 9 * i].row == 8 || virtual_area[virtual_position_object_nr + 9 * i].column == 8)
-                break;
-        }
-    }
-
-    ///////////////// BLACK /////////////////
     if (virtual_area[virtual_position_object_nr].figure_color == 'B')
     {
 
@@ -2945,16 +3374,23 @@ void paintVirtualAreaColorsBishop()
             {
                 if (virtual_area[virtual_position_object_nr - 9 * i].figure_color == 'W')
                 {
-                    virtual_area[virtual_position_object_nr - 9 * i].bg_color = 4;
-                    break;
+                    if (virtual_area[virtual_position_object_nr - 9 * (i + 1)].big_figure != "whiteKing")
+                    {
+                        virtual_area[virtual_position_object_nr - 9 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                    {
+                        virtual_area[virtual_position_object_nr - 9 * i].bg_color = 5;
+                        break;
+                    }
                 }
                 else
                     break;
             }
             if (virtual_position_object_nr >= 9)
             {
-                if (virtual_area[virtual_position_object_nr - 9 * i].bg_color != 4)
-                    virtual_area[virtual_position_object_nr - 9 * i].bg_color = 3;
+                virtual_area[virtual_position_object_nr - 9 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr - 9 * i].row == 1 || virtual_area[virtual_position_object_nr - 9 * i].column == 1)
                 break;
@@ -2969,16 +3405,23 @@ void paintVirtualAreaColorsBishop()
             {
                 if (virtual_area[virtual_position_object_nr - 7 * i].figure_color == 'W')
                 {
-                    virtual_area[virtual_position_object_nr - 7 * i].bg_color = 4;
-                    break;
+                    if (virtual_area[virtual_position_object_nr - 7 * (i + 1)].big_figure != "whiteKing")
+                    {
+                        virtual_area[virtual_position_object_nr - 7 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                    {
+                        virtual_area[virtual_position_object_nr - 7 * i].bg_color = 5;
+                        break;
+                    }
                 }
                 else
                     break;
             }
             if (virtual_position_object_nr >= 8)
             {
-                if (virtual_area[virtual_position_object_nr - 7 * i].bg_color != 4)
-                    virtual_area[virtual_position_object_nr - 7 * i].bg_color = 3;
+                virtual_area[virtual_position_object_nr - 7 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr - 7 * i].row == 1 || virtual_area[virtual_position_object_nr - 7 * i].column == 8)
                 break;
@@ -2993,16 +3436,23 @@ void paintVirtualAreaColorsBishop()
             {
                 if (virtual_area[virtual_position_object_nr + 7 * i].figure_color == 'W')
                 {
-                    virtual_area[virtual_position_object_nr + 7 * i].bg_color = 4;
-                    break;
+                    if (virtual_area[virtual_position_object_nr + 7 * (i + 1)].big_figure != "whiteKing")
+                    {
+                        virtual_area[virtual_position_object_nr + 7 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                    {
+                        virtual_area[virtual_position_object_nr + 7 * i].bg_color = 5;
+                        break;
+                    }
                 }
                 else
                     break;
             }
             if (virtual_position_object_nr <= 55)
             {
-                if (virtual_area[virtual_position_object_nr + 7 * i].bg_color != 4)
-                    virtual_area[virtual_position_object_nr + 7 * i].bg_color = 3;
+                virtual_area[virtual_position_object_nr + 7 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr + 7 * i].row == 8 || virtual_area[virtual_position_object_nr + 7 * i].column == 1)
                 break;
@@ -3017,126 +3467,31 @@ void paintVirtualAreaColorsBishop()
             {
                 if (virtual_area[virtual_position_object_nr + 9 * i].figure_color == 'W')
                 {
-                    virtual_area[virtual_position_object_nr + 9 * i].bg_color = 4;
-                    break;
+                    if (virtual_area[virtual_position_object_nr + 9 * (i + 1)].big_figure != "whiteKing")
+                    {
+                        virtual_area[virtual_position_object_nr + 9 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                    {
+                        virtual_area[virtual_position_object_nr + 9 * i].bg_color = 5;
+                        break;
+                    }
                 }
                 else
                     break;
             }
             if (virtual_position_object_nr <= 54)
             {
-                if (virtual_area[virtual_position_object_nr + 9 * i].bg_color != 4)
-                    virtual_area[virtual_position_object_nr + 9 * i].bg_color = 3;
+                virtual_area[virtual_position_object_nr + 9 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr + 9 * i].row == 8 || virtual_area[virtual_position_object_nr + 9 * i].column == 8)
                 break;
         }
     }
 }
-void paintVirtualAreaColorsRook()
+void paintVirtualAreaColorsBlackRook()
 {
-    ///////////////// WHITE /////////////////
-    if (virtual_area[virtual_position_object_nr].figure_color == 'W')
-    {
-
-        // TOP SIDE
-        for (int i = 1; i <= 8; i++)
-        {
-            if (virtual_area[virtual_position_object_nr].row == 1)
-                break;
-            if (virtual_area[virtual_position_object_nr - 8 * i].figure_color != 'E')
-            {
-                if (virtual_area[virtual_position_object_nr - 8 * i].figure_color == 'B')
-                {
-                    virtual_area[virtual_position_object_nr - 8 * i].bg_color = 4;
-                    break;
-                }
-                else
-                    break;
-            }
-            if (virtual_position_object_nr >= 8)
-            {
-                if (virtual_area[virtual_position_object_nr - 8 * i].bg_color != 4)
-                    virtual_area[virtual_position_object_nr - 8 * i].bg_color = 3;
-            }
-            if (virtual_area[virtual_position_object_nr - 8 * i].row == 1)
-                break;
-        }
-
-        // BOTTOM SIDE
-        for (int i = 1; i <= 8; i++)
-        {
-            if (virtual_area[virtual_position_object_nr].row == 8)
-                break;
-            if (virtual_area[virtual_position_object_nr + 8 * i].figure_color != 'E')
-            {
-                if (virtual_area[virtual_position_object_nr + 8 * i].figure_color == 'B')
-                {
-                    virtual_area[virtual_position_object_nr + 8 * i].bg_color = 4;
-                    break;
-                }
-                else
-                    break;
-            }
-            if (virtual_position_object_nr <= 55)
-            {
-                if (virtual_area[virtual_position_object_nr + 8 * i].bg_color != 4)
-                    virtual_area[virtual_position_object_nr + 8 * i].bg_color = 3;
-            }
-            if (virtual_area[virtual_position_object_nr + 8 * i].row == 8)
-                break;
-        }
-
-        // LEFT SIDE
-        for (int i = 1; i <= 8; i++)
-        {
-            if (virtual_area[virtual_position_object_nr].column == 1)
-                break;
-            if (virtual_area[virtual_position_object_nr - 1 * i].figure_color != 'E')
-            {
-                if (virtual_area[virtual_position_object_nr - 1 * i].figure_color == 'B')
-                {
-                    virtual_area[virtual_position_object_nr - 1 * i].bg_color = 4;
-                    break;
-                }
-                else
-                    break;
-            }
-            if (virtual_position_object_nr >= 1)
-            {
-                if (virtual_area[virtual_position_object_nr - 1 * i].bg_color != 4)
-                    virtual_area[virtual_position_object_nr - 1 * i].bg_color = 3;
-            }
-            if (virtual_area[virtual_position_object_nr - 1 * i].column == 1)
-                break;
-        }
-
-        // RIGHT SIDE
-        for (int i = 1; i <= 8; i++)
-        {
-            if (virtual_area[virtual_position_object_nr].column == 8)
-                break;
-            if (virtual_area[virtual_position_object_nr + 1 * i].figure_color != 'E')
-            {
-                if (virtual_area[virtual_position_object_nr + 1 * i].figure_color == 'B')
-                {
-                    virtual_area[virtual_position_object_nr + 1 * i].bg_color = 4;
-                    break;
-                }
-                else
-                    break;
-            }
-            if (virtual_position_object_nr <= 62)
-            {
-                if (virtual_area[virtual_position_object_nr + 1 * i].bg_color != 4)
-                    virtual_area[virtual_position_object_nr + 1 * i].bg_color = 3;
-            }
-            if (virtual_area[virtual_position_object_nr + 1 * i].column == 8)
-                break;
-        }
-    }
-
-    ///////////////// BLACK /////////////////
     if (virtual_area[virtual_position_object_nr].figure_color == 'B')
     {
         // TOP SIDE
@@ -3148,16 +3503,23 @@ void paintVirtualAreaColorsRook()
             {
                 if (virtual_area[virtual_position_object_nr - 8 * i].figure_color == 'W')
                 {
-                    virtual_area[virtual_position_object_nr - 8 * i].bg_color = 4;
-                    break;
+                    if (virtual_area[virtual_position_object_nr - 8 * (i + 1)].big_figure != "whiteKing")
+                    {
+                        virtual_area[virtual_position_object_nr - 8 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                    {
+                        virtual_area[virtual_position_object_nr - 8 * i].bg_color = 5;
+                        break;
+                    }
                 }
                 else
                     break;
             }
             if (virtual_position_object_nr >= 8)
             {
-                if (virtual_area[virtual_position_object_nr - 8 * i].bg_color != 4)
-                    virtual_area[virtual_position_object_nr - 8 * i].bg_color = 3;
+                virtual_area[virtual_position_object_nr - 8 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr - 8 * i].row == 1)
                 break;
@@ -3172,16 +3534,23 @@ void paintVirtualAreaColorsRook()
             {
                 if (virtual_area[virtual_position_object_nr + 8 * i].figure_color == 'W')
                 {
-                    virtual_area[virtual_position_object_nr + 8 * i].bg_color = 4;
-                    break;
+                    if (virtual_area[virtual_position_object_nr + 8 * (i + 1)].big_figure != "whiteKing")
+                    {
+                        virtual_area[virtual_position_object_nr + 8 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                    {
+                        virtual_area[virtual_position_object_nr + 8 * i].bg_color = 5;
+                        break;
+                    }
                 }
                 else
                     break;
             }
             if (virtual_position_object_nr <= 55)
             {
-                if (virtual_area[virtual_position_object_nr + 8 * i].bg_color != 4)
-                    virtual_area[virtual_position_object_nr + 8 * i].bg_color = 3;
+                virtual_area[virtual_position_object_nr + 8 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr + 8 * i].row == 8)
                 break;
@@ -3196,16 +3565,23 @@ void paintVirtualAreaColorsRook()
             {
                 if (virtual_area[virtual_position_object_nr - 1 * i].figure_color == 'W')
                 {
-                    virtual_area[virtual_position_object_nr - 1 * i].bg_color = 4;
-                    break;
+                    if (virtual_area[virtual_position_object_nr - 1 * (i + 1)].big_figure != "whiteKing")
+                    {
+                        virtual_area[virtual_position_object_nr - 1 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                    {
+                        virtual_area[virtual_position_object_nr - 1 * i].bg_color = 5;
+                        break;
+                    }
                 }
                 else
                     break;
             }
             if (virtual_position_object_nr >= 1)
             {
-                if (virtual_area[virtual_position_object_nr - 1 * i].bg_color != 4)
-                    virtual_area[virtual_position_object_nr - 1 * i].bg_color = 3;
+                virtual_area[virtual_position_object_nr - 1 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr - 1 * i].column == 1)
                 break;
@@ -3220,222 +3596,31 @@ void paintVirtualAreaColorsRook()
             {
                 if (virtual_area[virtual_position_object_nr + 1 * i].figure_color == 'W')
                 {
-                    virtual_area[virtual_position_object_nr + 1 * i].bg_color = 4;
-                    break;
+                    if (virtual_area[virtual_position_object_nr + 1 * (i + 1)].big_figure != "whiteKing")
+                    {
+                        virtual_area[virtual_position_object_nr + 1 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                    {
+                        virtual_area[virtual_position_object_nr + 1 * i].bg_color = 5;
+                        break;
+                    }
                 }
                 else
                     break;
             }
             if (virtual_position_object_nr <= 62)
             {
-                if (virtual_area[virtual_position_object_nr + 1 * i].bg_color != 4)
-                    virtual_area[virtual_position_object_nr + 1 * i].bg_color = 3;
+                virtual_area[virtual_position_object_nr + 1 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr + 1 * i].column == 8)
                 break;
         }
     }
 }
-void paintVirtualAreaColorsQueen()
+void paintVirtualAreaColorsBlackQueen()
 {
-    ///////////////// WHITE /////////////////
-    if (virtual_area[virtual_position_object_nr].figure_color == 'W')
-    {
-
-        // TOP SIDE
-        for (int i = 1; i <= 8; i++)
-        {
-            if (virtual_area[virtual_position_object_nr].row == 1)
-                break;
-            if (virtual_area[virtual_position_object_nr - 8 * i].figure_color != 'E')
-            {
-                if (virtual_area[virtual_position_object_nr - 8 * i].figure_color == 'B')
-                {
-                    virtual_area[virtual_position_object_nr - 8 * i].bg_color = 4;
-                    break;
-                }
-                else
-                    break;
-            }
-            if (virtual_position_object_nr >= 8)
-            {
-                if (virtual_area[virtual_position_object_nr - 8 * i].bg_color != 4)
-                    virtual_area[virtual_position_object_nr - 8 * i].bg_color = 3;
-            }
-            if (virtual_area[virtual_position_object_nr - 8 * i].row == 1)
-                break;
-        }
-
-        // BOTTOM SIDE
-        for (int i = 1; i <= 8; i++)
-        {
-            if (virtual_area[virtual_position_object_nr].row == 8)
-                break;
-            if (virtual_area[virtual_position_object_nr + 8 * i].figure_color != 'E')
-            {
-                if (virtual_area[virtual_position_object_nr + 8 * i].figure_color == 'B')
-                {
-                    virtual_area[virtual_position_object_nr + 8 * i].bg_color = 4;
-                    break;
-                }
-                else
-                    break;
-            }
-            if (virtual_position_object_nr <= 55)
-            {
-                if (virtual_area[virtual_position_object_nr + 8 * i].bg_color != 4)
-                    virtual_area[virtual_position_object_nr + 8 * i].bg_color = 3;
-            }
-            if (virtual_area[virtual_position_object_nr + 8 * i].row == 8)
-                break;
-        }
-
-        // LEFT SIDE
-        for (int i = 1; i <= 8; i++)
-        {
-            if (virtual_area[virtual_position_object_nr].column == 1)
-                break;
-            if (virtual_area[virtual_position_object_nr - 1 * i].figure_color != 'E')
-            {
-                if (virtual_area[virtual_position_object_nr - 1 * i].figure_color == 'B')
-                {
-                    virtual_area[virtual_position_object_nr - 1 * i].bg_color = 4;
-                    break;
-                }
-                else
-                    break;
-            }
-            if (virtual_position_object_nr >= 1)
-            {
-                if (virtual_area[virtual_position_object_nr - 1 * i].bg_color != 4)
-                    virtual_area[virtual_position_object_nr - 1 * i].bg_color = 3;
-            }
-            if (virtual_area[virtual_position_object_nr - 1 * i].column == 1)
-                break;
-        }
-
-        // RIGHT SIDE
-        for (int i = 1; i <= 8; i++)
-        {
-            if (virtual_area[virtual_position_object_nr].column == 8)
-                break;
-            if (virtual_area[virtual_position_object_nr + 1 * i].figure_color != 'E')
-            {
-                if (virtual_area[virtual_position_object_nr + 1 * i].figure_color == 'B')
-                {
-                    virtual_area[virtual_position_object_nr + 1 * i].bg_color = 4;
-                    break;
-                }
-                else
-                    break;
-            }
-            if (virtual_position_object_nr <= 62)
-            {
-                if (virtual_area[virtual_position_object_nr + 1 * i].bg_color != 4)
-                    virtual_area[virtual_position_object_nr + 1 * i].bg_color = 3;
-            }
-            if (virtual_area[virtual_position_object_nr + 1 * i].column == 8)
-                break;
-        }
-
-        // TOP LEFT SIDE
-        for (int i = 1; i <= 8; i++)
-        {
-            if (virtual_area[virtual_position_object_nr].row == 1 || virtual_area[virtual_position_object_nr].column == 1)
-                break;
-            if (virtual_area[virtual_position_object_nr - 9 * i].figure_color != 'E')
-            {
-                if (virtual_area[virtual_position_object_nr - 9 * i].figure_color == 'B')
-                {
-                    virtual_area[virtual_position_object_nr - 9 * i].bg_color = 4;
-                    break;
-                }
-                else
-                    break;
-            }
-            if (virtual_position_object_nr >= 9)
-            {
-                if (virtual_area[virtual_position_object_nr - 9 * i].bg_color != 4)
-                    virtual_area[virtual_position_object_nr - 9 * i].bg_color = 3;
-            }
-            if (virtual_area[virtual_position_object_nr - 9 * i].row == 1 || virtual_area[virtual_position_object_nr - 9 * i].column == 1)
-                break;
-        }
-
-        // TOP RIGHT SIDE
-        for (int i = 1; i <= 8; i++)
-        {
-            if (virtual_area[virtual_position_object_nr].row == 1 || virtual_area[virtual_position_object_nr].column == 8)
-                break;
-            if (virtual_area[virtual_position_object_nr - 7 * i].figure_color != 'E')
-            {
-                if (virtual_area[virtual_position_object_nr - 7 * i].figure_color == 'B')
-                {
-                    virtual_area[virtual_position_object_nr - 7 * i].bg_color = 4;
-                    break;
-                }
-                else
-                    break;
-            }
-            if (virtual_position_object_nr >= 8)
-            {
-                if (virtual_area[virtual_position_object_nr - 7 * i].bg_color != 4)
-                    virtual_area[virtual_position_object_nr - 7 * i].bg_color = 3;
-            }
-            if (virtual_area[virtual_position_object_nr - 7 * i].row == 1 || virtual_area[virtual_position_object_nr - 7 * i].column == 8)
-                break;
-        }
-
-        // BOTTOM LEFT SIDE
-        for (int i = 1; i <= 8; i++)
-        {
-            if (virtual_area[virtual_position_object_nr].row == 8 || virtual_area[virtual_position_object_nr].column == 1)
-                break;
-            if (virtual_area[virtual_position_object_nr + 7 * i].figure_color != 'E')
-            {
-                if (virtual_area[virtual_position_object_nr + 7 * i].figure_color == 'B')
-                {
-                    virtual_area[virtual_position_object_nr + 7 * i].bg_color = 4;
-                    break;
-                }
-                else
-                    break;
-            }
-            if (virtual_position_object_nr <= 55)
-            {
-                if (virtual_area[virtual_position_object_nr + 7 * i].bg_color != 4)
-                    virtual_area[virtual_position_object_nr + 7 * i].bg_color = 3;
-            }
-            if (virtual_area[virtual_position_object_nr + 7 * i].row == 8 || virtual_area[virtual_position_object_nr + 7 * i].column == 1)
-                break;
-        }
-
-        // BOTTOM RIGHT SIDE
-        for (int i = 1; i <= 8; i++)
-        {
-            if (virtual_area[virtual_position_object_nr].row == 8 || virtual_area[virtual_position_object_nr].column == 8)
-                break;
-            if (virtual_area[virtual_position_object_nr + 9 * i].figure_color != 'E')
-            {
-                if (virtual_area[virtual_position_object_nr + 9 * i].figure_color == 'B')
-                {
-                    virtual_area[virtual_position_object_nr + 9 * i].bg_color = 4;
-                    break;
-                }
-                else
-                    break;
-            }
-            if (virtual_position_object_nr <= 54 * i)
-            {
-                if (virtual_area[virtual_position_object_nr + 9 * i].bg_color != 4)
-                    virtual_area[virtual_position_object_nr + 9 * i].bg_color = 3;
-            }
-            if (virtual_area[virtual_position_object_nr + 9 * i].row == 8 || virtual_area[virtual_position_object_nr + 9 * i].column == 8)
-                break;
-        }
-    }
-
-    ///////////////// BLACK /////////////////
     if (virtual_area[virtual_position_object_nr].figure_color == 'B')
     {
         // TOP SIDE
@@ -3447,16 +3632,23 @@ void paintVirtualAreaColorsQueen()
             {
                 if (virtual_area[virtual_position_object_nr - 8 * i].figure_color == 'W')
                 {
-                    virtual_area[virtual_position_object_nr - 8 * i].bg_color = 4;
-                    break;
+                    if (virtual_area[virtual_position_object_nr - 8 * (i + 1)].big_figure != "whiteKing")
+                    {
+                        virtual_area[virtual_position_object_nr - 8 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                    {
+                        virtual_area[virtual_position_object_nr - 8 * i].bg_color = 5;
+                        break;
+                    }
                 }
                 else
                     break;
             }
             if (virtual_position_object_nr >= 8)
             {
-                if (virtual_area[virtual_position_object_nr - 8 * i].bg_color != 4)
-                    virtual_area[virtual_position_object_nr - 8 * i].bg_color = 3;
+                virtual_area[virtual_position_object_nr - 8 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr - 8 * i].row == 1)
                 break;
@@ -3471,16 +3663,23 @@ void paintVirtualAreaColorsQueen()
             {
                 if (virtual_area[virtual_position_object_nr + 8 * i].figure_color == 'W')
                 {
-                    virtual_area[virtual_position_object_nr + 8 * i].bg_color = 4;
-                    break;
+                    if (virtual_area[virtual_position_object_nr + 8 * (i + 1)].big_figure != "whiteKing")
+                    {
+                        virtual_area[virtual_position_object_nr + 8 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                    {
+                        virtual_area[virtual_position_object_nr + 8 * i].bg_color = 5;
+                        break;
+                    }
                 }
                 else
                     break;
             }
             if (virtual_position_object_nr <= 55)
             {
-                if (virtual_area[virtual_position_object_nr + 8 * i].bg_color != 4)
-                    virtual_area[virtual_position_object_nr + 8 * i].bg_color = 3;
+                virtual_area[virtual_position_object_nr + 8 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr + 8 * i].row == 8)
                 break;
@@ -3495,16 +3694,23 @@ void paintVirtualAreaColorsQueen()
             {
                 if (virtual_area[virtual_position_object_nr - 1 * i].figure_color == 'W')
                 {
-                    virtual_area[virtual_position_object_nr - 1 * i].bg_color = 4;
-                    break;
+                    if (virtual_area[virtual_position_object_nr - 1 * (i + 1)].big_figure != "whiteKing")
+                    {
+                        virtual_area[virtual_position_object_nr - 1 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                    {
+                        virtual_area[virtual_position_object_nr - 1 * i].bg_color = 5;
+                        break;
+                    }
                 }
                 else
                     break;
             }
             if (virtual_position_object_nr >= 1)
             {
-                if (virtual_area[virtual_position_object_nr - 1 * i].bg_color != 4)
-                    virtual_area[virtual_position_object_nr - 1 * i].bg_color = 3;
+                virtual_area[virtual_position_object_nr - 1 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr - 1 * i].column == 1)
                 break;
@@ -3519,16 +3725,23 @@ void paintVirtualAreaColorsQueen()
             {
                 if (virtual_area[virtual_position_object_nr + 1 * i].figure_color == 'W')
                 {
-                    virtual_area[virtual_position_object_nr + 1 * i].bg_color = 4;
-                    break;
+                    if (virtual_area[virtual_position_object_nr + 1 * (i + 1)].big_figure != "whiteKing")
+                    {
+                        virtual_area[virtual_position_object_nr + 1 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                    {
+                        virtual_area[virtual_position_object_nr + 1 * i].bg_color = 5;
+                        break;
+                    }
                 }
                 else
                     break;
             }
             if (virtual_position_object_nr <= 62)
             {
-                if (virtual_area[virtual_position_object_nr + 1 * i].bg_color != 4)
-                    virtual_area[virtual_position_object_nr + 1 * i].bg_color = 3;
+                virtual_area[virtual_position_object_nr + 1 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr + 1 * i].column == 8)
                 break;
@@ -3543,16 +3756,23 @@ void paintVirtualAreaColorsQueen()
             {
                 if (virtual_area[virtual_position_object_nr - 9 * i].figure_color == 'W')
                 {
-                    virtual_area[virtual_position_object_nr - 9 * i].bg_color = 4;
-                    break;
+                    if (virtual_area[virtual_position_object_nr - 9 * (i + 1)].big_figure != "whiteKing")
+                    {
+                        virtual_area[virtual_position_object_nr - 9 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                    {
+                        virtual_area[virtual_position_object_nr - 9 * i].bg_color = 5;
+                        break;
+                    }
                 }
                 else
                     break;
             }
             if (virtual_position_object_nr >= 9)
             {
-                if (virtual_area[virtual_position_object_nr - 9 * i].bg_color != 4)
-                    virtual_area[virtual_position_object_nr - 9 * i].bg_color = 3;
+                virtual_area[virtual_position_object_nr - 9 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr - 9 * i].row == 1 || virtual_area[virtual_position_object_nr - 9 * i].column == 1)
                 break;
@@ -3567,16 +3787,23 @@ void paintVirtualAreaColorsQueen()
             {
                 if (virtual_area[virtual_position_object_nr - 7 * i].figure_color == 'W')
                 {
-                    virtual_area[virtual_position_object_nr - 7 * i].bg_color = 4;
-                    break;
+                    if (virtual_area[virtual_position_object_nr - 7 * (i + 1)].big_figure != "whiteKing")
+                    {
+                        virtual_area[virtual_position_object_nr - 7 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                    {
+                        virtual_area[virtual_position_object_nr - 7 * i].bg_color = 5;
+                        break;
+                    }
                 }
                 else
                     break;
             }
             if (virtual_position_object_nr >= 8)
             {
-                if (virtual_area[virtual_position_object_nr - 7 * i].bg_color != 4)
-                    virtual_area[virtual_position_object_nr - 7 * i].bg_color = 3;
+                virtual_area[virtual_position_object_nr - 7 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr - 7 * i].row == 1 || virtual_area[virtual_position_object_nr - 7 * i].column == 8)
                 break;
@@ -3591,16 +3818,23 @@ void paintVirtualAreaColorsQueen()
             {
                 if (virtual_area[virtual_position_object_nr + 7 * i].figure_color == 'W')
                 {
-                    virtual_area[virtual_position_object_nr + 7 * i].bg_color = 4;
-                    break;
+                    if (virtual_area[virtual_position_object_nr + 7 * (i + 1)].big_figure != "whiteKing")
+                    {
+                        virtual_area[virtual_position_object_nr + 7 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                    {
+                        virtual_area[virtual_position_object_nr + 7 * i].bg_color = 5;
+                        break;
+                    }
                 }
                 else
                     break;
             }
             if (virtual_position_object_nr <= 55)
             {
-                if (virtual_area[virtual_position_object_nr + 7 * i].bg_color != 4)
-                    virtual_area[virtual_position_object_nr + 7 * i].bg_color = 3;
+                virtual_area[virtual_position_object_nr + 7 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr + 7 * i].row == 8 || virtual_area[virtual_position_object_nr + 7 * i].column == 1)
                 break;
@@ -3615,261 +3849,87 @@ void paintVirtualAreaColorsQueen()
             {
                 if (virtual_area[virtual_position_object_nr + 9 * i].figure_color == 'W')
                 {
-                    virtual_area[virtual_position_object_nr + 9 * i].bg_color = 4;
-                    break;
+                    if (virtual_area[virtual_position_object_nr + 9 * (i + 1)].big_figure != "whiteKing")
+                    {
+                        virtual_area[virtual_position_object_nr + 9 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                    {
+                        virtual_area[virtual_position_object_nr + 9 * i].bg_color = 5;
+                        break;
+                    }
                 }
                 else
                     break;
             }
             if (virtual_position_object_nr <= 54)
             {
-                if (virtual_area[virtual_position_object_nr + 9 * i].bg_color != 4)
-                    virtual_area[virtual_position_object_nr + 9 * i].bg_color = 3;
+                virtual_area[virtual_position_object_nr + 9 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr + 9 * i].row == 8 || virtual_area[virtual_position_object_nr + 9 * i].column == 8)
                 break;
         }
     }
 }
-void paintVirtualAreaColorsKing()
+void paintVirtualAreaColorsBlackKing()
 {
-    ///////////////// WHITE /////////////////
-    if (virtual_area[virtual_position_object_nr].figure_color == 'W')
-    {
-        // TOP SIDE
-        if (virtual_area[virtual_position_object_nr].row > 1)
-        {
-            if (virtual_area[virtual_position_object_nr - 8].figure_color == 'B')
-                virtual_area[virtual_position_object_nr - 8].bg_color = 4;
-            else if (virtual_area[virtual_position_object_nr - 8].figure_color == 'E')
-            {
-                if (virtual_area[virtual_position_object_nr - 8].bg_color != 4)
-                    virtual_area[virtual_position_object_nr - 8].bg_color = 3;
-            }
-        }
-
-        // BOTTOM SIDE
-        if (virtual_area[virtual_position_object_nr].row < 8)
-        {
-            if (virtual_area[virtual_position_object_nr + 8].figure_color == 'B')
-                virtual_area[virtual_position_object_nr + 8].bg_color = 4;
-            else if (virtual_area[virtual_position_object_nr + 8].figure_color == 'E')
-            {
-                if (virtual_area[virtual_position_object_nr + 8].bg_color != 4)
-                    virtual_area[virtual_position_object_nr + 8].bg_color = 3;
-            }
-        }
-
-        // LEFT SIDE
-        if (virtual_area[virtual_position_object_nr].column > 1)
-        {
-            if (virtual_area[virtual_position_object_nr - 1].figure_color == 'B')
-                virtual_area[virtual_position_object_nr - 1].bg_color = 4;
-            else if (virtual_area[virtual_position_object_nr - 1].figure_color == 'E')
-            {
-                if (virtual_area[virtual_position_object_nr - 1].bg_color != 4)
-                    virtual_area[virtual_position_object_nr - 1].bg_color = 3;
-            }
-        }
-
-        // RIGHT SIDE
-        if (virtual_area[virtual_position_object_nr].column < 8)
-        {
-            if (virtual_area[virtual_position_object_nr + 1].figure_color == 'B')
-                virtual_area[virtual_position_object_nr + 1].bg_color = 4;
-            else if (virtual_area[virtual_position_object_nr + 1].figure_color == 'E')
-            {
-                if (virtual_area[virtual_position_object_nr + 1].bg_color != 4)
-                    virtual_area[virtual_position_object_nr + 1].bg_color = 3;
-            }
-        }
-
-        // TOP LEFT SIDE
-        if (virtual_area[virtual_position_object_nr].row > 1 && virtual_area[virtual_position_object_nr].column > 1)
-        {
-            if (virtual_area[virtual_position_object_nr - 9].figure_color == 'B')
-                virtual_area[virtual_position_object_nr - 9].bg_color = 4;
-            else if (virtual_area[virtual_position_object_nr - 9].figure_color == 'E')
-            {
-                if (virtual_area[virtual_position_object_nr - 9].bg_color != 4)
-                    virtual_area[virtual_position_object_nr - 9].bg_color = 3;
-            }
-        }
-
-        // TOP RIGHT SIDE
-        if (virtual_area[virtual_position_object_nr].row > 1 && virtual_area[virtual_position_object_nr].column < 8)
-        {
-            if (virtual_area[virtual_position_object_nr - 7].figure_color == 'B')
-                virtual_area[virtual_position_object_nr - 7].bg_color = 4;
-            else if (virtual_area[virtual_position_object_nr - 7].figure_color == 'E')
-            {
-                if (virtual_area[virtual_position_object_nr - 7].bg_color != 4)
-                    virtual_area[virtual_position_object_nr - 7].bg_color = 3;
-            }
-        }
-
-        // BOTTOM LEFT SIDE
-        if (virtual_area[virtual_position_object_nr].row < 8 && virtual_area[virtual_position_object_nr].column > 1)
-        {
-            if (virtual_area[virtual_position_object_nr + 7].figure_color == 'B')
-                virtual_area[virtual_position_object_nr + 7].bg_color = 4;
-            else if (virtual_area[virtual_position_object_nr + 7].figure_color == 'E')
-            {
-                if (virtual_area[virtual_position_object_nr + 7].bg_color != 4)
-                    virtual_area[virtual_position_object_nr + 7].bg_color = 3;
-            }
-        }
-
-        // BOTTOM RIGHT SIDE
-        if (virtual_area[virtual_position_object_nr].row < 8 && virtual_area[virtual_position_object_nr].column < 8)
-        {
-            if (virtual_area[virtual_position_object_nr + 9].figure_color == 'B')
-                virtual_area[virtual_position_object_nr + 9].bg_color = 4;
-        }
-        else if (virtual_area[virtual_position_object_nr + 9].figure_color == 'E')
-        {
-            if (virtual_area[virtual_position_object_nr + 9].bg_color != 4)
-                virtual_area[virtual_position_object_nr + 9].bg_color = 3;
-        }
-
-        // KING SIDE CASTLING
-        if (active_white_left_castling == true)
-        {
-            if (virtual_area[58].figure_color == 'E')
-            {
-                if (virtual_area[58].bg_color != 4)
-                    virtual_area[58].bg_color = 3;
-            }
-        }
-
-        // QUEEN SIDE CASTLING
-        if (active_white_right_castling == true)
-        {
-            if (virtual_area[62].figure_color == 'E')
-            {
-                if (virtual_area[62].bg_color != 4)
-                    virtual_area[62].bg_color = 3;
-            }
-        }
-    }
-
-    ///////////////// BLACK /////////////////
     if (virtual_area[virtual_position_object_nr].figure_color == 'B')
     {
         // TOP SIDE
         if (virtual_area[virtual_position_object_nr].row > 1)
         {
-            if (virtual_area[virtual_position_object_nr - 8].figure_color == 'W')
+            if (virtual_area[virtual_position_object_nr - 8].figure_color != 'B')
                 virtual_area[virtual_position_object_nr - 8].bg_color = 4;
-            else if (virtual_area[virtual_position_object_nr - 8].figure_color == 'E')
-            {
-                if (virtual_area[virtual_position_object_nr - 8].bg_color != 4)
-                    virtual_area[virtual_position_object_nr - 8].bg_color = 3;
-            }
         }
 
         // BOTTOM SIDE
         if (virtual_area[virtual_position_object_nr].row < 8)
         {
-            if (virtual_area[virtual_position_object_nr + 8].figure_color == 'W')
+            if (virtual_area[virtual_position_object_nr + 8].figure_color != 'B')
                 virtual_area[virtual_position_object_nr + 8].bg_color = 4;
-            else if (virtual_area[virtual_position_object_nr + 8].figure_color == 'E')
-            {
-                if (virtual_area[virtual_position_object_nr + 8].bg_color != 4)
-                    virtual_area[virtual_position_object_nr + 8].bg_color = 3;
-            }
         }
 
         // LEFT SIDE
         if (virtual_area[virtual_position_object_nr].column > 1)
         {
-            if (virtual_area[virtual_position_object_nr - 1].figure_color == 'W')
+            if (virtual_area[virtual_position_object_nr - 1].figure_color != 'B')
                 virtual_area[virtual_position_object_nr - 1].bg_color = 4;
-            else if (virtual_area[virtual_position_object_nr - 1].figure_color == 'E')
-            {
-                if (virtual_area[virtual_position_object_nr - 1].bg_color != 4)
-                    virtual_area[virtual_position_object_nr - 1].bg_color = 3;
-            }
         }
 
         // RIGHT SIDE
         if (virtual_area[virtual_position_object_nr].column < 8)
         {
-            if (virtual_area[virtual_position_object_nr + 1].figure_color == 'W')
+            if (virtual_area[virtual_position_object_nr + 1].figure_color != 'B')
                 virtual_area[virtual_position_object_nr + 1].bg_color = 4;
-            else if (virtual_area[virtual_position_object_nr + 1].figure_color == 'E')
-            {
-                if (virtual_area[virtual_position_object_nr + 1].bg_color != 4)
-                    virtual_area[virtual_position_object_nr + 1].bg_color = 3;
-            }
         }
 
         // TOP LEFT SIDE
         if (virtual_area[virtual_position_object_nr].row > 1 && virtual_area[virtual_position_object_nr].column > 1)
         {
-            if (virtual_area[virtual_position_object_nr - 9].figure_color == 'W')
+            if (virtual_area[virtual_position_object_nr - 9].figure_color != 'B')
                 virtual_area[virtual_position_object_nr - 9].bg_color = 4;
-            else if (virtual_area[virtual_position_object_nr - 9].figure_color == 'E')
-            {
-                if (virtual_area[virtual_position_object_nr - 9].bg_color != 4)
-                    virtual_area[virtual_position_object_nr - 9].bg_color = 3;
-            }
         }
 
         // TOP RIGHT SIDE
         if (virtual_area[virtual_position_object_nr].row > 1 && virtual_area[virtual_position_object_nr].column < 8)
         {
-            if (virtual_area[virtual_position_object_nr - 7].figure_color == 'W')
+            if (virtual_area[virtual_position_object_nr - 7].figure_color != 'B')
                 virtual_area[virtual_position_object_nr - 7].bg_color = 4;
-            else if (virtual_area[virtual_position_object_nr - 7].figure_color == 'E')
-            {
-                if (virtual_area[virtual_position_object_nr - 7].bg_color != 4)
-                    virtual_area[virtual_position_object_nr - 7].bg_color = 3;
-            }
         }
 
         // BOTTOM LEFT SIDE
         if (virtual_area[virtual_position_object_nr].row < 8 && virtual_area[virtual_position_object_nr].column > 1)
         {
-            if (virtual_area[virtual_position_object_nr + 7].figure_color == 'W')
+            if (virtual_area[virtual_position_object_nr + 7].figure_color != 'B')
                 virtual_area[virtual_position_object_nr + 7].bg_color = 4;
-            else if (virtual_area[virtual_position_object_nr + 7].figure_color == 'E')
-            {
-                if (virtual_area[virtual_position_object_nr + 7].bg_color != 4)
-                    virtual_area[virtual_position_object_nr + 7].bg_color = 3;
-            }
         }
 
         // BOTTOM RIGHT SIDE
         if (virtual_area[virtual_position_object_nr].row < 8 && virtual_area[virtual_position_object_nr].column < 8)
         {
-            if (virtual_area[virtual_position_object_nr + 9].figure_color == 'W')
+            if (virtual_area[virtual_position_object_nr + 9].figure_color != 'B')
                 virtual_area[virtual_position_object_nr + 9].bg_color = 4;
-            else if (virtual_area[virtual_position_object_nr + 9].figure_color == 'E')
-            {
-                if (virtual_area[virtual_position_object_nr + 9].bg_color != 4)
-                    virtual_area[virtual_position_object_nr + 9].bg_color = 3;
-            }
-        }
-
-        // KING SIDE CASTLING
-        if (active_black_left_castling == true)
-        {
-            if (virtual_area[2].figure_color == 'E')
-            {
-                if (virtual_area[2].bg_color != 4)
-                    virtual_area[2].bg_color = 3;
-            }
-        }
-
-        // QUEEN SIDE CASTLING
-        if (active_black_right_castling == true)
-        {
-            if (virtual_area[6].figure_color == 'E')
-            {
-                if (virtual_area[6].bg_color != 4)
-                    virtual_area[6].bg_color = 3;
-            }
         }
     }
 }

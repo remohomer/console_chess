@@ -106,6 +106,16 @@ void Area::drawArea()
         SetConsoleTextAttribute(hOut, BACKGROUND_RED);
         cout << " " << figure << " ";
     }
+    else if (bg_color == 5 && figure_color == 'W')
+    {
+        SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_INTENSITY);
+        cout << " " << figure << " ";
+    }
+    else if (bg_color == 5 && figure_color == 'B' || bg_color == 5 && figure_color == 'E')
+    {
+        SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_BLUE);
+        cout << " " << figure << " ";
+    }
     else
     {
         cout << "\nNiezdefiniowany kolor tla lub figury\n";
