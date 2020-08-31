@@ -2549,22 +2549,24 @@ void paintVirtualAreaColorsWhitePawn()
         /////////// STARTED POSITION ///////////
         if (virtual_area[virtual_position_object_nr].row == 7)
         {
-            // TOP LEFT8
-            if (virtual_area[virtual_position_object_nr - 9].figure_color != 'W' && virtual_area[virtual_position_object_nr].column > 1)
+            // TOP LEFT
+            if (virtual_area[virtual_position_object_nr - 9].figure_color != 'W' && virtual_area[virtual_position_object_nr].column > 1 && virtual_area[virtual_position_object_nr - 9].bg_color != 5)
+            {
                 virtual_area[virtual_position_object_nr - 9].bg_color = 4;
+            }
             // TOP RIGHT
-            if (virtual_area[virtual_position_object_nr - 7].figure_color != 'W' && virtual_area[virtual_position_object_nr].column < 8)
+            if (virtual_area[virtual_position_object_nr - 7].figure_color != 'W' && virtual_area[virtual_position_object_nr].column < 8 && virtual_area[virtual_position_object_nr - 7].bg_color != 5)
                 virtual_area[virtual_position_object_nr - 7].bg_color = 4;
         }
         /////////// OTHER POSITION ///////////
         else
         {
             // TOP LEFT
-            if (virtual_area[virtual_position_object_nr - 9].figure_color != 'W' && virtual_area[virtual_position_object_nr].column > 1)
+            if (virtual_area[virtual_position_object_nr - 9].figure_color != 'W' && virtual_area[virtual_position_object_nr].column > 1 && virtual_area[virtual_position_object_nr - 9].bg_color != 5)
                 virtual_area[virtual_position_object_nr - 9].bg_color = 4;
 
             // TOP RIGHT
-            if (virtual_area[virtual_position_object_nr - 7].figure_color != 'W' && virtual_area[virtual_position_object_nr].column < 8)
+            if (virtual_area[virtual_position_object_nr - 7].figure_color != 'W' && virtual_area[virtual_position_object_nr].column < 8 && virtual_area[virtual_position_object_nr - 7].bg_color != 5)
                 virtual_area[virtual_position_object_nr - 7].bg_color = 4;
         }
     }
@@ -2579,7 +2581,7 @@ void paintVirtualAreaColorsWhiteKnight()
         {
             if (virtual_area[virtual_position_object_nr].column >= 2)
             {
-                if (virtual_area[virtual_position_object_nr - 17].figure_color != 'W')
+                if (virtual_area[virtual_position_object_nr - 17].figure_color != 'W' && virtual_area[virtual_position_object_nr - 17].bg_color != 5)
                     virtual_area[virtual_position_object_nr - 17].bg_color = 4;
             }
         }
@@ -2589,7 +2591,7 @@ void paintVirtualAreaColorsWhiteKnight()
         {
             if (virtual_area[virtual_position_object_nr].column <= 7)
             {
-                if (virtual_area[virtual_position_object_nr - 15].figure_color != 'W')
+                if (virtual_area[virtual_position_object_nr - 15].figure_color != 'W' && virtual_area[virtual_position_object_nr - 15].bg_color != 5)
                     virtual_area[virtual_position_object_nr - 15].bg_color = 4;
             }
         }
@@ -2599,7 +2601,7 @@ void paintVirtualAreaColorsWhiteKnight()
         {
             if (virtual_area[virtual_position_object_nr].column >= 2)
             {
-                if (virtual_area[virtual_position_object_nr + 15].figure_color != 'W')
+                if (virtual_area[virtual_position_object_nr + 15].figure_color != 'W' && virtual_area[virtual_position_object_nr + 15].bg_color != 5)
                     virtual_area[virtual_position_object_nr + 15].bg_color = 4;
             }
         }
@@ -2609,7 +2611,7 @@ void paintVirtualAreaColorsWhiteKnight()
         {
             if (virtual_area[virtual_position_object_nr].column <= 7)
             {
-                if (virtual_area[virtual_position_object_nr + 17].figure_color != 'W')
+                if (virtual_area[virtual_position_object_nr + 17].figure_color != 'W' && virtual_area[virtual_position_object_nr + 17].bg_color != 5)
                     virtual_area[virtual_position_object_nr + 17].bg_color = 4;
             }
         }
@@ -2619,7 +2621,7 @@ void paintVirtualAreaColorsWhiteKnight()
         {
             if (virtual_area[virtual_position_object_nr].column >= 3)
             {
-                if (virtual_area[virtual_position_object_nr - 10].figure_color != 'W')
+                if (virtual_area[virtual_position_object_nr - 10].figure_color != 'W' && virtual_area[virtual_position_object_nr - 10].bg_color != 5)
                     virtual_area[virtual_position_object_nr - 10].bg_color = 4;
             }
         }
@@ -2629,7 +2631,7 @@ void paintVirtualAreaColorsWhiteKnight()
         {
             if (virtual_area[virtual_position_object_nr].column >= 3)
             {
-                if (virtual_area[virtual_position_object_nr + 6].figure_color != 'W')
+                if (virtual_area[virtual_position_object_nr + 6].figure_color != 'W' && virtual_area[virtual_position_object_nr + 6].bg_color != 5)
                     virtual_area[virtual_position_object_nr + 6].bg_color = 4;
             }
         }
@@ -2639,7 +2641,7 @@ void paintVirtualAreaColorsWhiteKnight()
         {
             if (virtual_area[virtual_position_object_nr].column <= 6)
             {
-                if (virtual_area[virtual_position_object_nr - 6].figure_color != 'W')
+                if (virtual_area[virtual_position_object_nr - 6].figure_color != 'W' && virtual_area[virtual_position_object_nr - 6].bg_color != 5)
                     virtual_area[virtual_position_object_nr - 6].bg_color = 4;
             }
         }
@@ -2649,7 +2651,7 @@ void paintVirtualAreaColorsWhiteKnight()
         {
             if (virtual_area[virtual_position_object_nr].column <= 6)
             {
-                if (virtual_area[virtual_position_object_nr + 10].figure_color != 'W')
+                if (virtual_area[virtual_position_object_nr + 10].figure_color != 'W' && virtual_area[virtual_position_object_nr + 10].bg_color != 5)
                     virtual_area[virtual_position_object_nr + 10].bg_color = 4;
             }
         }
@@ -2672,12 +2674,21 @@ void paintVirtualAreaColorsWhiteBishop()
                 {
                     if (virtual_area[virtual_position_object_nr - 9 * (i + 1)].big_figure != "blackKing")
                     {
-                        virtual_area[virtual_position_object_nr - 9 * i].bg_color = 4;
-                        break;
+                        if (virtual_area[virtual_position_object_nr - 9 * i].bg_color != 5)
+                        {
+                            virtual_area[virtual_position_object_nr - 9 * i].bg_color = 4;
+                            break;
+                        }
+                        else
+                            break;
                     }
                     else
                     {
-                        virtual_area[virtual_position_object_nr - 9 * i].bg_color = 5;
+                        for (int j = i; j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr - 9 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
                         break;
                     }
                 }
@@ -2686,7 +2697,8 @@ void paintVirtualAreaColorsWhiteBishop()
             }
             if (virtual_position_object_nr >= 9)
             {
-                virtual_area[virtual_position_object_nr - 9 * i].bg_color = 4;
+                if (virtual_area[virtual_position_object_nr - 9 * i].bg_color != 5)
+                    virtual_area[virtual_position_object_nr - 9 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr - 9 * i].row == 1 || virtual_area[virtual_position_object_nr - 9 * i].column == 1)
                 break;
@@ -2703,12 +2715,21 @@ void paintVirtualAreaColorsWhiteBishop()
                 {
                     if (virtual_area[virtual_position_object_nr - 7 * (i + 1)].big_figure != "blackKing")
                     {
-                        virtual_area[virtual_position_object_nr - 7 * i].bg_color = 4;
-                        break;
+                        if (virtual_area[virtual_position_object_nr - 7 * i].bg_color != 5)
+                        {
+                            virtual_area[virtual_position_object_nr - 7 * i].bg_color = 4;
+                            break;
+                        }
+                        else
+                            break;
                     }
                     else
                     {
-                        virtual_area[virtual_position_object_nr - 7 * i].bg_color = 5;
+                        for (int j = i; j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr - 7 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
                         break;
                     }
                 }
@@ -2717,7 +2738,8 @@ void paintVirtualAreaColorsWhiteBishop()
             }
             if (virtual_position_object_nr >= 8)
             {
-                virtual_area[virtual_position_object_nr - 7 * i].bg_color = 4;
+                if (virtual_area[virtual_position_object_nr - 7 * i].bg_color != 5)
+                    virtual_area[virtual_position_object_nr - 7 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr - 7 * i].row == 1 || virtual_area[virtual_position_object_nr - 7 * i].column == 8)
                 break;
@@ -2734,12 +2756,21 @@ void paintVirtualAreaColorsWhiteBishop()
                 {
                     if (virtual_area[virtual_position_object_nr + 7 * (i + 1)].big_figure != "blackKing")
                     {
-                        virtual_area[virtual_position_object_nr + 7 * i].bg_color = 4;
-                        break;
+                        if (virtual_area[virtual_position_object_nr + 7 * i].bg_color != 5)
+                        {
+                            virtual_area[virtual_position_object_nr + 7 * i].bg_color = 4;
+                            break;
+                        }
+                        else
+                            break;
                     }
                     else
                     {
-                        virtual_area[virtual_position_object_nr + 7 * i].bg_color = 5;
+                        for (int j = i; j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr + 7 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
                         break;
                     }
                 }
@@ -2748,7 +2779,8 @@ void paintVirtualAreaColorsWhiteBishop()
             }
             if (virtual_position_object_nr <= 55)
             {
-                virtual_area[virtual_position_object_nr + 7 * i].bg_color = 4;
+                if (virtual_area[virtual_position_object_nr + 7 * i].bg_color != 5)
+                    virtual_area[virtual_position_object_nr + 7 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr + 7 * i].row == 8 || virtual_area[virtual_position_object_nr + 7 * i].column == 1)
                 break;
@@ -2765,12 +2797,21 @@ void paintVirtualAreaColorsWhiteBishop()
                 {
                     if (virtual_area[virtual_position_object_nr + 9 * (i + 1)].big_figure != "blackKing")
                     {
-                        virtual_area[virtual_position_object_nr + 9 * i].bg_color = 4;
-                        break;
+                        if (virtual_area[virtual_position_object_nr + 9 * i].bg_color != 5)
+                        {
+                            virtual_area[virtual_position_object_nr + 9 * i].bg_color = 4;
+                            break;
+                        }
+                        else
+                            break;
                     }
                     else
                     {
-                        virtual_area[virtual_position_object_nr + 9 * i].bg_color = 5;
+                        for (int j = i; j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr + 9 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
                         break;
                     }
                 }
@@ -2779,7 +2820,8 @@ void paintVirtualAreaColorsWhiteBishop()
             }
             if (virtual_position_object_nr <= 54)
             {
-                virtual_area[virtual_position_object_nr + 9 * i].bg_color = 4;
+                if (virtual_area[virtual_position_object_nr + 9 * i].bg_color != 5)
+                    virtual_area[virtual_position_object_nr + 9 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr + 9 * i].row == 8 || virtual_area[virtual_position_object_nr + 9 * i].column == 8)
                 break;
@@ -2802,12 +2844,21 @@ void paintVirtualAreaColorsWhiteRook()
                 {
                     if (virtual_area[virtual_position_object_nr - 8 * (i + 1)].big_figure != "blackKing")
                     {
-                        virtual_area[virtual_position_object_nr - 8 * i].bg_color = 4;
-                        break;
+                        if (virtual_area[virtual_position_object_nr - 8 * i].bg_color != 5)
+                        {
+                            virtual_area[virtual_position_object_nr - 8 * i].bg_color = 4;
+                            break;
+                        }
+                        else
+                            break;
                     }
                     else
                     {
-                        virtual_area[virtual_position_object_nr - 8 * i].bg_color = 5;
+                        for (int j = i; j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr - 8 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
                         break;
                     }
                 }
@@ -2816,7 +2867,8 @@ void paintVirtualAreaColorsWhiteRook()
             }
             if (virtual_position_object_nr >= 8)
             {
-                virtual_area[virtual_position_object_nr - 8 * i].bg_color = 4;
+                if (virtual_area[virtual_position_object_nr - 8 * i].bg_color != 5)
+                    virtual_area[virtual_position_object_nr - 8 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr - 8 * i].row == 1)
                 break;
@@ -2833,12 +2885,21 @@ void paintVirtualAreaColorsWhiteRook()
                 {
                     if (virtual_area[virtual_position_object_nr + 8 * (i + 1)].big_figure != "blackKing")
                     {
-                        virtual_area[virtual_position_object_nr + 8 * i].bg_color = 4;
-                        break;
+                        if (virtual_area[virtual_position_object_nr + 8 * i].bg_color != 5)
+                        {
+                            virtual_area[virtual_position_object_nr + 8 * i].bg_color = 4;
+                            break;
+                        }
+                        else
+                            break;
                     }
                     else
                     {
-                        virtual_area[virtual_position_object_nr + 8 * i].bg_color = 5;
+                        for (int j = i; j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr + 8 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
                         break;
                     }
                 }
@@ -2847,7 +2908,8 @@ void paintVirtualAreaColorsWhiteRook()
             }
             if (virtual_position_object_nr <= 55)
             {
-                virtual_area[virtual_position_object_nr + 8 * i].bg_color = 4;
+                if (virtual_area[virtual_position_object_nr + 8 * i].bg_color != 5)
+                    virtual_area[virtual_position_object_nr + 8 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr + 8 * i].row == 8)
                 break;
@@ -2864,12 +2926,21 @@ void paintVirtualAreaColorsWhiteRook()
                 {
                     if (virtual_area[virtual_position_object_nr - 1 * (i + 1)].big_figure != "blackKing")
                     {
-                        virtual_area[virtual_position_object_nr - 1 * i].bg_color = 4;
-                        break;
+                        if (virtual_area[virtual_position_object_nr - 1 * i].bg_color != 5)
+                        {
+                            virtual_area[virtual_position_object_nr - 1 * i].bg_color = 4;
+                            break;
+                        }
+                        else
+                            break;
                     }
                     else
                     {
-                        virtual_area[virtual_position_object_nr - 1 * i].bg_color = 5;
+                        for (int j = i; j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr - 1 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
                         break;
                     }
                 }
@@ -2878,7 +2949,8 @@ void paintVirtualAreaColorsWhiteRook()
             }
             if (virtual_position_object_nr >= 1)
             {
-                virtual_area[virtual_position_object_nr - 1 * i].bg_color = 4;
+                if (virtual_area[virtual_position_object_nr - 1 * i].bg_color != 5)
+                    virtual_area[virtual_position_object_nr - 1 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr - 1 * i].column == 1)
                 break;
@@ -2895,12 +2967,21 @@ void paintVirtualAreaColorsWhiteRook()
                 {
                     if (virtual_area[virtual_position_object_nr + 1 * (i + 1)].big_figure != "blackKing")
                     {
-                        virtual_area[virtual_position_object_nr + 1 * i].bg_color = 4;
-                        break;
+                        if (virtual_area[virtual_position_object_nr + 1 * i].bg_color != 5)
+                        {
+                            virtual_area[virtual_position_object_nr + 1 * i].bg_color = 4;
+                            break;
+                        }
+                        else
+                            break;
                     }
                     else
                     {
-                        virtual_area[virtual_position_object_nr + 1 * i].bg_color = 5;
+                        for (int j = i; j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr + 1 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
                         break;
                     }
                 }
@@ -2909,7 +2990,8 @@ void paintVirtualAreaColorsWhiteRook()
             }
             if (virtual_position_object_nr <= 62)
             {
-                virtual_area[virtual_position_object_nr + 1 * i].bg_color = 4;
+                if (virtual_area[virtual_position_object_nr + 1 * i].bg_color != 5)
+                    virtual_area[virtual_position_object_nr + 1 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr + 1 * i].column == 8)
                 break;
@@ -2932,12 +3014,21 @@ void paintVirtualAreaColorsWhiteQueen()
                 {
                     if (virtual_area[virtual_position_object_nr - 8 * (i + 1)].big_figure != "blackKing")
                     {
-                        virtual_area[virtual_position_object_nr - 8 * i].bg_color = 4;
-                        break;
+                        if (virtual_area[virtual_position_object_nr - 8 * i].bg_color != 5)
+                        {
+                            virtual_area[virtual_position_object_nr - 8 * i].bg_color = 4;
+                            break;
+                        }
+                        else
+                            break;
                     }
                     else
                     {
-                        virtual_area[virtual_position_object_nr - 8 * i].bg_color = 5;
+                        for (int j = i; j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr - 8 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
                         break;
                     }
                 }
@@ -2946,7 +3037,8 @@ void paintVirtualAreaColorsWhiteQueen()
             }
             if (virtual_position_object_nr >= 8)
             {
-                virtual_area[virtual_position_object_nr - 8 * i].bg_color = 4;
+                if (virtual_area[virtual_position_object_nr - 8 * i].bg_color != 5)
+                    virtual_area[virtual_position_object_nr - 8 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr - 8 * i].row == 1)
                 break;
@@ -2963,12 +3055,21 @@ void paintVirtualAreaColorsWhiteQueen()
                 {
                     if (virtual_area[virtual_position_object_nr + 8 * (i + 1)].big_figure != "blackKing")
                     {
-                        virtual_area[virtual_position_object_nr + 8 * i].bg_color = 4;
-                        break;
+                        if (virtual_area[virtual_position_object_nr + 8 * i].bg_color != 5)
+                        {
+                            virtual_area[virtual_position_object_nr + 8 * i].bg_color = 4;
+                            break;
+                        }
+                        else
+                            break;
                     }
                     else
                     {
-                        virtual_area[virtual_position_object_nr + 8 * i].bg_color = 5;
+                        for (int j = i; j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr + 8 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
                         break;
                     }
                 }
@@ -2977,7 +3078,8 @@ void paintVirtualAreaColorsWhiteQueen()
             }
             if (virtual_position_object_nr <= 55)
             {
-                virtual_area[virtual_position_object_nr + 8 * i].bg_color = 4;
+                if (virtual_area[virtual_position_object_nr + 8 * i].bg_color != 5)
+                    virtual_area[virtual_position_object_nr + 8 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr + 8 * i].row == 8)
                 break;
@@ -2994,12 +3096,21 @@ void paintVirtualAreaColorsWhiteQueen()
                 {
                     if (virtual_area[virtual_position_object_nr - 1 * (i + 1)].big_figure != "blackKing")
                     {
-                        virtual_area[virtual_position_object_nr - 1 * i].bg_color = 4;
-                        break;
+                        if (virtual_area[virtual_position_object_nr - 1 * i].bg_color != 5)
+                        {
+                            virtual_area[virtual_position_object_nr - 1 * i].bg_color = 4;
+                            break;
+                        }
+                        else
+                            break;
                     }
                     else
                     {
-                        virtual_area[virtual_position_object_nr - 1 * i].bg_color = 5;
+                        for (int j = i; j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr - 1 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
                         break;
                     }
                 }
@@ -3008,7 +3119,8 @@ void paintVirtualAreaColorsWhiteQueen()
             }
             if (virtual_position_object_nr >= 1)
             {
-                virtual_area[virtual_position_object_nr - 1 * i].bg_color = 4;
+                if (virtual_area[virtual_position_object_nr - 1 * i].bg_color != 5)
+                    virtual_area[virtual_position_object_nr - 1 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr - 1 * i].column == 1)
                 break;
@@ -3025,12 +3137,21 @@ void paintVirtualAreaColorsWhiteQueen()
                 {
                     if (virtual_area[virtual_position_object_nr + 1 * (i + 1)].big_figure != "blackKing")
                     {
-                        virtual_area[virtual_position_object_nr + 1 * i].bg_color = 4;
-                        break;
+                        if (virtual_area[virtual_position_object_nr + 1 * i].bg_color != 5)
+                        {
+                            virtual_area[virtual_position_object_nr + 1 * i].bg_color = 4;
+                            break;
+                        }
+                        else
+                            break;
                     }
                     else
                     {
-                        virtual_area[virtual_position_object_nr + 1 * i].bg_color = 5;
+                        for (int j = i; j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr + 1 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
                         break;
                     }
                 }
@@ -3039,7 +3160,8 @@ void paintVirtualAreaColorsWhiteQueen()
             }
             if (virtual_position_object_nr <= 62)
             {
-                virtual_area[virtual_position_object_nr + 1 * i].bg_color = 4;
+                if (virtual_area[virtual_position_object_nr + 1 * i].bg_color != 5)
+                    virtual_area[virtual_position_object_nr + 1 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr + 1 * i].column == 8)
                 break;
@@ -3056,12 +3178,21 @@ void paintVirtualAreaColorsWhiteQueen()
                 {
                     if (virtual_area[virtual_position_object_nr - 9 * (i + 1)].big_figure != "blackKing")
                     {
-                        virtual_area[virtual_position_object_nr - 9 * i].bg_color = 4;
-                        break;
+                        if (virtual_area[virtual_position_object_nr - 9 * i].bg_color != 5)
+                        {
+                            virtual_area[virtual_position_object_nr - 9 * i].bg_color = 4;
+                            break;
+                        }
+                        else
+                            break;
                     }
                     else
                     {
-                        virtual_area[virtual_position_object_nr - 9 * i].bg_color = 5;
+                        for (int j = i; j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr - 9 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
                         break;
                     }
                 }
@@ -3070,7 +3201,8 @@ void paintVirtualAreaColorsWhiteQueen()
             }
             if (virtual_position_object_nr >= 9)
             {
-                virtual_area[virtual_position_object_nr - 9 * i].bg_color = 4;
+                if (virtual_area[virtual_position_object_nr - 9 * i].bg_color != 5)
+                    virtual_area[virtual_position_object_nr - 9 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr - 9 * i].row == 1 || virtual_area[virtual_position_object_nr - 9 * i].column == 1)
                 break;
@@ -3087,12 +3219,21 @@ void paintVirtualAreaColorsWhiteQueen()
                 {
                     if (virtual_area[virtual_position_object_nr - 7 * (i + 1)].big_figure != "blackKing")
                     {
-                        virtual_area[virtual_position_object_nr - 7 * i].bg_color = 4;
-                        break;
+                        if (virtual_area[virtual_position_object_nr - 7 * i].bg_color != 5)
+                        {
+                            virtual_area[virtual_position_object_nr - 7 * i].bg_color = 4;
+                            break;
+                        }
+                        else
+                            break;
                     }
                     else
                     {
-                        virtual_area[virtual_position_object_nr - 7 * i].bg_color = 5;
+                        for (int j = i; j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr - 7 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
                         break;
                     }
                 }
@@ -3101,7 +3242,8 @@ void paintVirtualAreaColorsWhiteQueen()
             }
             if (virtual_position_object_nr >= 8)
             {
-                virtual_area[virtual_position_object_nr - 7 * i].bg_color = 4;
+                if (virtual_area[virtual_position_object_nr - 7 * i].bg_color != 5)
+                    virtual_area[virtual_position_object_nr - 7 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr - 7 * i].row == 1 || virtual_area[virtual_position_object_nr - 7 * i].column == 8)
                 break;
@@ -3118,12 +3260,21 @@ void paintVirtualAreaColorsWhiteQueen()
                 {
                     if (virtual_area[virtual_position_object_nr + 7 * (i + 1)].big_figure != "blackKing")
                     {
-                        virtual_area[virtual_position_object_nr + 7 * i].bg_color = 4;
-                        break;
+                        if (virtual_area[virtual_position_object_nr + 7 * i].bg_color != 5)
+                        {
+                            virtual_area[virtual_position_object_nr + 7 * i].bg_color = 4;
+                            break;
+                        }
+                        else
+                            break;
                     }
                     else
                     {
-                        virtual_area[virtual_position_object_nr + 7 * i].bg_color = 5;
+                        for (int j = i; j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr + 7 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
                         break;
                     }
                 }
@@ -3132,7 +3283,8 @@ void paintVirtualAreaColorsWhiteQueen()
             }
             if (virtual_position_object_nr <= 55)
             {
-                virtual_area[virtual_position_object_nr + 7 * i].bg_color = 4;
+                if (virtual_area[virtual_position_object_nr + 7 * i].bg_color != 5)
+                    virtual_area[virtual_position_object_nr + 7 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr + 7 * i].row == 8 || virtual_area[virtual_position_object_nr + 7 * i].column == 1)
                 break;
@@ -3149,12 +3301,21 @@ void paintVirtualAreaColorsWhiteQueen()
                 {
                     if (virtual_area[virtual_position_object_nr + 9 * (i + 1)].big_figure != "blackKing")
                     {
-                        virtual_area[virtual_position_object_nr + 9 * i].bg_color = 4;
-                        break;
+                        if (virtual_area[virtual_position_object_nr + 9 * i].bg_color != 5)
+                        {
+                            virtual_area[virtual_position_object_nr + 9 * i].bg_color = 4;
+                            break;
+                        }
+                        else
+                            break;
                     }
                     else
                     {
-                        virtual_area[virtual_position_object_nr + 9 * i].bg_color = 5;
+                        for (int j = i; j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr + 9 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
                         break;
                     }
                 }
@@ -3163,7 +3324,8 @@ void paintVirtualAreaColorsWhiteQueen()
             }
             if (virtual_position_object_nr <= 54)
             {
-                virtual_area[virtual_position_object_nr + 9 * i].bg_color = 4;
+                if (virtual_area[virtual_position_object_nr + 9 * i].bg_color != 5)
+                    virtual_area[virtual_position_object_nr + 9 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr + 9 * i].row == 8 || virtual_area[virtual_position_object_nr + 9 * i].column == 8)
                 break;
@@ -3255,21 +3417,21 @@ void paintVirtualAreaColorsBlackPawn()
         if (virtual_area[virtual_position_object_nr].row == 2)
         {
             // TOP LEFT
-            if (virtual_area[virtual_position_object_nr + 7].figure_color != 'B' && virtual_area[virtual_position_object_nr].column > 1)
+            if (virtual_area[virtual_position_object_nr + 7].figure_color != 'B' && virtual_area[virtual_position_object_nr].column > 1 && virtual_area[virtual_position_object_nr + 7].bg_color != 5)
                 virtual_area[virtual_position_object_nr + 7].bg_color = 4;
             // TOP RIGHT
-            if (virtual_area[virtual_position_object_nr + 9].figure_color != 'B' && virtual_area[virtual_position_object_nr].column < 8)
+            if (virtual_area[virtual_position_object_nr + 9].figure_color != 'B' && virtual_area[virtual_position_object_nr].column < 8 && virtual_area[virtual_position_object_nr + 9].bg_color != 5)
                 virtual_area[virtual_position_object_nr + 9].bg_color = 4;
         }
         /////////// OTHER POSITION ///////////
         else
         {
             // TOP LEFT
-            if (virtual_area[virtual_position_object_nr + 7].figure_color != 'B' && virtual_area[virtual_position_object_nr].column > 1)
+            if (virtual_area[virtual_position_object_nr + 7].figure_color != 'B' && virtual_area[virtual_position_object_nr].column > 1 && virtual_area[virtual_position_object_nr + 7].bg_color != 5)
                 virtual_area[virtual_position_object_nr + 7].bg_color = 4;
 
             // TOP RIGHT
-            if (virtual_area[virtual_position_object_nr + 9].figure_color != 'B' && virtual_area[virtual_position_object_nr].column < 8)
+            if (virtual_area[virtual_position_object_nr + 9].figure_color != 'B' && virtual_area[virtual_position_object_nr].column < 8 && virtual_area[virtual_position_object_nr + 9].bg_color != 5)
                 virtual_area[virtual_position_object_nr + 9].bg_color = 4;
         }
     }
@@ -3284,7 +3446,7 @@ void paintVirtualAreaColorsBlackKnight()
         {
             if (virtual_area[virtual_position_object_nr].column >= 2)
             {
-                if (virtual_area[virtual_position_object_nr - 17].figure_color != 'B')
+                if (virtual_area[virtual_position_object_nr - 17].figure_color != 'B' && virtual_area[virtual_position_object_nr - 17].bg_color != 5)
                     virtual_area[virtual_position_object_nr - 17].bg_color = 4;
             }
         }
@@ -3294,7 +3456,7 @@ void paintVirtualAreaColorsBlackKnight()
         {
             if (virtual_area[virtual_position_object_nr].column <= 7)
             {
-                if (virtual_area[virtual_position_object_nr - 15].figure_color != 'B')
+                if (virtual_area[virtual_position_object_nr - 15].figure_color != 'B' && virtual_area[virtual_position_object_nr - 15].bg_color != 5)
                     virtual_area[virtual_position_object_nr - 15].bg_color = 4;
             }
         }
@@ -3304,7 +3466,7 @@ void paintVirtualAreaColorsBlackKnight()
         {
             if (virtual_area[virtual_position_object_nr].column >= 2)
             {
-                if (virtual_area[virtual_position_object_nr + 15].figure_color != 'B')
+                if (virtual_area[virtual_position_object_nr + 15].figure_color != 'B' && virtual_area[virtual_position_object_nr + 15].bg_color != 5)
                     virtual_area[virtual_position_object_nr + 15].bg_color = 4;
             }
         }
@@ -3314,7 +3476,7 @@ void paintVirtualAreaColorsBlackKnight()
         {
             if (virtual_area[virtual_position_object_nr].column <= 7)
             {
-                if (virtual_area[virtual_position_object_nr + 17].figure_color != 'B')
+                if (virtual_area[virtual_position_object_nr + 17].figure_color != 'B' && virtual_area[virtual_position_object_nr + 17].bg_color != 5)
                     virtual_area[virtual_position_object_nr + 17].bg_color = 4;
             }
         }
@@ -3324,7 +3486,7 @@ void paintVirtualAreaColorsBlackKnight()
         {
             if (virtual_area[virtual_position_object_nr].column >= 3)
             {
-                if (virtual_area[virtual_position_object_nr - 10].figure_color != 'B')
+                if (virtual_area[virtual_position_object_nr - 10].figure_color != 'B' && virtual_area[virtual_position_object_nr - 10].bg_color != 5)
                     virtual_area[virtual_position_object_nr - 10].bg_color = 4;
             }
         }
@@ -3334,7 +3496,7 @@ void paintVirtualAreaColorsBlackKnight()
         {
             if (virtual_area[virtual_position_object_nr].column >= 3)
             {
-                if (virtual_area[virtual_position_object_nr + 6].figure_color != 'B')
+                if (virtual_area[virtual_position_object_nr + 6].figure_color != 'B' && virtual_area[virtual_position_object_nr + 6].bg_color != 5)
                     virtual_area[virtual_position_object_nr + 6].bg_color = 4;
             }
         }
@@ -3344,7 +3506,7 @@ void paintVirtualAreaColorsBlackKnight()
         {
             if (virtual_area[virtual_position_object_nr].column <= 6)
             {
-                if (virtual_area[virtual_position_object_nr - 6].figure_color != 'B')
+                if (virtual_area[virtual_position_object_nr - 6].figure_color != 'B' && virtual_area[virtual_position_object_nr - 6].bg_color != 5)
                     virtual_area[virtual_position_object_nr - 6].bg_color = 4;
             }
         }
@@ -3354,7 +3516,7 @@ void paintVirtualAreaColorsBlackKnight()
         {
             if (virtual_area[virtual_position_object_nr].column <= 6)
             {
-                if (virtual_area[virtual_position_object_nr + 10].figure_color != 'B')
+                if (virtual_area[virtual_position_object_nr + 10].figure_color != 'B' && virtual_area[virtual_position_object_nr + 10].bg_color != 5)
                     virtual_area[virtual_position_object_nr + 10].bg_color = 4;
             }
         }
@@ -3376,12 +3538,21 @@ void paintVirtualAreaColorsBlackBishop()
                 {
                     if (virtual_area[virtual_position_object_nr - 9 * (i + 1)].big_figure != "whiteKing")
                     {
-                        virtual_area[virtual_position_object_nr - 9 * i].bg_color = 4;
-                        break;
+                        if (virtual_area[virtual_position_object_nr - 9 * i].bg_color != 5)
+                        {
+                            virtual_area[virtual_position_object_nr - 9 * i].bg_color = 4;
+                            break;
+                        }
+                        else
+                            break;
                     }
                     else
                     {
-                        virtual_area[virtual_position_object_nr - 9 * i].bg_color = 5;
+                        for (int j = i; j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr - 9 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
                         break;
                     }
                 }
@@ -3390,7 +3561,8 @@ void paintVirtualAreaColorsBlackBishop()
             }
             if (virtual_position_object_nr >= 9)
             {
-                virtual_area[virtual_position_object_nr - 9 * i].bg_color = 4;
+                if (virtual_area[virtual_position_object_nr - 9 * i].bg_color != 5)
+                    virtual_area[virtual_position_object_nr - 9 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr - 9 * i].row == 1 || virtual_area[virtual_position_object_nr - 9 * i].column == 1)
                 break;
@@ -3407,12 +3579,21 @@ void paintVirtualAreaColorsBlackBishop()
                 {
                     if (virtual_area[virtual_position_object_nr - 7 * (i + 1)].big_figure != "whiteKing")
                     {
-                        virtual_area[virtual_position_object_nr - 7 * i].bg_color = 4;
-                        break;
+                        if (virtual_area[virtual_position_object_nr - 7 * i].bg_color != 5)
+                        {
+                            virtual_area[virtual_position_object_nr - 7 * i].bg_color = 4;
+                            break;
+                        }
+                        else
+                            break;
                     }
                     else
                     {
-                        virtual_area[virtual_position_object_nr - 7 * i].bg_color = 5;
+                        for (int j = i; j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr - 7 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
                         break;
                     }
                 }
@@ -3421,7 +3602,8 @@ void paintVirtualAreaColorsBlackBishop()
             }
             if (virtual_position_object_nr >= 8)
             {
-                virtual_area[virtual_position_object_nr - 7 * i].bg_color = 4;
+                if (virtual_area[virtual_position_object_nr - 7 * i].bg_color != 5)
+                    virtual_area[virtual_position_object_nr - 7 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr - 7 * i].row == 1 || virtual_area[virtual_position_object_nr - 7 * i].column == 8)
                 break;
@@ -3438,12 +3620,21 @@ void paintVirtualAreaColorsBlackBishop()
                 {
                     if (virtual_area[virtual_position_object_nr + 7 * (i + 1)].big_figure != "whiteKing")
                     {
-                        virtual_area[virtual_position_object_nr + 7 * i].bg_color = 4;
-                        break;
+                        if (virtual_area[virtual_position_object_nr + 7 * i].bg_color != 5)
+                        {
+                            virtual_area[virtual_position_object_nr + 7 * i].bg_color = 4;
+                            break;
+                        }
+                        else
+                            break;
                     }
                     else
                     {
-                        virtual_area[virtual_position_object_nr + 7 * i].bg_color = 5;
+                        for (int j = i; j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr + 7 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
                         break;
                     }
                 }
@@ -3452,7 +3643,8 @@ void paintVirtualAreaColorsBlackBishop()
             }
             if (virtual_position_object_nr <= 55)
             {
-                virtual_area[virtual_position_object_nr + 7 * i].bg_color = 4;
+                if (virtual_area[virtual_position_object_nr + 7 * i].bg_color != 5)
+                    virtual_area[virtual_position_object_nr + 7 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr + 7 * i].row == 8 || virtual_area[virtual_position_object_nr + 7 * i].column == 1)
                 break;
@@ -3469,12 +3661,21 @@ void paintVirtualAreaColorsBlackBishop()
                 {
                     if (virtual_area[virtual_position_object_nr + 9 * (i + 1)].big_figure != "whiteKing")
                     {
-                        virtual_area[virtual_position_object_nr + 9 * i].bg_color = 4;
-                        break;
+                        if (virtual_area[virtual_position_object_nr + 9 * i].bg_color != 5)
+                        {
+                            virtual_area[virtual_position_object_nr + 9 * i].bg_color = 4;
+                            break;
+                        }
+                        else
+                            break;
                     }
                     else
                     {
-                        virtual_area[virtual_position_object_nr + 9 * i].bg_color = 5;
+                        for (int j = i; j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr + 9 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
                         break;
                     }
                 }
@@ -3483,7 +3684,8 @@ void paintVirtualAreaColorsBlackBishop()
             }
             if (virtual_position_object_nr <= 54)
             {
-                virtual_area[virtual_position_object_nr + 9 * i].bg_color = 4;
+                if (virtual_area[virtual_position_object_nr + 9 * i].bg_color != 5)
+                    virtual_area[virtual_position_object_nr + 9 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr + 9 * i].row == 8 || virtual_area[virtual_position_object_nr + 9 * i].column == 8)
                 break;
@@ -3505,12 +3707,21 @@ void paintVirtualAreaColorsBlackRook()
                 {
                     if (virtual_area[virtual_position_object_nr - 8 * (i + 1)].big_figure != "whiteKing")
                     {
-                        virtual_area[virtual_position_object_nr - 8 * i].bg_color = 4;
-                        break;
+                        if (virtual_area[virtual_position_object_nr - 8 * i].bg_color != 5)
+                        {
+                            virtual_area[virtual_position_object_nr - 8 * i].bg_color = 4;
+                            break;
+                        }
+                        else
+                            break;
                     }
                     else
                     {
-                        virtual_area[virtual_position_object_nr - 8 * i].bg_color = 5;
+                        for (int j = i; j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr - 8 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
                         break;
                     }
                 }
@@ -3519,7 +3730,8 @@ void paintVirtualAreaColorsBlackRook()
             }
             if (virtual_position_object_nr >= 8)
             {
-                virtual_area[virtual_position_object_nr - 8 * i].bg_color = 4;
+                if (virtual_area[virtual_position_object_nr - 8 * i].bg_color != 5)
+                    virtual_area[virtual_position_object_nr - 8 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr - 8 * i].row == 1)
                 break;
@@ -3536,12 +3748,21 @@ void paintVirtualAreaColorsBlackRook()
                 {
                     if (virtual_area[virtual_position_object_nr + 8 * (i + 1)].big_figure != "whiteKing")
                     {
-                        virtual_area[virtual_position_object_nr + 8 * i].bg_color = 4;
-                        break;
+                        if (virtual_area[virtual_position_object_nr + 8 * i].bg_color != 5)
+                        {
+                            virtual_area[virtual_position_object_nr + 8 * i].bg_color = 4;
+                            break;
+                        }
+                        else
+                            break;
                     }
                     else
                     {
-                        virtual_area[virtual_position_object_nr + 8 * i].bg_color = 5;
+                        for (int j = i; j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr + 8 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
                         break;
                     }
                 }
@@ -3550,7 +3771,8 @@ void paintVirtualAreaColorsBlackRook()
             }
             if (virtual_position_object_nr <= 55)
             {
-                virtual_area[virtual_position_object_nr + 8 * i].bg_color = 4;
+                if (virtual_area[virtual_position_object_nr + 8 * i].bg_color != 5)
+                    virtual_area[virtual_position_object_nr + 8 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr + 8 * i].row == 8)
                 break;
@@ -3567,12 +3789,21 @@ void paintVirtualAreaColorsBlackRook()
                 {
                     if (virtual_area[virtual_position_object_nr - 1 * (i + 1)].big_figure != "whiteKing")
                     {
-                        virtual_area[virtual_position_object_nr - 1 * i].bg_color = 4;
-                        break;
+                        if (virtual_area[virtual_position_object_nr - 1 * i].bg_color != 5)
+                        {
+                            virtual_area[virtual_position_object_nr - 1 * i].bg_color = 4;
+                            break;
+                        }
+                        else
+                            break;
                     }
                     else
                     {
-                        virtual_area[virtual_position_object_nr - 1 * i].bg_color = 5;
+                        for (int j = i; j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr - 1 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
                         break;
                     }
                 }
@@ -3581,7 +3812,8 @@ void paintVirtualAreaColorsBlackRook()
             }
             if (virtual_position_object_nr >= 1)
             {
-                virtual_area[virtual_position_object_nr - 1 * i].bg_color = 4;
+                if (virtual_area[virtual_position_object_nr - 1 * i].bg_color != 5)
+                    virtual_area[virtual_position_object_nr - 1 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr - 1 * i].column == 1)
                 break;
@@ -3598,12 +3830,21 @@ void paintVirtualAreaColorsBlackRook()
                 {
                     if (virtual_area[virtual_position_object_nr + 1 * (i + 1)].big_figure != "whiteKing")
                     {
-                        virtual_area[virtual_position_object_nr + 1 * i].bg_color = 4;
-                        break;
+                        if (virtual_area[virtual_position_object_nr + 1 * i].bg_color != 5)
+                        {
+                            virtual_area[virtual_position_object_nr + 1 * i].bg_color = 4;
+                            break;
+                        }
+                        else
+                            break;
                     }
                     else
                     {
-                        virtual_area[virtual_position_object_nr + 1 * i].bg_color = 5;
+                        for (int j = i; j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr + 1 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
                         break;
                     }
                 }
@@ -3612,7 +3853,8 @@ void paintVirtualAreaColorsBlackRook()
             }
             if (virtual_position_object_nr <= 62)
             {
-                virtual_area[virtual_position_object_nr + 1 * i].bg_color = 4;
+                if (virtual_area[virtual_position_object_nr + 1 * i].bg_color != 5)
+                    virtual_area[virtual_position_object_nr + 1 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr + 1 * i].column == 8)
                 break;
@@ -3634,12 +3876,21 @@ void paintVirtualAreaColorsBlackQueen()
                 {
                     if (virtual_area[virtual_position_object_nr - 8 * (i + 1)].big_figure != "whiteKing")
                     {
-                        virtual_area[virtual_position_object_nr - 8 * i].bg_color = 4;
-                        break;
+                        if (virtual_area[virtual_position_object_nr - 8 * i].bg_color != 5)
+                        {
+                            virtual_area[virtual_position_object_nr - 8 * i].bg_color = 4;
+                            break;
+                        }
+                        else
+                            break;
                     }
                     else
                     {
-                        virtual_area[virtual_position_object_nr - 8 * i].bg_color = 5;
+                        for (int j = i; j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr - 8 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
                         break;
                     }
                 }
@@ -3648,7 +3899,8 @@ void paintVirtualAreaColorsBlackQueen()
             }
             if (virtual_position_object_nr >= 8)
             {
-                virtual_area[virtual_position_object_nr - 8 * i].bg_color = 4;
+                if (virtual_area[virtual_position_object_nr - 8 * i].bg_color != 5)
+                    virtual_area[virtual_position_object_nr - 8 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr - 8 * i].row == 1)
                 break;
@@ -3665,12 +3917,21 @@ void paintVirtualAreaColorsBlackQueen()
                 {
                     if (virtual_area[virtual_position_object_nr + 8 * (i + 1)].big_figure != "whiteKing")
                     {
-                        virtual_area[virtual_position_object_nr + 8 * i].bg_color = 4;
-                        break;
+                        if (virtual_area[virtual_position_object_nr + 8 * i].bg_color != 5)
+                        {
+                            virtual_area[virtual_position_object_nr + 8 * i].bg_color = 4;
+                            break;
+                        }
+                        else
+                            break;
                     }
                     else
                     {
-                        virtual_area[virtual_position_object_nr + 8 * i].bg_color = 5;
+                        for (int j = i; j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr + 8 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
                         break;
                     }
                 }
@@ -3679,7 +3940,8 @@ void paintVirtualAreaColorsBlackQueen()
             }
             if (virtual_position_object_nr <= 55)
             {
-                virtual_area[virtual_position_object_nr + 8 * i].bg_color = 4;
+                if (virtual_area[virtual_position_object_nr + 8 * i].bg_color != 5)
+                    virtual_area[virtual_position_object_nr + 8 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr + 8 * i].row == 8)
                 break;
@@ -3696,12 +3958,21 @@ void paintVirtualAreaColorsBlackQueen()
                 {
                     if (virtual_area[virtual_position_object_nr - 1 * (i + 1)].big_figure != "whiteKing")
                     {
-                        virtual_area[virtual_position_object_nr - 1 * i].bg_color = 4;
-                        break;
+                        if (virtual_area[virtual_position_object_nr - 1 * i].bg_color != 5)
+                        {
+                            virtual_area[virtual_position_object_nr - 1 * i].bg_color = 4;
+                            break;
+                        }
+                        else
+                            break;
                     }
                     else
                     {
-                        virtual_area[virtual_position_object_nr - 1 * i].bg_color = 5;
+                        for (int j = i; j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr - 1 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
                         break;
                     }
                 }
@@ -3710,7 +3981,8 @@ void paintVirtualAreaColorsBlackQueen()
             }
             if (virtual_position_object_nr >= 1)
             {
-                virtual_area[virtual_position_object_nr - 1 * i].bg_color = 4;
+                if (virtual_area[virtual_position_object_nr - 1 * i].bg_color != 5)
+                    virtual_area[virtual_position_object_nr - 1 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr - 1 * i].column == 1)
                 break;
@@ -3727,12 +3999,21 @@ void paintVirtualAreaColorsBlackQueen()
                 {
                     if (virtual_area[virtual_position_object_nr + 1 * (i + 1)].big_figure != "whiteKing")
                     {
-                        virtual_area[virtual_position_object_nr + 1 * i].bg_color = 4;
-                        break;
+                        if (virtual_area[virtual_position_object_nr + 1 * i].bg_color != 5)
+                        {
+                            virtual_area[virtual_position_object_nr + 1 * i].bg_color = 4;
+                            break;
+                        }
+                        else
+                            break;
                     }
                     else
                     {
-                        virtual_area[virtual_position_object_nr + 1 * i].bg_color = 5;
+                        for (int j = i; j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr + 1 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
                         break;
                     }
                 }
@@ -3741,7 +4022,8 @@ void paintVirtualAreaColorsBlackQueen()
             }
             if (virtual_position_object_nr <= 62)
             {
-                virtual_area[virtual_position_object_nr + 1 * i].bg_color = 4;
+                if (virtual_area[virtual_position_object_nr + 1 * i].bg_color != 5)
+                    virtual_area[virtual_position_object_nr + 1 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr + 1 * i].column == 8)
                 break;
@@ -3758,12 +4040,21 @@ void paintVirtualAreaColorsBlackQueen()
                 {
                     if (virtual_area[virtual_position_object_nr - 9 * (i + 1)].big_figure != "whiteKing")
                     {
-                        virtual_area[virtual_position_object_nr - 9 * i].bg_color = 4;
-                        break;
+                        if (virtual_area[virtual_position_object_nr - 9 * i].bg_color != 5)
+                        {
+                            virtual_area[virtual_position_object_nr - 9 * i].bg_color = 4;
+                            break;
+                        }
+                        else
+                            break;
                     }
                     else
                     {
-                        virtual_area[virtual_position_object_nr - 9 * i].bg_color = 5;
+                        for (int j = i; j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr - 9 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
                         break;
                     }
                 }
@@ -3772,7 +4063,8 @@ void paintVirtualAreaColorsBlackQueen()
             }
             if (virtual_position_object_nr >= 9)
             {
-                virtual_area[virtual_position_object_nr - 9 * i].bg_color = 4;
+                if (virtual_area[virtual_position_object_nr - 9 * i].bg_color != 5)
+                    virtual_area[virtual_position_object_nr - 9 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr - 9 * i].row == 1 || virtual_area[virtual_position_object_nr - 9 * i].column == 1)
                 break;
@@ -3789,12 +4081,21 @@ void paintVirtualAreaColorsBlackQueen()
                 {
                     if (virtual_area[virtual_position_object_nr - 7 * (i + 1)].big_figure != "whiteKing")
                     {
-                        virtual_area[virtual_position_object_nr - 7 * i].bg_color = 4;
-                        break;
+                        if (virtual_area[virtual_position_object_nr - 7 * i].bg_color != 5)
+                        {
+                            virtual_area[virtual_position_object_nr - 7 * i].bg_color = 4;
+                            break;
+                        }
+                        else
+                            break;
                     }
                     else
                     {
-                        virtual_area[virtual_position_object_nr - 7 * i].bg_color = 5;
+                        for (int j = i; j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr - 7 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
                         break;
                     }
                 }
@@ -3803,7 +4104,8 @@ void paintVirtualAreaColorsBlackQueen()
             }
             if (virtual_position_object_nr >= 8)
             {
-                virtual_area[virtual_position_object_nr - 7 * i].bg_color = 4;
+                if (virtual_area[virtual_position_object_nr - 7 * i].bg_color != 5)
+                    virtual_area[virtual_position_object_nr - 7 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr - 7 * i].row == 1 || virtual_area[virtual_position_object_nr - 7 * i].column == 8)
                 break;
@@ -3820,12 +4122,21 @@ void paintVirtualAreaColorsBlackQueen()
                 {
                     if (virtual_area[virtual_position_object_nr + 7 * (i + 1)].big_figure != "whiteKing")
                     {
-                        virtual_area[virtual_position_object_nr + 7 * i].bg_color = 4;
-                        break;
+                        if (virtual_area[virtual_position_object_nr + 7 * i].bg_color != 5)
+                        {
+                            virtual_area[virtual_position_object_nr + 7 * i].bg_color = 4;
+                            break;
+                        }
+                        else
+                            break;
                     }
                     else
                     {
-                        virtual_area[virtual_position_object_nr + 7 * i].bg_color = 5;
+                        for (int j = i; j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr + 7 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
                         break;
                     }
                 }
@@ -3834,7 +4145,8 @@ void paintVirtualAreaColorsBlackQueen()
             }
             if (virtual_position_object_nr <= 55)
             {
-                virtual_area[virtual_position_object_nr + 7 * i].bg_color = 4;
+                if (virtual_area[virtual_position_object_nr + 7 * i].bg_color != 5)
+                    virtual_area[virtual_position_object_nr + 7 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr + 7 * i].row == 8 || virtual_area[virtual_position_object_nr + 7 * i].column == 1)
                 break;
@@ -3851,12 +4163,21 @@ void paintVirtualAreaColorsBlackQueen()
                 {
                     if (virtual_area[virtual_position_object_nr + 9 * (i + 1)].big_figure != "whiteKing")
                     {
-                        virtual_area[virtual_position_object_nr + 9 * i].bg_color = 4;
-                        break;
+                        if (virtual_area[virtual_position_object_nr + 9 * i].bg_color != 5)
+                        {
+                            virtual_area[virtual_position_object_nr + 9 * i].bg_color = 4;
+                            break;
+                        }
+                        else
+                            break;
                     }
                     else
                     {
-                        virtual_area[virtual_position_object_nr + 9 * i].bg_color = 5;
+                        for (int j = i; j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr + 9 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
                         break;
                     }
                 }
@@ -3865,7 +4186,8 @@ void paintVirtualAreaColorsBlackQueen()
             }
             if (virtual_position_object_nr <= 54)
             {
-                virtual_area[virtual_position_object_nr + 9 * i].bg_color = 4;
+                if (virtual_area[virtual_position_object_nr + 9 * i].bg_color != 5)
+                    virtual_area[virtual_position_object_nr + 9 * i].bg_color = 4;
             }
             if (virtual_area[virtual_position_object_nr + 9 * i].row == 8 || virtual_area[virtual_position_object_nr + 9 * i].column == 8)
                 break;
