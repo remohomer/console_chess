@@ -7,15 +7,16 @@
 using namespace std;
 
 // ----------------- AREA -----------------
-Area::Area(string p, short r, short c, short started_bg_c, char started_f_c, char started_f, string started_b_f, short i, short b_c, char f_c, char f, string b_f)
+Area::Area(string pos, short r, short c, short started_bg_c, char started_f_c, char started_f, string started_b_f, bool pin, short i, short b_c, char f_c, char f, string b_f)
 {
-    position = p;
+    position = pos;
     row = r;
     column = c;
     started_bg_color = started_bg_c;
     started_figure_color = started_f_c;
     started_figure = started_f;
     started_big_figure = started_b_f;
+    pinned = pin;
     id = i;
 
     bg_color = b_c;
