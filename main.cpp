@@ -803,11 +803,12 @@ void whiteKingCheck()
 {
     for (int j = 0; j < 64; j++)
     {
-        if (virtual_area[j].big_figure == "whiteKing" && virtual_area[j].bg_color == 4)
+        if (virtual_area[j].big_figure == "whiteKing" && virtual_area[j].bg_color == 3)
         {
             white_king_check = true;
             break;
         }
+        white_king_check = false;
     }
 }
 
@@ -815,11 +816,12 @@ void blackKingCheck()
 {
     for (int j = 0; j < 64; j++)
     {
-        if (virtual_area[j].big_figure == "blackKing" && virtual_area[j].bg_color == 4)
+        if (virtual_area[j].big_figure == "blackKing" && virtual_area[j].bg_color == 3)
         {
             black_king_check = true;
             break;
         }
+        black_king_check = false;
     }
 }
 
@@ -1457,6 +1459,7 @@ void paintAreaColorsPawn()
 }
 void paintAreaColorsKnight()
 {
+
     ///////////////// WHITE /////////////////
     if (area[old_position_object_nr].figure_color == 'W')
     {
@@ -1464,8 +1467,16 @@ void paintAreaColorsKnight()
         // TOP TOP LEFT
         if (old_position_object_nr >= 17)
         {
-            if (virtual_area[old_position_object_nr].bg_color == 5)
+            if (virtual_area[old_position_object_nr].bg_color == 5);
+            else if (white_king_check == true)
             {
+                if (area[old_position_object_nr].column >= 2)
+                {
+                    if (area[old_position_object_nr - 17].figure_color == 'B' && area[old_position_object_nr - 17].bg_color == 3)
+                        area[old_position_object_nr - 17].bg_color = 4;
+                    else if (area[old_position_object_nr - 17].figure_color == 'E' && area[old_position_object_nr - 17].bg_color == 3)
+                        area[old_position_object_nr - 17].bg_color = 3;
+                }
             }
             else
             {
@@ -1482,8 +1493,16 @@ void paintAreaColorsKnight()
         // TOP TOP RIGHT
         if (old_position_object_nr >= 16)
         {
-            if (virtual_area[old_position_object_nr].bg_color == 5)
+            if (virtual_area[old_position_object_nr].bg_color == 5);
+            else if (white_king_check == true)
             {
+                if (area[old_position_object_nr].column >= 2)
+                {
+                    if (area[old_position_object_nr - 15].figure_color == 'B' && area[old_position_object_nr - 15].bg_color == 3)
+                        area[old_position_object_nr - 15].bg_color = 4;
+                    else if (area[old_position_object_nr - 15].figure_color == 'E' && area[old_position_object_nr - 15].bg_color == 3)
+                        area[old_position_object_nr - 15].bg_color = 3;
+                }
             }
             else
             {
@@ -1500,8 +1519,16 @@ void paintAreaColorsKnight()
         // BOTTOM BOTTOM LEFT
         if (old_position_object_nr <= 47)
         {
-            if (virtual_area[old_position_object_nr].bg_color == 5)
+            if (virtual_area[old_position_object_nr].bg_color == 5);
+            else if (white_king_check == true)
             {
+                if (area[old_position_object_nr].column >= 2)
+                {
+                    if (area[old_position_object_nr + 15].figure_color == 'B' && area[old_position_object_nr + 15].bg_color == 3)
+                        area[old_position_object_nr + 15].bg_color = 4;
+                    else if (area[old_position_object_nr + 15].figure_color == 'E' && area[old_position_object_nr + 15].bg_color == 3)
+                        area[old_position_object_nr + 15].bg_color = 3;
+                }
             }
             else
             {
@@ -1518,8 +1545,16 @@ void paintAreaColorsKnight()
         // BOTTOM BOTTOM RIGHT
         if (old_position_object_nr <= 46)
         {
-            if (virtual_area[old_position_object_nr].bg_color == 5)
+            if (virtual_area[old_position_object_nr].bg_color == 5);
+            else if (white_king_check == true)
             {
+                if (area[old_position_object_nr].column >= 2)
+                {
+                    if (area[old_position_object_nr + 17].figure_color == 'B' && area[old_position_object_nr + 17].bg_color == 3)
+                        area[old_position_object_nr + 17].bg_color = 4;
+                    else if (area[old_position_object_nr + 17].figure_color == 'E' && area[old_position_object_nr + 17].bg_color == 3)
+                        area[old_position_object_nr + 17].bg_color = 3;
+                }
             }
             else
             {
@@ -1536,8 +1571,16 @@ void paintAreaColorsKnight()
         // LEFT LEFT TOP
         if (old_position_object_nr >= 10)
         {
-            if (virtual_area[old_position_object_nr].bg_color == 5)
+            if (virtual_area[old_position_object_nr].bg_color == 5);
+            else if (white_king_check == true)
             {
+                if (area[old_position_object_nr].column >= 2)
+                {
+                    if (area[old_position_object_nr - 10].figure_color == 'B' && area[old_position_object_nr - 10].bg_color == 3)
+                        area[old_position_object_nr - 10].bg_color = 4;
+                    else if (area[old_position_object_nr - 10].figure_color == 'E' && area[old_position_object_nr - 10].bg_color == 3)
+                        area[old_position_object_nr - 10].bg_color = 3;
+                }
             }
             else
             {
@@ -1554,8 +1597,16 @@ void paintAreaColorsKnight()
         // LEFT LEFT BOTTOM
         if (old_position_object_nr <= 55)
         {
-            if (virtual_area[old_position_object_nr].bg_color == 5)
+            if (virtual_area[old_position_object_nr].bg_color == 5);
+            else if (white_king_check == true)
             {
+                if (area[old_position_object_nr].column >= 2)
+                {
+                    if (area[old_position_object_nr + 6].figure_color == 'B' && area[old_position_object_nr + 6].bg_color == 3)
+                        area[old_position_object_nr + 6].bg_color = 4;
+                    else if (area[old_position_object_nr + 6].figure_color == 'E' && area[old_position_object_nr + 6].bg_color == 3)
+                        area[old_position_object_nr + 6].bg_color = 3;
+                }
             }
             else
             {
@@ -1572,8 +1623,16 @@ void paintAreaColorsKnight()
         // RIGH RIGHT TOP
         if (old_position_object_nr >= 8)
         {
-            if (virtual_area[old_position_object_nr].bg_color == 5)
+            if (virtual_area[old_position_object_nr].bg_color == 5);
+            else if (white_king_check == true)
             {
+                if (area[old_position_object_nr].column >= 2)
+                {
+                    if (area[old_position_object_nr - 6].figure_color == 'B' && area[old_position_object_nr - 6].bg_color == 3)
+                        area[old_position_object_nr - 6].bg_color = 4;
+                    else if (area[old_position_object_nr - 6].figure_color == 'E' && area[old_position_object_nr - 6].bg_color == 3)
+                        area[old_position_object_nr - 6].bg_color = 3;
+                }
             }
             else
             {
@@ -1590,8 +1649,16 @@ void paintAreaColorsKnight()
         // RIGH RIGHT BOTTOM
         if (old_position_object_nr <= 53)
         {
-            if (virtual_area[old_position_object_nr].bg_color == 5)
+            if (virtual_area[old_position_object_nr].bg_color == 5);
+            else if (white_king_check == true)
             {
+                if (area[old_position_object_nr].column >= 2)
+                {
+                    if (area[old_position_object_nr + 10].figure_color == 'B' && area[old_position_object_nr + 10].bg_color == 3)
+                        area[old_position_object_nr + 10].bg_color = 4;
+                    else if (area[old_position_object_nr + 10].figure_color == 'E' && area[old_position_object_nr + 10].bg_color == 3)
+                        area[old_position_object_nr + 10].bg_color = 3;
+                }
             }
             else
             {
@@ -1612,8 +1679,16 @@ void paintAreaColorsKnight()
         // TOP TOP LEFT
         if (old_position_object_nr >= 17)
         {
-            if (virtual_area[old_position_object_nr].bg_color == 5)
+            if (virtual_area[old_position_object_nr].bg_color == 5);
+            else if (black_king_check == true)
             {
+                if (area[old_position_object_nr].column >= 2)
+                {
+                    if (area[old_position_object_nr - 17].figure_color == 'W' && area[old_position_object_nr - 17].bg_color == 3)
+                        area[old_position_object_nr - 17].bg_color = 4;
+                    else if (area[old_position_object_nr - 17].figure_color == 'E' && area[old_position_object_nr - 17].bg_color == 3)
+                        area[old_position_object_nr - 17].bg_color = 3;
+                }
             }
             else
             {
@@ -1630,8 +1705,16 @@ void paintAreaColorsKnight()
         // TOP TOP RIGHT
         if (old_position_object_nr >= 16)
         {
-            if (virtual_area[old_position_object_nr].bg_color == 5)
+            if (virtual_area[old_position_object_nr].bg_color == 5);
+            else if (black_king_check == true)
             {
+                if (area[old_position_object_nr].column >= 2)
+                {
+                    if (area[old_position_object_nr - 15].figure_color == 'W' && area[old_position_object_nr - 15].bg_color == 3)
+                        area[old_position_object_nr - 15].bg_color = 4;
+                    else if (area[old_position_object_nr - 15].figure_color == 'E' && area[old_position_object_nr - 15].bg_color == 3)
+                        area[old_position_object_nr - 15].bg_color = 3;
+                }
             }
             else
             {
@@ -1648,8 +1731,16 @@ void paintAreaColorsKnight()
         // BOTTOM BOTTOM LEFT
         if (old_position_object_nr <= 47)
         {
-            if (virtual_area[old_position_object_nr].bg_color == 5)
+            if (virtual_area[old_position_object_nr].bg_color == 5);
+            else if (black_king_check == true)
             {
+                if (area[old_position_object_nr].column >= 2)
+                {
+                    if (area[old_position_object_nr + 15].figure_color == 'W' && area[old_position_object_nr + 15].bg_color == 3)
+                        area[old_position_object_nr + 15].bg_color = 4;
+                    else if (area[old_position_object_nr + 15].figure_color == 'E' && area[old_position_object_nr + 15].bg_color == 3)
+                        area[old_position_object_nr + 15].bg_color = 3;
+                }
             }
             else
             {
@@ -1666,8 +1757,16 @@ void paintAreaColorsKnight()
         // BOTTOM BOTTOM RIGHT
         if (old_position_object_nr <= 46)
         {
-            if (virtual_area[old_position_object_nr].bg_color == 5)
+            if (virtual_area[old_position_object_nr].bg_color == 5);
+            else if (black_king_check == true)
             {
+                if (area[old_position_object_nr].column >= 2)
+                {
+                    if (area[old_position_object_nr + 17].figure_color == 'W' && area[old_position_object_nr + 17].bg_color == 3)
+                        area[old_position_object_nr + 17].bg_color = 4;
+                    else if (area[old_position_object_nr + 17].figure_color == 'E' && area[old_position_object_nr + 17].bg_color == 3)
+                        area[old_position_object_nr + 17].bg_color = 3;
+                }
             }
             else
             {
@@ -1684,8 +1783,16 @@ void paintAreaColorsKnight()
         // LEFT LEFT TOP
         if (old_position_object_nr >= 10)
         {
-            if (virtual_area[old_position_object_nr].bg_color == 5)
+            if (virtual_area[old_position_object_nr].bg_color == 5);
+            else if (black_king_check == true)
             {
+                if (area[old_position_object_nr].column >= 2)
+                {
+                    if (area[old_position_object_nr - 10].figure_color == 'W' && area[old_position_object_nr - 10].bg_color == 3)
+                        area[old_position_object_nr - 10].bg_color = 4;
+                    else if (area[old_position_object_nr - 10].figure_color == 'E' && area[old_position_object_nr - 10].bg_color == 3)
+                        area[old_position_object_nr - 10].bg_color = 3;
+                }
             }
             else
             {
@@ -1702,8 +1809,16 @@ void paintAreaColorsKnight()
         // LEFT LEFT BOTTOM
         if (old_position_object_nr <= 55)
         {
-            if (virtual_area[old_position_object_nr].bg_color == 5)
+            if (virtual_area[old_position_object_nr].bg_color == 5);
+            else if (black_king_check == true)
             {
+                if (area[old_position_object_nr].column >= 2)
+                {
+                    if (area[old_position_object_nr + 6].figure_color == 'W' && area[old_position_object_nr + 6].bg_color == 3)
+                        area[old_position_object_nr + 6].bg_color = 4;
+                    else if (area[old_position_object_nr + 6].figure_color == 'E' && area[old_position_object_nr + 6].bg_color == 3)
+                        area[old_position_object_nr + 6].bg_color = 3;
+                }
             }
             else
             {
@@ -1720,8 +1835,16 @@ void paintAreaColorsKnight()
         // RIGH RIGHT TOP
         if (old_position_object_nr >= 8)
         {
-            if (virtual_area[old_position_object_nr].bg_color == 5)
+            if (virtual_area[old_position_object_nr].bg_color == 5);
+            else if (black_king_check == true)
             {
+                if (area[old_position_object_nr].column >= 2)
+                {
+                    if (area[old_position_object_nr - 6].figure_color == 'W' && area[old_position_object_nr - 6].bg_color == 3)
+                        area[old_position_object_nr - 6].bg_color = 4;
+                    else if (area[old_position_object_nr - 6].figure_color == 'E' && area[old_position_object_nr - 6].bg_color == 3)
+                        area[old_position_object_nr - 6].bg_color = 3;
+                }
             }
             else
             {
@@ -1738,8 +1861,16 @@ void paintAreaColorsKnight()
         // RIGH RIGHT BOTTOM
         if (old_position_object_nr <= 53)
         {
-            if (virtual_area[old_position_object_nr].bg_color == 5)
+            if (virtual_area[old_position_object_nr].bg_color == 5);
+            else if (black_king_check == true)
             {
+                if (area[old_position_object_nr].column >= 2)
+                {
+                    if (area[old_position_object_nr + 10].figure_color == 'W' && area[old_position_object_nr + 10].bg_color == 3)
+                        area[old_position_object_nr + 10].bg_color = 4;
+                    else if (area[old_position_object_nr + 10].figure_color == 'E' && area[old_position_object_nr + 10].bg_color == 3)
+                        area[old_position_object_nr + 10].bg_color = 3;
+                }
             }
             else
             {
@@ -1789,7 +1920,7 @@ void paintAreaColorsKing()
         {
             if (area[old_position_object_nr - 8].figure_color == 'B' && virtual_area[old_position_object_nr - 8].bg_color != 2)
                 area[old_position_object_nr - 8].bg_color = 4;
-            else if (area[old_position_object_nr - 8].figure_color == 'E' && virtual_area[old_position_object_nr - 8].bg_color != 4)
+            else if (area[old_position_object_nr - 8].figure_color == 'E' && virtual_area[old_position_object_nr - 8].bg_color != 3 && virtual_area[old_position_object_nr - 8].bg_color != 4)
                 area[old_position_object_nr - 8].bg_color = 3;
         }
 
@@ -1798,7 +1929,7 @@ void paintAreaColorsKing()
         {
             if (area[old_position_object_nr + 8].figure_color == 'B' && virtual_area[old_position_object_nr + 8].bg_color != 2)
                 area[old_position_object_nr + 8].bg_color = 4;
-            else if (area[old_position_object_nr + 8].figure_color == 'E' && virtual_area[old_position_object_nr + 8].bg_color != 4)
+            else if (area[old_position_object_nr + 8].figure_color == 'E' && virtual_area[old_position_object_nr + 8].bg_color != 3 && virtual_area[old_position_object_nr + 8].bg_color != 4)
                 area[old_position_object_nr + 8].bg_color = 3;
         }
 
@@ -1807,7 +1938,7 @@ void paintAreaColorsKing()
         {
             if (area[old_position_object_nr - 1].figure_color == 'B' && virtual_area[old_position_object_nr - 1].bg_color != 2)
                 area[old_position_object_nr - 1].bg_color = 4;
-            else if (area[old_position_object_nr - 1].figure_color == 'E' && virtual_area[old_position_object_nr - 1].bg_color != 4)
+            else if (area[old_position_object_nr - 1].figure_color == 'E' && virtual_area[old_position_object_nr - 1].bg_color != 3 && virtual_area[old_position_object_nr - 1].bg_color != 4)
                 area[old_position_object_nr - 1].bg_color = 3;
         }
 
@@ -1816,7 +1947,7 @@ void paintAreaColorsKing()
         {
             if (area[old_position_object_nr + 1].figure_color == 'B' && virtual_area[old_position_object_nr + 1].bg_color != 2)
                 area[old_position_object_nr + 1].bg_color = 4;
-            else if (area[old_position_object_nr + 1].figure_color == 'E' && virtual_area[old_position_object_nr + 1].bg_color != 4)
+            else if (area[old_position_object_nr + 1].figure_color == 'E' && virtual_area[old_position_object_nr + 1].bg_color != 3 && virtual_area[old_position_object_nr + 1].bg_color != 4)
                 area[old_position_object_nr + 1].bg_color = 3;
         }
 
@@ -1825,7 +1956,7 @@ void paintAreaColorsKing()
         {
             if (area[old_position_object_nr - 9].figure_color == 'B' && virtual_area[old_position_object_nr - 9].bg_color != 2)
                 area[old_position_object_nr - 9].bg_color = 4;
-            else if (area[old_position_object_nr - 9].figure_color == 'E' && virtual_area[old_position_object_nr - 9].bg_color != 4)
+            else if (area[old_position_object_nr - 9].figure_color == 'E' && virtual_area[old_position_object_nr - 9].bg_color != 3 && virtual_area[old_position_object_nr - 9].bg_color != 4)
                 area[old_position_object_nr - 9].bg_color = 3;
         }
 
@@ -1834,7 +1965,7 @@ void paintAreaColorsKing()
         {
             if (area[old_position_object_nr - 7].figure_color == 'B' && virtual_area[old_position_object_nr - 7].bg_color != 2)
                 area[old_position_object_nr - 7].bg_color = 4;
-            else if (area[old_position_object_nr - 7].figure_color == 'E' && virtual_area[old_position_object_nr - 7].bg_color != 4)
+            else if (area[old_position_object_nr - 7].figure_color == 'E' && virtual_area[old_position_object_nr - 7].bg_color != 3 && virtual_area[old_position_object_nr - 7].bg_color != 4)
                 area[old_position_object_nr - 7].bg_color = 3;
         }
 
@@ -1843,7 +1974,7 @@ void paintAreaColorsKing()
         {
             if (area[old_position_object_nr + 7].figure_color == 'B' && virtual_area[old_position_object_nr + 7].bg_color != 2)
                 area[old_position_object_nr + 7].bg_color = 4;
-            else if (area[old_position_object_nr + 7].figure_color == 'E' && virtual_area[old_position_object_nr + 7].bg_color != 4)
+            else if (area[old_position_object_nr + 7].figure_color == 'E' && virtual_area[old_position_object_nr + 7].bg_color != 3 && virtual_area[old_position_object_nr + 7].bg_color != 4)
                 area[old_position_object_nr + 7].bg_color = 3;
         }
 
@@ -1852,7 +1983,7 @@ void paintAreaColorsKing()
         {
             if (area[old_position_object_nr + 9].figure_color == 'B' && virtual_area[old_position_object_nr + 9].bg_color != 2)
                 area[old_position_object_nr + 9].bg_color = 4;
-            else if (area[old_position_object_nr + 9].figure_color == 'E' && virtual_area[old_position_object_nr + 9].bg_color != 4)
+            else if (area[old_position_object_nr + 9].figure_color == 'E' && virtual_area[old_position_object_nr + 9].bg_color != 3 && virtual_area[old_position_object_nr + 9].bg_color != 4)
                 area[old_position_object_nr + 9].bg_color = 3;
         }
 
@@ -1879,7 +2010,7 @@ void paintAreaColorsKing()
         {
             if (area[old_position_object_nr - 8].figure_color == 'W' && virtual_area[old_position_object_nr - 8].bg_color != 2)
                 area[old_position_object_nr - 8].bg_color = 4;
-            else if (area[old_position_object_nr - 8].figure_color == 'E' && virtual_area[old_position_object_nr - 8].bg_color != 4)
+            else if (area[old_position_object_nr - 8].figure_color == 'E' && virtual_area[old_position_object_nr - 8].bg_color != 3 && virtual_area[old_position_object_nr - 8].bg_color != 4)
                 area[old_position_object_nr - 8].bg_color = 3;
         }
 
@@ -1888,7 +2019,7 @@ void paintAreaColorsKing()
         {
             if (area[old_position_object_nr + 8].figure_color == 'W' && virtual_area[old_position_object_nr + 8].bg_color != 2)
                 area[old_position_object_nr + 8].bg_color = 4;
-            else if (area[old_position_object_nr + 8].figure_color == 'E' && virtual_area[old_position_object_nr + 8].bg_color != 4)
+            else if (area[old_position_object_nr + 8].figure_color == 'E' && virtual_area[old_position_object_nr + 8].bg_color != 3 && virtual_area[old_position_object_nr + 8].bg_color != 4)
                 area[old_position_object_nr + 8].bg_color = 3;
         }
 
@@ -1897,7 +2028,7 @@ void paintAreaColorsKing()
         {
             if (area[old_position_object_nr - 1].figure_color == 'W' && virtual_area[old_position_object_nr - 1].bg_color != 2)
                 area[old_position_object_nr - 1].bg_color = 4;
-            else if (area[old_position_object_nr - 1].figure_color == 'E' && virtual_area[old_position_object_nr - 1].bg_color != 4)
+            else if (area[old_position_object_nr - 1].figure_color == 'E' && virtual_area[old_position_object_nr - 1].bg_color != 3 && virtual_area[old_position_object_nr - 1].bg_color != 4)
                 area[old_position_object_nr - 1].bg_color = 3;
         }
 
@@ -1906,7 +2037,7 @@ void paintAreaColorsKing()
         {
             if (area[old_position_object_nr + 1].figure_color == 'W' && virtual_area[old_position_object_nr + 1].bg_color != 2)
                 area[old_position_object_nr + 1].bg_color = 4;
-            else if (area[old_position_object_nr + 1].figure_color == 'E' && virtual_area[old_position_object_nr + 1].bg_color != 4)
+            else if (area[old_position_object_nr + 1].figure_color == 'E' && virtual_area[old_position_object_nr + 1].bg_color != 3 && virtual_area[old_position_object_nr + 1].bg_color != 4)
                 area[old_position_object_nr + 1].bg_color = 3;
         }
 
@@ -1915,7 +2046,7 @@ void paintAreaColorsKing()
         {
             if (area[old_position_object_nr - 9].figure_color == 'W' && virtual_area[old_position_object_nr - 9].bg_color != 2)
                 area[old_position_object_nr - 9].bg_color = 4;
-            else if (area[old_position_object_nr - 9].figure_color == 'E' && virtual_area[old_position_object_nr - 9].bg_color != 4)
+            else if (area[old_position_object_nr - 9].figure_color == 'E' && virtual_area[old_position_object_nr - 9].bg_color != 3 && virtual_area[old_position_object_nr - 9].bg_color != 4)
                 area[old_position_object_nr - 9].bg_color = 3;
         }
 
@@ -1924,7 +2055,7 @@ void paintAreaColorsKing()
         {
             if (area[old_position_object_nr - 7].figure_color == 'W' && virtual_area[old_position_object_nr - 7].bg_color != 2)
                 area[old_position_object_nr - 7].bg_color = 4;
-            else if (area[old_position_object_nr - 7].figure_color == 'E' && virtual_area[old_position_object_nr - 7].bg_color != 4)
+            else if (area[old_position_object_nr - 7].figure_color == 'E' && virtual_area[old_position_object_nr - 7].bg_color != 3 && virtual_area[old_position_object_nr - 7].bg_color != 4)
                 area[old_position_object_nr - 7].bg_color = 3;
         }
 
@@ -1933,7 +2064,7 @@ void paintAreaColorsKing()
         {
             if (area[old_position_object_nr + 7].figure_color == 'W' && virtual_area[old_position_object_nr + 7].bg_color != 2)
                 area[old_position_object_nr + 7].bg_color = 4;
-            else if (area[old_position_object_nr + 7].figure_color == 'E' && virtual_area[old_position_object_nr + 7].bg_color != 4)
+            else if (area[old_position_object_nr + 7].figure_color == 'E' && virtual_area[old_position_object_nr + 7].bg_color != 3 && virtual_area[old_position_object_nr + 7].bg_color != 4)
                 area[old_position_object_nr + 7].bg_color = 3;
         }
 
@@ -1942,7 +2073,7 @@ void paintAreaColorsKing()
         {
             if (area[old_position_object_nr + 9].figure_color == 'W' && virtual_area[old_position_object_nr + 9].bg_color != 2)
                 area[old_position_object_nr + 9].bg_color = 4;
-            else if (area[old_position_object_nr + 9].figure_color == 'E' && virtual_area[old_position_object_nr + 9].bg_color != 4)
+            else if (area[old_position_object_nr + 9].figure_color == 'E' && virtual_area[old_position_object_nr + 9].bg_color != 3 && virtual_area[old_position_object_nr + 9].bg_color != 4)
                 area[old_position_object_nr + 9].bg_color = 3;
         }
 
@@ -1964,7 +2095,13 @@ void paintAreaColorsKing()
 
 void pawnTopSide()
 {
-    if (virtual_area[old_position_object_nr].bg_color == 5)
+    if (white_king_check == true && virtual_area[old_position_object_nr].bg_color == 5);
+    else if (white_king_check == true)
+    {
+        if (virtual_area[old_position_object_nr - 8].bg_color == 3)
+            area[old_position_object_nr - 8].bg_color = 3;
+    }
+    else if (virtual_area[old_position_object_nr].bg_color == 5)
     {
         if (area[old_position_object_nr - 8].figure_color == 'E' && virtual_area[old_position_object_nr - 8].bg_color == 5)
             area[old_position_object_nr - 8].bg_color = 3;
@@ -1977,7 +2114,13 @@ void pawnTopSide()
 }
 void pawnTopTopSide()
 {
-    if (virtual_area[old_position_object_nr].bg_color == 5)
+    if (white_king_check == true && virtual_area[old_position_object_nr].bg_color == 5);
+    else if (white_king_check == true)
+    {
+        if (virtual_area[old_position_object_nr - 16].bg_color == 3)
+            area[old_position_object_nr - 16].bg_color = 3;
+    }
+    else if (virtual_area[old_position_object_nr].bg_color == 5)
     {
         if (area[old_position_object_nr - 16].figure_color == 'E' && virtual_area[old_position_object_nr - 16].bg_color == 5)
             area[old_position_object_nr - 16].bg_color = 3;
@@ -2016,7 +2159,13 @@ void pawnTopRigtSide()
 }
 void pawnBottomSide()
 {
-    if (virtual_area[old_position_object_nr].bg_color == 5)
+    if (black_king_check == true && virtual_area[old_position_object_nr].bg_color == 5);
+    else if (black_king_check == true)
+    {
+        if (virtual_area[old_position_object_nr + 8].bg_color == 3)
+            area[old_position_object_nr + 8].bg_color = 3;
+    }
+    else if (virtual_area[old_position_object_nr].bg_color == 5)
     {
         if (area[old_position_object_nr + 8].figure_color == 'E' && virtual_area[old_position_object_nr + 8].bg_color == 5)
             area[old_position_object_nr + 8].bg_color = 3;
@@ -2029,7 +2178,13 @@ void pawnBottomSide()
 }
 void pawnBottomBottomSide()
 {
-    if (virtual_area[old_position_object_nr].bg_color == 5)
+    if (black_king_check == true && virtual_area[old_position_object_nr].bg_color == 5);
+    else if (black_king_check == true)
+    {
+        if (virtual_area[old_position_object_nr - 16].bg_color == 3)
+            area[old_position_object_nr - 16].bg_color = 3;
+    }
+    else if (virtual_area[old_position_object_nr].bg_color == 5)
     {
         if (area[old_position_object_nr + 16].figure_color == 'E' && virtual_area[old_position_object_nr + 16].bg_color == 5)
             area[old_position_object_nr + 16].bg_color = 3;
@@ -2072,8 +2227,30 @@ void topSide()
     // WHITE
     if (area[old_position_object_nr].figure_color == 'W')
     {
-
-        if (virtual_area[old_position_object_nr].bg_color == 5)
+        if (white_king_check == true && virtual_area[old_position_object_nr].bg_color == 5);
+        else if (white_king_check == true)
+        {
+            for (int i = 1; i <= 8; i++)
+            {
+                if (area[old_position_object_nr].row == 1)
+                    break;
+                if (area[old_position_object_nr - 8 * i].figure_color != 'E')
+                {
+                    if (area[old_position_object_nr - 8 * i].figure_color == 'B' && virtual_area[old_position_object_nr - 8 * i].bg_color == 3)
+                    {
+                        area[old_position_object_nr - 8 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                        break;
+                }
+                else if (old_position_object_nr >= 8 && virtual_area[old_position_object_nr - 8 * i].bg_color == 3)
+                    area[old_position_object_nr - 8 * i].bg_color = 3;
+                if (area[old_position_object_nr - 8 * i].row == 1)
+                    break;
+            }
+        }
+        else if (virtual_area[old_position_object_nr].bg_color == 5)
         {
             for (int i = 1; i <= 8; i++)
             {
@@ -2121,7 +2298,30 @@ void topSide()
     // BLACK
     if (area[old_position_object_nr].figure_color == 'B')
     {
-        if (virtual_area[old_position_object_nr].bg_color == 5)
+        if (black_king_check == true && virtual_area[old_position_object_nr].bg_color == 5);
+        else if (black_king_check == true)
+        {
+            for (int i = 1; i <= 8; i++)
+            {
+                if (area[old_position_object_nr].row == 1)
+                    break;
+                if (area[old_position_object_nr - 8 * i].figure_color != 'E')
+                {
+                    if (area[old_position_object_nr - 8 * i].figure_color == 'W' && virtual_area[old_position_object_nr - 8 * i].bg_color == 3)
+                    {
+                        area[old_position_object_nr - 8 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                        break;
+                }
+                else if (old_position_object_nr >= 8 && virtual_area[old_position_object_nr - 8 * i].bg_color == 3)
+                    area[old_position_object_nr - 8 * i].bg_color = 3;
+                if (area[old_position_object_nr - 8 * i].row == 1)
+                    break;
+            }
+        }
+        else if (virtual_area[old_position_object_nr].bg_color == 5)
         {
             for (int i = 1; i <= 8; i++)
             {
@@ -2172,7 +2372,30 @@ void bottomSide()
     // WHITE
     if (area[old_position_object_nr].figure_color == 'W')
     {
-        if (virtual_area[old_position_object_nr].bg_color == 5)
+        if (white_king_check == true && virtual_area[old_position_object_nr].bg_color == 5);
+        else if (white_king_check == true)
+        {
+            for (int i = 1; i <= 8; i++)
+            {
+                if (area[old_position_object_nr].row == 8)
+                    break;
+                if (area[old_position_object_nr + 8 * i].figure_color != 'E')
+                {
+                    if (area[old_position_object_nr + 8 * i].figure_color == 'B' && virtual_area[old_position_object_nr + 8 * i].bg_color == 3)
+                    {
+                        area[old_position_object_nr + 8 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                        break;
+                }
+                else if (old_position_object_nr <= 55 && virtual_area[old_position_object_nr + 8 * i].bg_color == 3)
+                    area[old_position_object_nr + 8 * i].bg_color = 3;
+                if (area[old_position_object_nr + 8 * i].row == 1)
+                    break;
+            }
+        }
+        else if (virtual_area[old_position_object_nr].bg_color == 5)
         {
             for (int i = 1; i <= 8; i++)
             {
@@ -2220,7 +2443,30 @@ void bottomSide()
     // BLACK
     if (area[old_position_object_nr].figure_color == 'B')
     {
-        if (virtual_area[old_position_object_nr].bg_color == 5)
+        if (black_king_check == true && virtual_area[old_position_object_nr].bg_color == 5);
+        else if (black_king_check == true)
+        {
+            for (int i = 1; i <= 8; i++)
+            {
+                if (area[old_position_object_nr].row == 8)
+                    break;
+                if (area[old_position_object_nr + 8 * i].figure_color != 'E')
+                {
+                    if (area[old_position_object_nr + 8 * i].figure_color == 'W' && virtual_area[old_position_object_nr + 8 * i].bg_color == 3)
+                    {
+                        area[old_position_object_nr + 8 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                        break;
+                }
+                else if (old_position_object_nr <= 55 && virtual_area[old_position_object_nr + 8 * i].bg_color == 3)
+                    area[old_position_object_nr + 8 * i].bg_color = 3;
+                if (area[old_position_object_nr + 8 * i].row == 1)
+                    break;
+            }
+        }
+        else if (virtual_area[old_position_object_nr].bg_color == 5)
         {
             for (int i = 1; i <= 8; i++)
             {
@@ -2271,7 +2517,30 @@ void leftSide()
     // WHITE
     if (area[old_position_object_nr].figure_color == 'W')
     {
-        if (virtual_area[old_position_object_nr].bg_color == 5)
+        if (white_king_check == true && virtual_area[old_position_object_nr].bg_color == 5);
+        else if (white_king_check == true)
+        {
+            for (int i = 1; i <= 8; i++)
+            {
+                if (area[old_position_object_nr].column == 1)
+                    break;
+                if (area[old_position_object_nr - 1 * i].figure_color != 'E')
+                {
+                    if (area[old_position_object_nr - 1 * i].figure_color == 'B' && virtual_area[old_position_object_nr - 1 * i].bg_color == 3)
+                    {
+                        area[old_position_object_nr - 1 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                        break;
+                }
+                else if (area[old_position_object_nr].column >= 2 && virtual_area[old_position_object_nr - 1 * i].bg_color == 3)
+                    area[old_position_object_nr - 1 * i].bg_color = 3;
+                if (area[old_position_object_nr - 1 * i].row == 1)
+                    break;
+            }
+        }
+        else if (virtual_area[old_position_object_nr].bg_color == 5)
         {
             for (int i = 1; i <= 8; i++)
             {
@@ -2319,7 +2588,30 @@ void leftSide()
     // BLACK
     if (area[old_position_object_nr].figure_color == 'B')
     {
-        if (virtual_area[old_position_object_nr].bg_color == 5)
+        if (black_king_check == true && virtual_area[old_position_object_nr].bg_color == 5);
+        else if (black_king_check == true)
+        {
+            for (int i = 1; i <= 8; i++)
+            {
+                if (area[old_position_object_nr].column == 1)
+                    break;
+                if (area[old_position_object_nr - 1 * i].figure_color != 'E')
+                {
+                    if (area[old_position_object_nr - 1 * i].figure_color == 'W' && virtual_area[old_position_object_nr - 1 * i].bg_color == 3)
+                    {
+                        area[old_position_object_nr - 1 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                        break;
+                }
+                else if (area[old_position_object_nr].column >= 2 && virtual_area[old_position_object_nr - 1 * i].bg_color == 3)
+                    area[old_position_object_nr - 1 * i].bg_color = 3;
+                if (area[old_position_object_nr - 1 * i].row == 1)
+                    break;
+            }
+        }
+        else if (virtual_area[old_position_object_nr].bg_color == 5)
         {
             for (int i = 1; i <= 8; i++)
             {
@@ -2370,7 +2662,30 @@ void rightSide()
     // WHITE
     if (area[old_position_object_nr].figure_color == 'W')
     {
-        if (virtual_area[old_position_object_nr].bg_color == 5)
+       if (white_king_check == true && virtual_area[old_position_object_nr].bg_color == 5);
+        else  if (white_king_check == true)
+        {
+            for (int i = 1; i <= 8; i++)
+            {
+                if (area[old_position_object_nr].column == 8)
+                    break;
+                if (area[old_position_object_nr + 1 * i].figure_color != 'E')
+                {
+                    if (area[old_position_object_nr + 1 * i].figure_color == 'B' && virtual_area[old_position_object_nr + 1 * i].bg_color == 3)
+                    {
+                        area[old_position_object_nr + 1 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                        break;
+                }
+                else if (area[old_position_object_nr].column <= 7 && virtual_area[old_position_object_nr + 1 * i].bg_color == 3)
+                    area[old_position_object_nr + 1 * i].bg_color = 3;
+                if (area[old_position_object_nr + 1 * i].row == 1)
+                    break;
+            }
+        }
+        else if (virtual_area[old_position_object_nr].bg_color == 5)
         {
             for (int i = 1; i <= 8; i++)
             {
@@ -2418,7 +2733,30 @@ void rightSide()
     // BLACK
     if (area[old_position_object_nr].figure_color == 'B')
     {
-        if (virtual_area[old_position_object_nr].bg_color == 5)
+        if (black_king_check == true && virtual_area[old_position_object_nr].bg_color == 5);
+        else if (black_king_check == true)
+        {
+            for (int i = 1; i <= 8; i++)
+            {
+                if (area[old_position_object_nr].column == 8)
+                    break;
+                if (area[old_position_object_nr + 1 * i].figure_color != 'E')
+                {
+                    if (area[old_position_object_nr + 1 * i].figure_color == 'W' && virtual_area[old_position_object_nr + 1 * i].bg_color == 3)
+                    {
+                        area[old_position_object_nr + 1 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                        break;
+                }
+                else if (area[old_position_object_nr].column <= 7 && virtual_area[old_position_object_nr + 1 * i].bg_color == 3)
+                    area[old_position_object_nr + 1 * i].bg_color = 3;
+                if (area[old_position_object_nr + 1 * i].row == 1)
+                    break;
+            }
+        }
+        else if (virtual_area[old_position_object_nr].bg_color == 5)
         {
             for (int i = 1; i <= 8; i++)
             {
@@ -2469,7 +2807,30 @@ void topLeftSide()
     // WHITE
     if (area[old_position_object_nr].figure_color == 'W')
     {
-        if (virtual_area[old_position_object_nr].bg_color == 5)
+        if (white_king_check == true && virtual_area[old_position_object_nr].bg_color == 5);
+        else if (white_king_check == true)
+        {
+            for (int i = 1; i <= 8; i++)
+            {
+                if (area[old_position_object_nr].row == 1 || area[old_position_object_nr].column == 1)
+                    break;
+                if (area[old_position_object_nr - 9 * i].figure_color != 'E')
+                {
+                    if (area[old_position_object_nr - 9 * i].figure_color == 'B' && virtual_area[old_position_object_nr - 9 * i].bg_color == 3)
+                    {
+                        area[old_position_object_nr - 9 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                        break;
+                }
+                else if (old_position_object_nr >= 9 && virtual_area[old_position_object_nr - 9 * i].bg_color == 3)
+                    area[old_position_object_nr - 9 * i].bg_color = 3;
+                if (area[old_position_object_nr - 9 * i].row == 1)
+                    break;
+            }
+        }
+        else if (virtual_area[old_position_object_nr].bg_color == 5)
         {
             for (int i = 1; i <= 8; i++)
             {
@@ -2517,7 +2878,30 @@ void topLeftSide()
     // BLACK
     if (area[old_position_object_nr].figure_color == 'B')
     {
-        if (virtual_area[old_position_object_nr].bg_color == 5)
+        if (black_king_check == true && virtual_area[old_position_object_nr].bg_color == 5);
+        else if (black_king_check == true)
+        {
+            for (int i = 1; i <= 8; i++)
+            {
+                if (area[old_position_object_nr].row == 1 || area[old_position_object_nr].column == 1)
+                    break;
+                if (area[old_position_object_nr - 9 * i].figure_color != 'E')
+                {
+                    if (area[old_position_object_nr - 9 * i].figure_color == 'W' && virtual_area[old_position_object_nr - 9 * i].bg_color == 3)
+                    {
+                        area[old_position_object_nr - 9 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                        break;
+                }
+                else if (old_position_object_nr >= 9 && virtual_area[old_position_object_nr - 9 * i].bg_color == 3)
+                    area[old_position_object_nr - 9 * i].bg_color = 3;
+                if (area[old_position_object_nr - 9 * i].row == 1)
+                    break;
+            }
+        }
+        else if (virtual_area[old_position_object_nr].bg_color == 5)
         {
             for (int i = 1; i <= 8; i++)
             {
@@ -2568,7 +2952,30 @@ void topRighttSide()
     // WHITE
     if (area[old_position_object_nr].figure_color == 'W')
     {
-        if (virtual_area[old_position_object_nr].bg_color == 5)
+        if (white_king_check == true && virtual_area[old_position_object_nr].bg_color == 5);
+        else if (white_king_check == true)
+        {
+            for (int i = 1; i <= 8; i++)
+            {
+                if (area[old_position_object_nr].row == 1 || area[old_position_object_nr].column == 8)
+                    break;
+                if (area[old_position_object_nr - 7 * i].figure_color != 'E')
+                {
+                    if (area[old_position_object_nr - 7 * i].figure_color == 'W' && virtual_area[old_position_object_nr - 7 * i].bg_color == 3)
+                    {
+                        area[old_position_object_nr - 7 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                        break;
+                }
+                else if (old_position_object_nr >= 8 && virtual_area[old_position_object_nr - 7 * i].bg_color == 3)
+                    area[old_position_object_nr - 7 * i].bg_color = 3;
+                if (area[old_position_object_nr - 7 * i].row == 1)
+                    break;
+            }
+        }
+        else if (virtual_area[old_position_object_nr].bg_color == 5)
         {
             for (int i = 1; i <= 8; i++)
             {
@@ -2616,7 +3023,30 @@ void topRighttSide()
     // BLACK
     if (area[old_position_object_nr].figure_color == 'B')
     {
-        if (virtual_area[old_position_object_nr].bg_color == 5)
+        if (black_king_check == true && virtual_area[old_position_object_nr].bg_color == 5);
+        else if (black_king_check == true)
+        {
+            for (int i = 1; i <= 8; i++)
+            {
+                if (area[old_position_object_nr].row == 1 || area[old_position_object_nr].column == 8)
+                    break;
+                if (area[old_position_object_nr - 7 * i].figure_color != 'E')
+                {
+                    if (area[old_position_object_nr - 7 * i].figure_color == 'W' && virtual_area[old_position_object_nr - 7 * i].bg_color == 3)
+                    {
+                        area[old_position_object_nr - 7 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                        break;
+                }
+                else if (old_position_object_nr >= 8 && virtual_area[old_position_object_nr - 7 * i].bg_color == 3)
+                    area[old_position_object_nr - 7 * i].bg_color = 3;
+                if (area[old_position_object_nr - 7 * i].row == 1)
+                    break;
+            }
+        }
+        else if (virtual_area[old_position_object_nr].bg_color == 5)
         {
             for (int i = 1; i <= 8; i++)
             {
@@ -2667,7 +3097,30 @@ void bottomLeftSide()
     // WHITE
     if (area[old_position_object_nr].figure_color == 'W')
     {
-        if (virtual_area[old_position_object_nr].bg_color == 5)
+        if (white_king_check == true && virtual_area[old_position_object_nr].bg_color == 5);
+        else if (white_king_check == true)
+        {
+            for (int i = 1; i <= 8; i++)
+            {
+                if (area[old_position_object_nr].row == 8 || area[old_position_object_nr].column == 1)
+                    break;
+                if (area[old_position_object_nr + 7 * i].figure_color != 'E')
+                {
+                    if (area[old_position_object_nr + 7 * i].figure_color == 'B' && virtual_area[old_position_object_nr + 7 * i].bg_color == 3)
+                    {
+                        area[old_position_object_nr + 7 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                        break;
+                }
+                else if (old_position_object_nr <= 55 && virtual_area[old_position_object_nr + 7 * i].bg_color == 3)
+                    area[old_position_object_nr + 7 * i].bg_color = 3;
+                if (area[old_position_object_nr + 7 * i].row == 1)
+                    break;
+            }
+        }
+        else if (virtual_area[old_position_object_nr].bg_color == 5)
         {
             for (int i = 1; i <= 8; i++)
             {
@@ -2715,7 +3168,30 @@ void bottomLeftSide()
     // BLACK
     if (area[old_position_object_nr].figure_color == 'B')
     {
-        if (virtual_area[old_position_object_nr].bg_color == 5)
+        if (black_king_check == true && virtual_area[old_position_object_nr].bg_color == 5);
+        else if (black_king_check == true)
+        {
+            for (int i = 1; i <= 8; i++)
+            {
+                if (area[old_position_object_nr].row == 8 || area[old_position_object_nr].column == 1)
+                    break;
+                if (area[old_position_object_nr + 7 * i].figure_color != 'E')
+                {
+                    if (area[old_position_object_nr + 7 * i].figure_color == 'W' && virtual_area[old_position_object_nr + 7 * i].bg_color == 3)
+                    {
+                        area[old_position_object_nr + 7 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                        break;
+                }
+                else if (old_position_object_nr <= 55 && virtual_area[old_position_object_nr + 7 * i].bg_color == 3)
+                    area[old_position_object_nr + 7 * i].bg_color = 3;
+                if (area[old_position_object_nr + 7 * i].row == 1)
+                    break;
+            }
+        }
+        else if (virtual_area[old_position_object_nr].bg_color == 5)
         {
             for (int i = 1; i <= 8; i++)
             {
@@ -2766,7 +3242,30 @@ void bottomRightSide()
     // WHITE
     if (area[old_position_object_nr].figure_color == 'W')
     {
-        if (virtual_area[old_position_object_nr].bg_color == 5)
+        if (white_king_check == true && virtual_area[old_position_object_nr].bg_color == 5);
+        else if (white_king_check == true)
+        {
+            for (int i = 1; i <= 8; i++)
+            {
+                if (area[old_position_object_nr].row == 8 || area[old_position_object_nr].column == 8)
+                    break;
+                if (area[old_position_object_nr + 9 * i].figure_color != 'E')
+                {
+                    if (area[old_position_object_nr + 9 * i].figure_color == 'B' && virtual_area[old_position_object_nr + 9 * i].bg_color == 3)
+                    {
+                        area[old_position_object_nr + 9 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                        break;
+                }
+                else if (old_position_object_nr <= 54 && virtual_area[old_position_object_nr + 9 * i].bg_color == 3)
+                    area[old_position_object_nr + 9 * i].bg_color = 3;
+                if (area[old_position_object_nr + 9 * i].row == 1)
+                    break;
+            }
+        }
+        else if (virtual_area[old_position_object_nr].bg_color == 5)
         {
             for (int i = 1; i <= 8; i++)
             {
@@ -2814,7 +3313,30 @@ void bottomRightSide()
     // BLACK
     if (area[old_position_object_nr].figure_color == 'B')
     {
-        if (virtual_area[old_position_object_nr].bg_color == 5)
+        if (black_king_check == true && virtual_area[old_position_object_nr].bg_color == 5);
+        else if (black_king_check == true)
+        {
+            for (int i = 1; i <= 8; i++)
+            {
+                if (area[old_position_object_nr].row == 8 || area[old_position_object_nr].column == 8)
+                    break;
+                if (area[old_position_object_nr + 9 * i].figure_color != 'E')
+                {
+                    if (area[old_position_object_nr + 9 * i].figure_color == 'W' && virtual_area[old_position_object_nr + 9 * i].bg_color == 3)
+                    {
+                        area[old_position_object_nr + 9 * i].bg_color = 4;
+                        break;
+                    }
+                    else
+                        break;
+                }
+                else if (old_position_object_nr <= 54 && virtual_area[old_position_object_nr + 9 * i].bg_color == 3)
+                    area[old_position_object_nr + 9 * i].bg_color = 3;
+                if (area[old_position_object_nr + 9 * i].row == 1)
+                    break;
+            }
+        }
+        else if (virtual_area[old_position_object_nr].bg_color == 5)
         {
             for (int i = 1; i <= 8; i++)
             {
@@ -2882,13 +3404,27 @@ void paintVirtualAreaColorsWhitePawn()
     if (virtual_area[virtual_position_object_nr].figure_color == 'W')
     {
         // TOP LEFT
-        if (virtual_area[virtual_position_object_nr - 9].figure_color != 'W' && virtual_area[virtual_position_object_nr].column > 1 && virtual_area[virtual_position_object_nr - 9].bg_color != 5)
+        if (virtual_area[virtual_position_object_nr - 9].big_figure == "blackKing")
+        {
+            if (virtual_area[virtual_position_object_nr - 9].bg_color != 2)
+                virtual_area[virtual_position_object_nr - 9].bg_color = 3;
+            if (virtual_area[virtual_position_object_nr].bg_color != 2)
+                virtual_area[virtual_position_object_nr].bg_color = 3;
+        }
+        else if (virtual_area[virtual_position_object_nr - 9].figure_color != 'W' && virtual_area[virtual_position_object_nr].column > 1 && virtual_area[virtual_position_object_nr - 9].bg_color != 2 && virtual_area[virtual_position_object_nr - 9].bg_color != 3 && virtual_area[virtual_position_object_nr - 9].bg_color != 5)
             virtual_area[virtual_position_object_nr - 9].bg_color = 4;
         else if (virtual_area[virtual_position_object_nr - 9].figure_color == 'W' && virtual_area[virtual_position_object_nr].column > 1 && virtual_area[virtual_position_object_nr - 9].bg_color != 5)
             virtual_area[virtual_position_object_nr - 9].bg_color = 2;
 
         // TOP RIGHT
-        if (virtual_area[virtual_position_object_nr - 7].figure_color != 'W' && virtual_area[virtual_position_object_nr].column < 8 && virtual_area[virtual_position_object_nr - 7].bg_color != 5)
+        if (virtual_area[virtual_position_object_nr - 7].big_figure == "blackKing")
+        {
+            if (virtual_area[virtual_position_object_nr - 7].bg_color != 2)
+                virtual_area[virtual_position_object_nr - 7].bg_color = 3;
+            if (virtual_area[virtual_position_object_nr].bg_color != 2)
+                virtual_area[virtual_position_object_nr].bg_color = 3;
+        }
+        else if (virtual_area[virtual_position_object_nr - 7].figure_color != 'W' && virtual_area[virtual_position_object_nr].column < 8 && virtual_area[virtual_position_object_nr - 7].bg_color != 2 && virtual_area[virtual_position_object_nr - 7].bg_color != 3 && virtual_area[virtual_position_object_nr - 7].bg_color != 5)
             virtual_area[virtual_position_object_nr - 7].bg_color = 4;
         else if (virtual_area[virtual_position_object_nr - 7].figure_color == 'W' && virtual_area[virtual_position_object_nr].column < 8 && virtual_area[virtual_position_object_nr - 7].bg_color != 5)
             virtual_area[virtual_position_object_nr - 7].bg_color = 2;
@@ -2904,7 +3440,14 @@ void paintVirtualAreaColorsWhiteKnight()
         {
             if (virtual_area[virtual_position_object_nr].column >= 2)
             {
-                if (virtual_area[virtual_position_object_nr - 17].figure_color != 'W' && virtual_area[virtual_position_object_nr - 17].bg_color != 5)
+                if (virtual_area[virtual_position_object_nr - 17].big_figure == "blackKing")
+                {
+                    if (virtual_area[virtual_position_object_nr - 17].bg_color != 3)
+                        virtual_area[virtual_position_object_nr - 17].bg_color = 3;
+                    if (virtual_area[virtual_position_object_nr].bg_color != 3)
+                        virtual_area[virtual_position_object_nr].bg_color = 3;
+                }
+                else if (virtual_area[virtual_position_object_nr - 17].figure_color != 'W' && virtual_area[virtual_position_object_nr - 17].bg_color != 2 && virtual_area[virtual_position_object_nr - 17].bg_color != 3 && virtual_area[virtual_position_object_nr - 17].bg_color != 5)
                     virtual_area[virtual_position_object_nr - 17].bg_color = 4;
                 else if (virtual_area[virtual_position_object_nr - 17].figure_color == 'W' && virtual_area[virtual_position_object_nr - 17].bg_color != 5)
                     virtual_area[virtual_position_object_nr - 17].bg_color = 2;
@@ -2916,7 +3459,14 @@ void paintVirtualAreaColorsWhiteKnight()
         {
             if (virtual_area[virtual_position_object_nr].column <= 7)
             {
-                if (virtual_area[virtual_position_object_nr - 15].figure_color != 'W' && virtual_area[virtual_position_object_nr - 15].bg_color != 5)
+                if (virtual_area[virtual_position_object_nr - 15].big_figure == "blackKing")
+                {
+                    if (virtual_area[virtual_position_object_nr - 15].bg_color != 3)
+                        virtual_area[virtual_position_object_nr - 15].bg_color = 3;
+                    if (virtual_area[virtual_position_object_nr].bg_color != 3)
+                        virtual_area[virtual_position_object_nr].bg_color = 3;
+                }
+                else if (virtual_area[virtual_position_object_nr - 15].figure_color != 'W' && virtual_area[virtual_position_object_nr - 15].bg_color != 2 && virtual_area[virtual_position_object_nr - 15].bg_color != 3 && virtual_area[virtual_position_object_nr - 15].bg_color != 5)
                     virtual_area[virtual_position_object_nr - 15].bg_color = 4;
                 else if (virtual_area[virtual_position_object_nr - 15].figure_color == 'W' && virtual_area[virtual_position_object_nr - 15].bg_color != 5)
                     virtual_area[virtual_position_object_nr - 15].bg_color = 2;
@@ -2928,7 +3478,14 @@ void paintVirtualAreaColorsWhiteKnight()
         {
             if (virtual_area[virtual_position_object_nr].column >= 2)
             {
-                if (virtual_area[virtual_position_object_nr + 15].figure_color != 'W' && virtual_area[virtual_position_object_nr + 15].bg_color != 5)
+                if (virtual_area[virtual_position_object_nr + 15].big_figure == "blackKing")
+                {
+                    if (virtual_area[virtual_position_object_nr + 15].bg_color != 3)
+                        virtual_area[virtual_position_object_nr + 15].bg_color = 3;
+                    if (virtual_area[virtual_position_object_nr].bg_color != 3)
+                        virtual_area[virtual_position_object_nr].bg_color = 3;
+                }
+                else if (virtual_area[virtual_position_object_nr + 15].figure_color != 'W' && virtual_area[virtual_position_object_nr + 15].bg_color != 2 && virtual_area[virtual_position_object_nr + 15].bg_color != 3 && virtual_area[virtual_position_object_nr + 15].bg_color != 5)
                     virtual_area[virtual_position_object_nr + 15].bg_color = 4;
                 else if (virtual_area[virtual_position_object_nr + 15].figure_color == 'W' && virtual_area[virtual_position_object_nr + 15].bg_color != 5)
                     virtual_area[virtual_position_object_nr + 15].bg_color = 2;
@@ -2940,7 +3497,14 @@ void paintVirtualAreaColorsWhiteKnight()
         {
             if (virtual_area[virtual_position_object_nr].column <= 7)
             {
-                if (virtual_area[virtual_position_object_nr + 17].figure_color != 'W' && virtual_area[virtual_position_object_nr + 17].bg_color != 5)
+                if (virtual_area[virtual_position_object_nr + 17].big_figure == "blackKing")
+                {
+                    if (virtual_area[virtual_position_object_nr + 17].bg_color != 3)
+                        virtual_area[virtual_position_object_nr + 17].bg_color = 3;
+                    if (virtual_area[virtual_position_object_nr].bg_color != 3)
+                        virtual_area[virtual_position_object_nr].bg_color = 3;
+                }
+                else if (virtual_area[virtual_position_object_nr + 17].figure_color != 'W' && virtual_area[virtual_position_object_nr + 17].bg_color != 2 && virtual_area[virtual_position_object_nr + 17].bg_color != 3 && virtual_area[virtual_position_object_nr + 17].bg_color != 5)
                     virtual_area[virtual_position_object_nr + 17].bg_color = 4;
                 else if (virtual_area[virtual_position_object_nr + 17].figure_color == 'W' && virtual_area[virtual_position_object_nr + 17].bg_color != 5)
                     virtual_area[virtual_position_object_nr + 17].bg_color = 2;
@@ -2952,7 +3516,14 @@ void paintVirtualAreaColorsWhiteKnight()
         {
             if (virtual_area[virtual_position_object_nr].column >= 3)
             {
-                if (virtual_area[virtual_position_object_nr - 10].figure_color != 'W' && virtual_area[virtual_position_object_nr - 10].bg_color != 5)
+                if (virtual_area[virtual_position_object_nr - 10].big_figure == "blackKing")
+                {
+                    if (virtual_area[virtual_position_object_nr - 10].bg_color != 3)
+                        virtual_area[virtual_position_object_nr - 10].bg_color = 3;
+                    if (virtual_area[virtual_position_object_nr].bg_color != 3)
+                        virtual_area[virtual_position_object_nr].bg_color = 3;
+                }
+                else if (virtual_area[virtual_position_object_nr - 10].figure_color != 'W' && virtual_area[virtual_position_object_nr - 10].bg_color != 2 && virtual_area[virtual_position_object_nr - 10].bg_color != 3 && virtual_area[virtual_position_object_nr - 10].bg_color != 5)
                     virtual_area[virtual_position_object_nr - 10].bg_color = 4;
                 else if (virtual_area[virtual_position_object_nr - 10].figure_color == 'W' && virtual_area[virtual_position_object_nr - 10].bg_color != 5)
                     virtual_area[virtual_position_object_nr - 10].bg_color = 2;
@@ -2964,7 +3535,14 @@ void paintVirtualAreaColorsWhiteKnight()
         {
             if (virtual_area[virtual_position_object_nr].column >= 3)
             {
-                if (virtual_area[virtual_position_object_nr + 6].figure_color != 'W' && virtual_area[virtual_position_object_nr + 6].bg_color != 5)
+                if (virtual_area[virtual_position_object_nr + 6].big_figure == "blackKing")
+                {
+                    if (virtual_area[virtual_position_object_nr + 6].bg_color != 3)
+                        virtual_area[virtual_position_object_nr + 6].bg_color = 3;
+                    if (virtual_area[virtual_position_object_nr].bg_color != 3)
+                        virtual_area[virtual_position_object_nr].bg_color = 3;
+                }
+                else if (virtual_area[virtual_position_object_nr + 6].figure_color != 'W' && virtual_area[virtual_position_object_nr + 6].bg_color != 2 && virtual_area[virtual_position_object_nr + 6].bg_color != 3 && virtual_area[virtual_position_object_nr + 6].bg_color != 5)
                     virtual_area[virtual_position_object_nr + 6].bg_color = 4;
                 else if (virtual_area[virtual_position_object_nr + 6].figure_color == 'W' && virtual_area[virtual_position_object_nr + 6].bg_color != 5)
                     virtual_area[virtual_position_object_nr + 6].bg_color = 2;
@@ -2976,7 +3554,14 @@ void paintVirtualAreaColorsWhiteKnight()
         {
             if (virtual_area[virtual_position_object_nr].column <= 6)
             {
-                if (virtual_area[virtual_position_object_nr - 6].figure_color != 'W' && virtual_area[virtual_position_object_nr - 6].bg_color != 5)
+                if (virtual_area[virtual_position_object_nr - 6].big_figure == "blackKing")
+                {
+                    if (virtual_area[virtual_position_object_nr - 6].bg_color != 3)
+                        virtual_area[virtual_position_object_nr - 6].bg_color = 3;
+                    if (virtual_area[virtual_position_object_nr].bg_color != 3)
+                        virtual_area[virtual_position_object_nr].bg_color = 3;
+                }
+                else if (virtual_area[virtual_position_object_nr - 6].figure_color != 'W' && virtual_area[virtual_position_object_nr - 6].bg_color != 2 && virtual_area[virtual_position_object_nr - 6].bg_color != 3 && virtual_area[virtual_position_object_nr - 6].bg_color != 5)
                     virtual_area[virtual_position_object_nr - 6].bg_color = 4;
                 else if (virtual_area[virtual_position_object_nr - 6].figure_color == 'W' && virtual_area[virtual_position_object_nr - 6].bg_color != 5)
                     virtual_area[virtual_position_object_nr - 6].bg_color = 2;
@@ -2988,7 +3573,14 @@ void paintVirtualAreaColorsWhiteKnight()
         {
             if (virtual_area[virtual_position_object_nr].column <= 6)
             {
-                if (virtual_area[virtual_position_object_nr + 10].figure_color != 'W' && virtual_area[virtual_position_object_nr + 10].bg_color != 5)
+                if (virtual_area[virtual_position_object_nr + 10].big_figure == "blackKing")
+                {
+                    if (virtual_area[virtual_position_object_nr + 10].bg_color != 3)
+                        virtual_area[virtual_position_object_nr + 10].bg_color = 3;
+                    if (virtual_area[virtual_position_object_nr].bg_color != 3)
+                        virtual_area[virtual_position_object_nr].bg_color = 3;
+                }
+                else if (virtual_area[virtual_position_object_nr + 10].figure_color != 'W' && virtual_area[virtual_position_object_nr + 10].bg_color != 2 && virtual_area[virtual_position_object_nr + 10].bg_color != 3 && virtual_area[virtual_position_object_nr + 10].bg_color != 5)
                     virtual_area[virtual_position_object_nr + 10].bg_color = 4;
                 else if (virtual_area[virtual_position_object_nr + 10].figure_color == 'W' && virtual_area[virtual_position_object_nr + 10].bg_color != 5)
                     virtual_area[virtual_position_object_nr + 10].bg_color = 2;
@@ -3106,7 +3698,7 @@ void paintVirtualAreaColorsWhiteKing()
         {
             if (virtual_area[virtual_position_object_nr + 9].figure_color != 'W')
                 virtual_area[virtual_position_object_nr + 9].bg_color = 4;
-            else             if (virtual_area[virtual_position_object_nr + 9].figure_color == 'W')
+            else if (virtual_area[virtual_position_object_nr + 9].figure_color == 'W')
                 virtual_area[virtual_position_object_nr + 9].bg_color = 2;
         }
     }
@@ -3132,14 +3724,28 @@ void paintVirtualAreaColorsBlackPawn()
 {
     if (virtual_area[virtual_position_object_nr].figure_color == 'B')
     {
-        // TOP LEFT
-        if (virtual_area[virtual_position_object_nr + 7].figure_color != 'B' && virtual_area[virtual_position_object_nr].column > 1 && virtual_area[virtual_position_object_nr + 7].bg_color != 5)
+        // BOTTOM LEFT
+        if (virtual_area[virtual_position_object_nr + 7].big_figure == "whiteKing")
+        {
+            if (virtual_area[virtual_position_object_nr + 7].bg_color != 2)
+                virtual_area[virtual_position_object_nr + 7].bg_color = 3;
+            if (virtual_area[virtual_position_object_nr].bg_color != 2)
+                virtual_area[virtual_position_object_nr].bg_color = 3;
+        }
+        else if (virtual_area[virtual_position_object_nr + 7].figure_color != 'B' && virtual_area[virtual_position_object_nr].column > 1 && virtual_area[virtual_position_object_nr + 7].bg_color != 2 && virtual_area[virtual_position_object_nr + 7].bg_color != 3 && virtual_area[virtual_position_object_nr + 7].bg_color != 5)
             virtual_area[virtual_position_object_nr + 7].bg_color = 4;
         else if (virtual_area[virtual_position_object_nr + 7].figure_color == 'B' && virtual_area[virtual_position_object_nr].column > 1 && virtual_area[virtual_position_object_nr + 7].bg_color != 5)
             virtual_area[virtual_position_object_nr + 7].bg_color = 2;
 
-        // TOP RIGHT
-        if (virtual_area[virtual_position_object_nr + 9].figure_color != 'B' && virtual_area[virtual_position_object_nr].column < 8 && virtual_area[virtual_position_object_nr + 9].bg_color != 5)
+        // BOTTOM RIGHT
+        if (virtual_area[virtual_position_object_nr + 9].big_figure == "whiteKing")
+        {
+            if (virtual_area[virtual_position_object_nr + 9].bg_color != 2)
+                virtual_area[virtual_position_object_nr + 9].bg_color = 3;
+            if (virtual_area[virtual_position_object_nr].bg_color != 2)
+                virtual_area[virtual_position_object_nr].bg_color = 3;
+        }
+        else if (virtual_area[virtual_position_object_nr + 9].figure_color != 'B' && virtual_area[virtual_position_object_nr].column < 8 && virtual_area[virtual_position_object_nr + 9].bg_color != 2 && virtual_area[virtual_position_object_nr + 9].bg_color != 3 && virtual_area[virtual_position_object_nr + 9].bg_color != 5)
             virtual_area[virtual_position_object_nr + 9].bg_color = 4;
         else if (virtual_area[virtual_position_object_nr + 9].figure_color == 'B' && virtual_area[virtual_position_object_nr].column < 8 && virtual_area[virtual_position_object_nr + 9].bg_color != 5)
             virtual_area[virtual_position_object_nr + 9].bg_color = 2;
@@ -3155,7 +3761,14 @@ void paintVirtualAreaColorsBlackKnight()
         {
             if (virtual_area[virtual_position_object_nr].column >= 2)
             {
-                if (virtual_area[virtual_position_object_nr - 17].figure_color != 'B' && virtual_area[virtual_position_object_nr - 17].bg_color != 5)
+                if (virtual_area[virtual_position_object_nr - 17].big_figure == "whiteKing")
+                {
+                    if (virtual_area[virtual_position_object_nr - 17].bg_color != 3)
+                        virtual_area[virtual_position_object_nr - 17].bg_color = 3;
+                    if (virtual_area[virtual_position_object_nr].bg_color != 3)
+                        virtual_area[virtual_position_object_nr].bg_color = 3;
+                }
+                else if (virtual_area[virtual_position_object_nr - 17].figure_color != 'B' && virtual_area[virtual_position_object_nr - 17].bg_color != 2 && virtual_area[virtual_position_object_nr - 17].bg_color != 3 && virtual_area[virtual_position_object_nr - 17].bg_color != 5)
                     virtual_area[virtual_position_object_nr - 17].bg_color = 4;
                 else if (virtual_area[virtual_position_object_nr - 17].figure_color == 'B' && virtual_area[virtual_position_object_nr - 17].bg_color != 5)
                     virtual_area[virtual_position_object_nr - 17].bg_color = 2;
@@ -3167,7 +3780,14 @@ void paintVirtualAreaColorsBlackKnight()
         {
             if (virtual_area[virtual_position_object_nr].column <= 7)
             {
-                if (virtual_area[virtual_position_object_nr - 15].figure_color != 'B' && virtual_area[virtual_position_object_nr - 15].bg_color != 5)
+                if (virtual_area[virtual_position_object_nr - 15].big_figure == "whiteKing")
+                {
+                    if (virtual_area[virtual_position_object_nr - 15].bg_color != 3)
+                        virtual_area[virtual_position_object_nr - 15].bg_color = 3;
+                    if (virtual_area[virtual_position_object_nr].bg_color != 3)
+                        virtual_area[virtual_position_object_nr].bg_color = 3;
+                }
+                else if (virtual_area[virtual_position_object_nr - 15].figure_color != 'B' && virtual_area[virtual_position_object_nr - 15].bg_color != 2 && virtual_area[virtual_position_object_nr - 15].bg_color != 3 && virtual_area[virtual_position_object_nr - 15].bg_color != 5)
                     virtual_area[virtual_position_object_nr - 15].bg_color = 4;
                 else if (virtual_area[virtual_position_object_nr - 15].figure_color == 'B' && virtual_area[virtual_position_object_nr - 15].bg_color != 5)
                     virtual_area[virtual_position_object_nr - 15].bg_color = 2;
@@ -3179,7 +3799,14 @@ void paintVirtualAreaColorsBlackKnight()
         {
             if (virtual_area[virtual_position_object_nr].column >= 2)
             {
-                if (virtual_area[virtual_position_object_nr + 15].figure_color != 'B' && virtual_area[virtual_position_object_nr + 15].bg_color != 5)
+                if (virtual_area[virtual_position_object_nr + 15].big_figure == "whiteKing")
+                {
+                    if (virtual_area[virtual_position_object_nr + 15].bg_color != 3)
+                        virtual_area[virtual_position_object_nr + 15].bg_color = 3;
+                    if (virtual_area[virtual_position_object_nr].bg_color != 3)
+                        virtual_area[virtual_position_object_nr].bg_color = 3;
+                }
+                else if (virtual_area[virtual_position_object_nr + 15].figure_color != 'B' && virtual_area[virtual_position_object_nr + 15].bg_color != 2 && virtual_area[virtual_position_object_nr + 15].bg_color != 3 && virtual_area[virtual_position_object_nr + 15].bg_color != 5)
                     virtual_area[virtual_position_object_nr + 15].bg_color = 4;
                 else if (virtual_area[virtual_position_object_nr + 15].figure_color == 'B' && virtual_area[virtual_position_object_nr + 15].bg_color != 5)
                     virtual_area[virtual_position_object_nr + 15].bg_color = 2;
@@ -3191,7 +3818,14 @@ void paintVirtualAreaColorsBlackKnight()
         {
             if (virtual_area[virtual_position_object_nr].column <= 7)
             {
-                if (virtual_area[virtual_position_object_nr + 17].figure_color != 'B' && virtual_area[virtual_position_object_nr + 17].bg_color != 5)
+                if (virtual_area[virtual_position_object_nr + 17].big_figure == "whiteKing")
+                {
+                    if (virtual_area[virtual_position_object_nr + 17].bg_color != 3)
+                        virtual_area[virtual_position_object_nr + 17].bg_color = 3;
+                    if (virtual_area[virtual_position_object_nr].bg_color != 3)
+                        virtual_area[virtual_position_object_nr].bg_color = 3;
+                }
+                else if (virtual_area[virtual_position_object_nr + 17].figure_color != 'B' && virtual_area[virtual_position_object_nr + 17].bg_color != 2 && virtual_area[virtual_position_object_nr + 17].bg_color != 3 && virtual_area[virtual_position_object_nr + 17].bg_color != 5)
                     virtual_area[virtual_position_object_nr + 17].bg_color = 4;
                 else if (virtual_area[virtual_position_object_nr + 17].figure_color == 'B' && virtual_area[virtual_position_object_nr + 17].bg_color != 5)
                     virtual_area[virtual_position_object_nr + 17].bg_color = 2;
@@ -3203,7 +3837,14 @@ void paintVirtualAreaColorsBlackKnight()
         {
             if (virtual_area[virtual_position_object_nr].column >= 3)
             {
-                if (virtual_area[virtual_position_object_nr - 10].figure_color != 'B' && virtual_area[virtual_position_object_nr - 10].bg_color != 5)
+                if (virtual_area[virtual_position_object_nr - 10].big_figure == "whiteKing")
+                {
+                    if (virtual_area[virtual_position_object_nr - 10].bg_color != 3)
+                        virtual_area[virtual_position_object_nr - 10].bg_color = 3;
+                    if (virtual_area[virtual_position_object_nr].bg_color != 3)
+                        virtual_area[virtual_position_object_nr].bg_color = 3;
+                }
+                else if (virtual_area[virtual_position_object_nr - 10].figure_color != 'B' && virtual_area[virtual_position_object_nr - 10].bg_color != 2 && virtual_area[virtual_position_object_nr - 10].bg_color != 3 && virtual_area[virtual_position_object_nr - 10].bg_color != 5)
                     virtual_area[virtual_position_object_nr - 10].bg_color = 4;
                 else if (virtual_area[virtual_position_object_nr - 10].figure_color == 'B' && virtual_area[virtual_position_object_nr - 10].bg_color != 5)
                     virtual_area[virtual_position_object_nr - 10].bg_color = 2;
@@ -3215,7 +3856,14 @@ void paintVirtualAreaColorsBlackKnight()
         {
             if (virtual_area[virtual_position_object_nr].column >= 3)
             {
-                if (virtual_area[virtual_position_object_nr + 6].figure_color != 'B' && virtual_area[virtual_position_object_nr + 6].bg_color != 5)
+                if (virtual_area[virtual_position_object_nr + 6].big_figure == "whiteKing")
+                {
+                    if (virtual_area[virtual_position_object_nr + 6].bg_color != 3)
+                        virtual_area[virtual_position_object_nr + 6].bg_color = 3;
+                    if (virtual_area[virtual_position_object_nr].bg_color != 3)
+                        virtual_area[virtual_position_object_nr].bg_color = 3;
+                }
+                else if (virtual_area[virtual_position_object_nr + 6].figure_color != 'B' && virtual_area[virtual_position_object_nr + 6].bg_color != 2 && virtual_area[virtual_position_object_nr + 6].bg_color != 3 && virtual_area[virtual_position_object_nr + 6].bg_color != 5)
                     virtual_area[virtual_position_object_nr + 6].bg_color = 4;
                 else if (virtual_area[virtual_position_object_nr + 6].figure_color == 'B' && virtual_area[virtual_position_object_nr + 6].bg_color != 5)
                     virtual_area[virtual_position_object_nr + 6].bg_color = 2;
@@ -3227,7 +3875,14 @@ void paintVirtualAreaColorsBlackKnight()
         {
             if (virtual_area[virtual_position_object_nr].column <= 6)
             {
-                if (virtual_area[virtual_position_object_nr - 6].figure_color != 'B' && virtual_area[virtual_position_object_nr - 6].bg_color != 5)
+                if (virtual_area[virtual_position_object_nr - 6].big_figure == "whiteKing")
+                {
+                    if (virtual_area[virtual_position_object_nr - 6].bg_color != 3)
+                        virtual_area[virtual_position_object_nr - 6].bg_color = 3;
+                    if (virtual_area[virtual_position_object_nr].bg_color != 3)
+                        virtual_area[virtual_position_object_nr].bg_color = 3;
+                }
+                else if (virtual_area[virtual_position_object_nr - 6].figure_color != 'B' && virtual_area[virtual_position_object_nr - 6].bg_color != 2 && virtual_area[virtual_position_object_nr - 6].bg_color != 3 && virtual_area[virtual_position_object_nr - 6].bg_color != 5)
                     virtual_area[virtual_position_object_nr - 6].bg_color = 4;
                 else if (virtual_area[virtual_position_object_nr - 6].figure_color == 'B' && virtual_area[virtual_position_object_nr - 6].bg_color != 5)
                     virtual_area[virtual_position_object_nr - 6].bg_color = 2;
@@ -3239,7 +3894,14 @@ void paintVirtualAreaColorsBlackKnight()
         {
             if (virtual_area[virtual_position_object_nr].column <= 6)
             {
-                if (virtual_area[virtual_position_object_nr + 10].figure_color != 'B' && virtual_area[virtual_position_object_nr + 10].bg_color != 5)
+                if (virtual_area[virtual_position_object_nr + 10].big_figure == "whiteKing")
+                {
+                    if (virtual_area[virtual_position_object_nr + 10].bg_color != 3)
+                        virtual_area[virtual_position_object_nr + 10].bg_color = 3;
+                    if (virtual_area[virtual_position_object_nr].bg_color != 3)
+                        virtual_area[virtual_position_object_nr].bg_color = 3;
+                }
+                else if (virtual_area[virtual_position_object_nr + 10].figure_color != 'B' && virtual_area[virtual_position_object_nr + 10].bg_color != 2 && virtual_area[virtual_position_object_nr + 10].bg_color != 3 && virtual_area[virtual_position_object_nr + 10].bg_color != 5)
                     virtual_area[virtual_position_object_nr + 10].bg_color = 4;
                 else if (virtual_area[virtual_position_object_nr + 10].figure_color == 'B' && virtual_area[virtual_position_object_nr + 10].bg_color != 5)
                     virtual_area[virtual_position_object_nr + 10].bg_color = 2;
@@ -3372,7 +4034,18 @@ void virtualWhiteTopSide()
             break;
         if (virtual_area[virtual_position_object_nr - 8 * i].figure_color != 'E')
         {
-            if (virtual_area[virtual_position_object_nr - 8 * i].figure_color == 'B')
+            if (virtual_area[virtual_position_object_nr - 8 * i].big_figure == "blackKing")
+            {
+                for (int j = i; j >= 1; j--)
+                {
+                    if (virtual_area[virtual_position_object_nr - 8 * j].bg_color != 2)
+                        virtual_area[virtual_position_object_nr - 8 * j].bg_color = 3;
+                }
+                if (virtual_area[virtual_position_object_nr].bg_color != 2)
+                    virtual_area[virtual_position_object_nr].bg_color = 3;
+                break;
+            }
+            else if (virtual_area[virtual_position_object_nr - 8 * i].figure_color == 'B')
             {
                 for (int k = 1; k < 7; k++)
                 {
@@ -3380,7 +4053,7 @@ void virtualWhiteTopSide()
                     {
                         if (virtual_area[virtual_position_object_nr - 8 * (i + k)].big_figure != "blackKing")
                         {
-                            if (virtual_area[virtual_position_object_nr - 8 * i].bg_color != 5)
+                            if (virtual_area[virtual_position_object_nr - 8 * i].bg_color != 2 && virtual_area[virtual_position_object_nr - 8 * i].bg_color != 3 && virtual_area[virtual_position_object_nr - 8 * i].bg_color != 5)
                             {
                                 virtual_area[virtual_position_object_nr - 8 * i].bg_color = 4;
                                 stop = true;
@@ -3432,7 +4105,18 @@ void virtualWhiteBottomSide()
             break;
         if (virtual_area[virtual_position_object_nr + 8 * i].figure_color != 'E')
         {
-            if (virtual_area[virtual_position_object_nr + 8 * i].figure_color == 'B')
+            if (virtual_area[virtual_position_object_nr + 8 * i].big_figure == "blackKing")
+            {
+                for (int j = i; j >= 1; j--)
+                {
+                    if (virtual_area[virtual_position_object_nr + 8 * j].bg_color != 2)
+                        virtual_area[virtual_position_object_nr + 8 * j].bg_color = 3;
+                }
+                if (virtual_area[virtual_position_object_nr].bg_color != 2)
+                    virtual_area[virtual_position_object_nr].bg_color = 3;
+                break;
+            }
+            else if (virtual_area[virtual_position_object_nr + 8 * i].figure_color == 'B')
             {
                 for (int k = 1; k < 7; k++)
                 {
@@ -3440,7 +4124,7 @@ void virtualWhiteBottomSide()
                     {
                         if (virtual_area[virtual_position_object_nr + 8 * (i + k)].big_figure != "blackKing")
                         {
-                            if (virtual_area[virtual_position_object_nr + 8 * i].bg_color != 5)
+                            if (virtual_area[virtual_position_object_nr + 8 * i].bg_color != 2 && virtual_area[virtual_position_object_nr + 8 * i].bg_color != 3 && virtual_area[virtual_position_object_nr + 8 * i].bg_color != 5)
                             {
                                 virtual_area[virtual_position_object_nr + 8 * i].bg_color = 4;
                                 stop = true;
@@ -3492,7 +4176,18 @@ void virtualWhiteLeftSide()
             break;
         if (virtual_area[virtual_position_object_nr - 1 * i].figure_color != 'E')
         {
-            if (virtual_area[virtual_position_object_nr - 1 * i].figure_color == 'B')
+            if (virtual_area[virtual_position_object_nr - 1 * i].big_figure == "blackKing")
+            {
+                for (int j = i; j >= 1; j--)
+                {
+                    if (virtual_area[virtual_position_object_nr - 1 * j].bg_color != 2)
+                        virtual_area[virtual_position_object_nr - 1 * j].bg_color = 3;
+                }
+                if (virtual_area[virtual_position_object_nr].bg_color != 2)
+                    virtual_area[virtual_position_object_nr].bg_color = 3;
+                break;
+            }
+            else if (virtual_area[virtual_position_object_nr - 1 * i].figure_color == 'B')
             {
                 for (int k = 1; k < 7; k++)
                 {
@@ -3500,7 +4195,7 @@ void virtualWhiteLeftSide()
                     {
                         if (virtual_area[virtual_position_object_nr - 1 * (i + k)].big_figure != "blackKing")
                         {
-                            if (virtual_area[virtual_position_object_nr - 1 * i].bg_color != 5)
+                            if (virtual_area[virtual_position_object_nr - 8 * i].bg_color != 2 && virtual_area[virtual_position_object_nr + 1 * i].bg_color != 3 && virtual_area[virtual_position_object_nr + 1 * i].bg_color != 5)
                             {
                                 virtual_area[virtual_position_object_nr - 1 * i].bg_color = 4;
                                 stop = true;
@@ -3552,7 +4247,18 @@ void virtualWhiteRightSide()
             break;
         if (virtual_area[virtual_position_object_nr + 1 * i].figure_color != 'E')
         {
-            if (virtual_area[virtual_position_object_nr + 1 * i].figure_color == 'B')
+            if (virtual_area[virtual_position_object_nr + 1 * i].big_figure == "blackKing")
+            {
+                for (int j = i; j >= 1; j--)
+                {
+                    if (virtual_area[virtual_position_object_nr + 1 * j].bg_color != 2)
+                        virtual_area[virtual_position_object_nr + 1 * j].bg_color = 3;
+                }
+                if (virtual_area[virtual_position_object_nr].bg_color != 2)
+                    virtual_area[virtual_position_object_nr].bg_color = 3;
+                break;
+            }
+            else if (virtual_area[virtual_position_object_nr + 1 * i].figure_color == 'B')
             {
                 for (int k = 1; k < 7; k++)
                 {
@@ -3560,7 +4266,7 @@ void virtualWhiteRightSide()
                     {
                         if (virtual_area[virtual_position_object_nr + 1 * (i + k)].big_figure != "blackKing")
                         {
-                            if (virtual_area[virtual_position_object_nr + 1 * i].bg_color != 5)
+                            if (virtual_area[virtual_position_object_nr + 1 * i].bg_color != 2 && virtual_area[virtual_position_object_nr + 1 * i].bg_color != 3 && virtual_area[virtual_position_object_nr + 1 * i].bg_color != 5)
                             {
                                 virtual_area[virtual_position_object_nr + 1 * i].bg_color = 4;
                                 stop = true;
@@ -3612,7 +4318,18 @@ void virtualWhiteTopLeftSide()
             break;
         if (virtual_area[virtual_position_object_nr - 9 * i].figure_color != 'E')
         {
-            if (virtual_area[virtual_position_object_nr - 9 * i].figure_color == 'B')
+            if (virtual_area[virtual_position_object_nr - 9 * i].big_figure == "blackKing")
+            {
+                for (int j = i; j >= 1; j--)
+                {
+                    if (virtual_area[virtual_position_object_nr - 9 * j].bg_color != 2)
+                        virtual_area[virtual_position_object_nr - 9 * j].bg_color = 3;
+                }
+                if (virtual_area[virtual_position_object_nr].bg_color != 2)
+                    virtual_area[virtual_position_object_nr].bg_color = 3;
+                break;
+            }
+            else if (virtual_area[virtual_position_object_nr - 9 * i].figure_color == 'B')
             {
                 for (int k = 1; k < 7; k++)
                 {
@@ -3620,7 +4337,7 @@ void virtualWhiteTopLeftSide()
                     {
                         if (virtual_area[virtual_position_object_nr - 9 * (i + k)].big_figure != "blackKing")
                         {
-                            if (virtual_area[virtual_position_object_nr - 9 * i].bg_color != 5)
+                            if (virtual_area[virtual_position_object_nr - 9 * i].bg_color != 2 && virtual_area[virtual_position_object_nr - 9 * i].bg_color != 3 && virtual_area[virtual_position_object_nr - 9 * i].bg_color != 5)
                             {
                                 virtual_area[virtual_position_object_nr - 9 * i].bg_color = 4;
                                 stop = true;
@@ -3672,7 +4389,18 @@ void virtualWhiteTopRightSide()
             break;
         if (virtual_area[virtual_position_object_nr - 7 * i].figure_color != 'E')
         {
-            if (virtual_area[virtual_position_object_nr - 7 * i].figure_color == 'B')
+            if (virtual_area[virtual_position_object_nr - 7 * i].big_figure == "blackKing")
+            {
+                for (int j = i; j >= 1; j--)
+                {
+                    if (virtual_area[virtual_position_object_nr - 7 * j].bg_color != 2)
+                        virtual_area[virtual_position_object_nr - 7 * j].bg_color = 3;
+                }
+                if (virtual_area[virtual_position_object_nr].bg_color != 2)
+                    virtual_area[virtual_position_object_nr].bg_color = 3;
+                break;
+            }
+            else if (virtual_area[virtual_position_object_nr - 7 * i].figure_color == 'B')
             {
                 for (int k = 1; k < 7; k++)
                 {
@@ -3680,7 +4408,7 @@ void virtualWhiteTopRightSide()
                     {
                         if (virtual_area[virtual_position_object_nr - 7 * (i + k)].big_figure != "blackKing")
                         {
-                            if (virtual_area[virtual_position_object_nr - 7 * i].bg_color != 5)
+                            if (virtual_area[virtual_position_object_nr - 7 * i].bg_color != 2 && virtual_area[virtual_position_object_nr - 7 * i].bg_color != 3 && virtual_area[virtual_position_object_nr - 7 * i].bg_color != 5)
                             {
                                 virtual_area[virtual_position_object_nr - 7 * i].bg_color = 4;
                                 stop = true;
@@ -3732,7 +4460,18 @@ void virtualWhiteBottomLeftSide()
             break;
         if (virtual_area[virtual_position_object_nr + 7 * i].figure_color != 'E')
         {
-            if (virtual_area[virtual_position_object_nr + 7 * i].figure_color == 'B')
+            if (virtual_area[virtual_position_object_nr + 7 * i].big_figure == "blackKing")
+            {
+                for (int j = i; j >= 1; j--)
+                {
+                    if (virtual_area[virtual_position_object_nr + 7 * j].bg_color != 2)
+                        virtual_area[virtual_position_object_nr + 7 * j].bg_color = 3;
+                }
+                if (virtual_area[virtual_position_object_nr].bg_color != 2)
+                    virtual_area[virtual_position_object_nr].bg_color = 3;
+                break;
+            }
+            else if (virtual_area[virtual_position_object_nr + 7 * i].figure_color == 'B')
             {
                 for (int k = 1; k < 7; k++)
                 {
@@ -3740,7 +4479,7 @@ void virtualWhiteBottomLeftSide()
                     {
                         if (virtual_area[virtual_position_object_nr + 7 * (i + k)].big_figure != "blackKing")
                         {
-                            if (virtual_area[virtual_position_object_nr + 7 * i].bg_color != 5)
+                            if (virtual_area[virtual_position_object_nr + 7 * i].bg_color != 2 && virtual_area[virtual_position_object_nr + 7 * i].bg_color != 3 && virtual_area[virtual_position_object_nr + 7 * i].bg_color != 5)
                             {
                                 virtual_area[virtual_position_object_nr + 7 * i].bg_color = 4;
                                 stop = true;
@@ -3792,7 +4531,18 @@ void virtualWhiteBottomRightSide()
             break;
         if (virtual_area[virtual_position_object_nr + 9 * i].figure_color != 'E')
         {
-            if (virtual_area[virtual_position_object_nr + 9 * i].figure_color == 'B')
+            if (virtual_area[virtual_position_object_nr + 9 * i].big_figure == "blackKing")
+            {
+                for (int j = i; j >= 1; j--)
+                {
+                    if (virtual_area[virtual_position_object_nr + 9 * j].bg_color != 2)
+                        virtual_area[virtual_position_object_nr + 9 * j].bg_color = 3;
+                }
+                if (virtual_area[virtual_position_object_nr].bg_color != 2)
+                    virtual_area[virtual_position_object_nr].bg_color = 3;
+                break;
+            }
+            else if (virtual_area[virtual_position_object_nr + 9 * i].figure_color == 'B')
             {
                 for (int k = 1; k < 7; k++)
                 {
@@ -3800,7 +4550,7 @@ void virtualWhiteBottomRightSide()
                     {
                         if (virtual_area[virtual_position_object_nr + 9 * (i + k)].big_figure != "blackKing")
                         {
-                            if (virtual_area[virtual_position_object_nr + 9 * i].bg_color != 5)
+                            if (virtual_area[virtual_position_object_nr + 9 * i].bg_color != 2 && virtual_area[virtual_position_object_nr + 9 * i].bg_color != 3 && virtual_area[virtual_position_object_nr + 9 * i].bg_color != 5)
                             {
                                 virtual_area[virtual_position_object_nr + 9 * i].bg_color = 4;
                                 stop = true;
@@ -3852,7 +4602,18 @@ void virtualBlackTopSide()
             break;
         if (virtual_area[virtual_position_object_nr - 8 * i].figure_color != 'E')
         {
-            if (virtual_area[virtual_position_object_nr - 8 * i].figure_color == 'W')
+            if (virtual_area[virtual_position_object_nr - 8 * i].big_figure == "whiteKing")
+            {
+                for (int j = i; j >= 1; j--)
+                {
+                    if (virtual_area[virtual_position_object_nr - 8 * j].bg_color != 2)
+                        virtual_area[virtual_position_object_nr - 8 * j].bg_color = 3;
+                }
+                if (virtual_area[virtual_position_object_nr].bg_color != 2)
+                    virtual_area[virtual_position_object_nr].bg_color = 3;
+                break;
+            }
+            else if (virtual_area[virtual_position_object_nr - 8 * i].figure_color == 'W')
             {
                 for (int k = 1; k < 7; k++)
                 {
@@ -3860,7 +4621,7 @@ void virtualBlackTopSide()
                     {
                         if (virtual_area[virtual_position_object_nr - 8 * (i + k)].big_figure != "whiteKing")
                         {
-                            if (virtual_area[virtual_position_object_nr - 8 * i].bg_color != 5)
+                            if (virtual_area[virtual_position_object_nr - 8 * i].bg_color != 2 && virtual_area[virtual_position_object_nr - 8 * i].bg_color != 3 && virtual_area[virtual_position_object_nr - 8 * i].bg_color != 5)
                             {
                                 virtual_area[virtual_position_object_nr - 8 * i].bg_color = 4;
                                 stop = true;
@@ -3912,7 +4673,18 @@ void virtualBlackBottomSide()
             break;
         if (virtual_area[virtual_position_object_nr + 8 * i].figure_color != 'E')
         {
-            if (virtual_area[virtual_position_object_nr + 8 * i].figure_color == 'W')
+            if (virtual_area[virtual_position_object_nr + 8 * i].big_figure == "whiteKing")
+            {
+                for (int j = i; j >= 1; j--)
+                {
+                    if (virtual_area[virtual_position_object_nr + 8 * j].bg_color != 2)
+                        virtual_area[virtual_position_object_nr + 8 * j].bg_color = 3;
+                }
+                if (virtual_area[virtual_position_object_nr].bg_color != 2)
+                    virtual_area[virtual_position_object_nr].bg_color = 3;
+                break;
+            }
+            else if (virtual_area[virtual_position_object_nr + 8 * i].figure_color == 'W')
             {
                 for (int k = 1; k < 7; k++)
                 {
@@ -3920,7 +4692,7 @@ void virtualBlackBottomSide()
                     {
                         if (virtual_area[virtual_position_object_nr + 8 * (i + k)].big_figure != "whiteKing")
                         {
-                            if (virtual_area[virtual_position_object_nr + 8 * i].bg_color != 5)
+                            if (virtual_area[virtual_position_object_nr + 8 * i].bg_color != 2 && virtual_area[virtual_position_object_nr + 8 * i].bg_color != 3 && virtual_area[virtual_position_object_nr + 8 * i].bg_color != 5)
                             {
                                 virtual_area[virtual_position_object_nr + 8 * i].bg_color = 4;
                                 stop = true;
@@ -3972,7 +4744,18 @@ void virtualBlackLeftSide()
             break;
         if (virtual_area[virtual_position_object_nr - 1 * i].figure_color != 'E')
         {
-            if (virtual_area[virtual_position_object_nr - 1 * i].figure_color == 'W')
+            if (virtual_area[virtual_position_object_nr - 1 * i].big_figure == "whiteKing")
+            {
+                for (int j = i; j >= 1; j--)
+                {
+                    if (virtual_area[virtual_position_object_nr - 1 * j].bg_color != 2)
+                        virtual_area[virtual_position_object_nr - 1 * j].bg_color = 3;
+                }
+                if (virtual_area[virtual_position_object_nr].bg_color != 2)
+                    virtual_area[virtual_position_object_nr].bg_color = 3;
+                break;
+            }
+            else if (virtual_area[virtual_position_object_nr - 1 * i].figure_color == 'W')
             {
                 for (int k = 1; k < 7; k++)
                 {
@@ -3980,7 +4763,7 @@ void virtualBlackLeftSide()
                     {
                         if (virtual_area[virtual_position_object_nr - 1 * (i + k)].big_figure != "whiteKing")
                         {
-                            if (virtual_area[virtual_position_object_nr - 1 * i].bg_color != 5)
+                            if (virtual_area[virtual_position_object_nr - 1 * i].bg_color != 2 && virtual_area[virtual_position_object_nr - 1 * i].bg_color != 3 && virtual_area[virtual_position_object_nr - 1 * i].bg_color != 5)
                             {
                                 virtual_area[virtual_position_object_nr - 1 * i].bg_color = 4;
                                 stop = true;
@@ -4032,7 +4815,18 @@ void virtualBlackRightSide()
             break;
         if (virtual_area[virtual_position_object_nr + 1 * i].figure_color != 'E')
         {
-            if (virtual_area[virtual_position_object_nr + 1 * i].figure_color == 'W')
+            if (virtual_area[virtual_position_object_nr + 1 * i].big_figure == "whiteKing")
+            {
+                for (int j = i; j >= 1; j--)
+                {
+                    if (virtual_area[virtual_position_object_nr + 1 * j].bg_color != 2)
+                        virtual_area[virtual_position_object_nr + 1 * j].bg_color = 3;
+                }
+                if (virtual_area[virtual_position_object_nr].bg_color != 2)
+                    virtual_area[virtual_position_object_nr].bg_color = 3;
+                break;
+            }
+            else if (virtual_area[virtual_position_object_nr + 1 * i].figure_color == 'W')
             {
                 for (int k = 1; k < 7; k++)
                 {
@@ -4040,7 +4834,7 @@ void virtualBlackRightSide()
                     {
                         if (virtual_area[virtual_position_object_nr + 1 * (i + k)].big_figure != "whiteKing")
                         {
-                            if (virtual_area[virtual_position_object_nr + 1 * i].bg_color != 5)
+                            if (virtual_area[virtual_position_object_nr + 1 * i].bg_color != 2 && virtual_area[virtual_position_object_nr + 1 * i].bg_color != 3 && virtual_area[virtual_position_object_nr + 1 * i].bg_color != 5)
                             {
                                 virtual_area[virtual_position_object_nr + 1 * i].bg_color = 4;
                                 stop = true;
@@ -4092,7 +4886,18 @@ void virtualBlackTopLeftSide()
             break;
         if (virtual_area[virtual_position_object_nr - 9 * i].figure_color != 'E')
         {
-            if (virtual_area[virtual_position_object_nr - 9 * i].figure_color == 'W')
+            if (virtual_area[virtual_position_object_nr - 9 * i].big_figure == "whiteKing")
+            {
+                for (int j = i; j >= 1; j--)
+                {
+                    if (virtual_area[virtual_position_object_nr - 9 * j].bg_color != 2)
+                        virtual_area[virtual_position_object_nr - 9 * j].bg_color = 3;
+                }
+                if (virtual_area[virtual_position_object_nr].bg_color != 2)
+                    virtual_area[virtual_position_object_nr].bg_color = 3;
+                break;
+            }
+            else if (virtual_area[virtual_position_object_nr - 9 * i].figure_color == 'W')
             {
                 for (int k = 1; k < 7; k++)
                 {
@@ -4100,7 +4905,7 @@ void virtualBlackTopLeftSide()
                     {
                         if (virtual_area[virtual_position_object_nr - 9 * (i + k)].big_figure != "whiteKing")
                         {
-                            if (virtual_area[virtual_position_object_nr - 9 * i].bg_color != 5)
+                            if (virtual_area[virtual_position_object_nr - 9 * i].bg_color != 2 && virtual_area[virtual_position_object_nr - 9 * i].bg_color != 3 && virtual_area[virtual_position_object_nr - 9 * i].bg_color != 5)
                             {
                                 virtual_area[virtual_position_object_nr - 9 * i].bg_color = 4;
                                 stop = true;
@@ -4152,7 +4957,18 @@ void virtualBlackTopRightSide()
             break;
         if (virtual_area[virtual_position_object_nr - 7 * i].figure_color != 'E')
         {
-            if (virtual_area[virtual_position_object_nr - 7 * i].figure_color == 'W')
+            if (virtual_area[virtual_position_object_nr - 7 * i].big_figure == "whiteKing")
+            {
+                for (int j = i; j >= 1; j--)
+                {
+                    if (virtual_area[virtual_position_object_nr - 7 * j].bg_color != 2)
+                        virtual_area[virtual_position_object_nr - 7 * j].bg_color = 3;
+                }
+                if (virtual_area[virtual_position_object_nr].bg_color != 2)
+                    virtual_area[virtual_position_object_nr].bg_color = 3;
+                break;
+            }
+            else if (virtual_area[virtual_position_object_nr - 7 * i].figure_color == 'W')
             {
                 for (int k = 1; k < 7; k++)
                 {
@@ -4160,7 +4976,7 @@ void virtualBlackTopRightSide()
                     {
                         if (virtual_area[virtual_position_object_nr - 7 * (i + k)].big_figure != "whiteKing")
                         {
-                            if (virtual_area[virtual_position_object_nr - 7 * i].bg_color != 5)
+                            if (virtual_area[virtual_position_object_nr - 7 * i].bg_color != 2 && virtual_area[virtual_position_object_nr - 7 * i].bg_color != 3 && virtual_area[virtual_position_object_nr - 7 * i].bg_color != 5)
                             {
                                 virtual_area[virtual_position_object_nr - 7 * i].bg_color = 4;
                                 stop = true;
@@ -4212,7 +5028,18 @@ void virtualBlackBottomLeftSide()
             break;
         if (virtual_area[virtual_position_object_nr + 7 * i].figure_color != 'E')
         {
-            if (virtual_area[virtual_position_object_nr + 7 * i].figure_color == 'W')
+            if (virtual_area[virtual_position_object_nr + 7 * i].big_figure == "whiteKing")
+            {
+                for (int j = i; j >= 1; j--)
+                {
+                    if (virtual_area[virtual_position_object_nr + 7 * j].bg_color != 2)
+                        virtual_area[virtual_position_object_nr + 7 * j].bg_color = 3;
+                }
+                if (virtual_area[virtual_position_object_nr].bg_color != 2)
+                    virtual_area[virtual_position_object_nr].bg_color = 3;
+                break;
+            }
+            else if (virtual_area[virtual_position_object_nr + 7 * i].figure_color == 'W')
             {
                 for (int k = 1; k < 7; k++)
                 {
@@ -4220,7 +5047,7 @@ void virtualBlackBottomLeftSide()
                     {
                         if (virtual_area[virtual_position_object_nr + 7 * (i + k)].big_figure != "whiteKing")
                         {
-                            if (virtual_area[virtual_position_object_nr + 7 * i].bg_color != 5)
+                            if (virtual_area[virtual_position_object_nr + 7 * i].bg_color != 2 && virtual_area[virtual_position_object_nr + 7 * i].bg_color != 3 && virtual_area[virtual_position_object_nr + 7 * i].bg_color != 5)
                             {
                                 virtual_area[virtual_position_object_nr + 7 * i].bg_color = 4;
                                 stop = true;
@@ -4272,7 +5099,18 @@ void virtualBlackBottomRightSide()
             break;
         if (virtual_area[virtual_position_object_nr + 9 * i].figure_color != 'E')
         {
-            if (virtual_area[virtual_position_object_nr + 9 * i].figure_color == 'W')
+            if (virtual_area[virtual_position_object_nr + 9 * i].big_figure == "whiteKing")
+            {
+                for (int j = i; j >= 1; j--)
+                {
+                    if (virtual_area[virtual_position_object_nr + 9 * j].bg_color != 2)
+                        virtual_area[virtual_position_object_nr + 9 * j].bg_color = 3;
+                }
+                if (virtual_area[virtual_position_object_nr].bg_color != 2)
+                    virtual_area[virtual_position_object_nr].bg_color = 3;
+                break;
+            }
+            else if (virtual_area[virtual_position_object_nr + 9 * i].figure_color == 'W')
             {
                 for (int k = 1; k < 7; k++)
                 {
@@ -4280,7 +5118,7 @@ void virtualBlackBottomRightSide()
                     {
                         if (virtual_area[virtual_position_object_nr + 9 * (i + k)].big_figure != "whiteKing")
                         {
-                            if (virtual_area[virtual_position_object_nr + 9 * i].bg_color != 5)
+                            if (virtual_area[virtual_position_object_nr + 9 * i].bg_color != 2 && virtual_area[virtual_position_object_nr + 9 * i].bg_color != 3 && virtual_area[virtual_position_object_nr + 9 * i].bg_color != 5)
                             {
                                 virtual_area[virtual_position_object_nr + 9 * i].bg_color = 4;
                                 stop = true;
