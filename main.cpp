@@ -1787,7 +1787,7 @@ void paintAreaColorsKing()
         // TOP SIDE
         if (area[old_position_object_nr].row > 1)
         {
-            if (area[old_position_object_nr - 8].figure_color == 'B')
+            if (area[old_position_object_nr - 8].figure_color == 'B' && virtual_area[old_position_object_nr - 8].bg_color != 2)
                 area[old_position_object_nr - 8].bg_color = 4;
             else if (area[old_position_object_nr - 8].figure_color == 'E' && virtual_area[old_position_object_nr - 8].bg_color != 4)
                 area[old_position_object_nr - 8].bg_color = 3;
@@ -1796,7 +1796,7 @@ void paintAreaColorsKing()
         // BOTTOM SIDE
         if (area[old_position_object_nr].row < 8)
         {
-            if (area[old_position_object_nr + 8].figure_color == 'B')
+            if (area[old_position_object_nr + 8].figure_color == 'B' && virtual_area[old_position_object_nr + 8].bg_color != 2)
                 area[old_position_object_nr + 8].bg_color = 4;
             else if (area[old_position_object_nr + 8].figure_color == 'E' && virtual_area[old_position_object_nr + 8].bg_color != 4)
                 area[old_position_object_nr + 8].bg_color = 3;
@@ -1805,7 +1805,7 @@ void paintAreaColorsKing()
         // LEFT SIDE
         if (area[old_position_object_nr].column > 1)
         {
-            if (area[old_position_object_nr - 1].figure_color == 'B')
+            if (area[old_position_object_nr - 1].figure_color == 'B' && virtual_area[old_position_object_nr - 1].bg_color != 2)
                 area[old_position_object_nr - 1].bg_color = 4;
             else if (area[old_position_object_nr - 1].figure_color == 'E' && virtual_area[old_position_object_nr - 1].bg_color != 4)
                 area[old_position_object_nr - 1].bg_color = 3;
@@ -1814,7 +1814,7 @@ void paintAreaColorsKing()
         // RIGHT SIDE
         if (area[old_position_object_nr].column < 8)
         {
-            if (area[old_position_object_nr + 1].figure_color == 'B')
+            if (area[old_position_object_nr + 1].figure_color == 'B' && virtual_area[old_position_object_nr + 1].bg_color != 2)
                 area[old_position_object_nr + 1].bg_color = 4;
             else if (area[old_position_object_nr + 1].figure_color == 'E' && virtual_area[old_position_object_nr + 1].bg_color != 4)
                 area[old_position_object_nr + 1].bg_color = 3;
@@ -1823,7 +1823,7 @@ void paintAreaColorsKing()
         // TOP LEFT SIDE
         if (area[old_position_object_nr].row > 1 && area[old_position_object_nr].column > 1)
         {
-            if (area[old_position_object_nr - 9].figure_color == 'B')
+            if (area[old_position_object_nr - 9].figure_color == 'B' && virtual_area[old_position_object_nr - 9].bg_color != 2)
                 area[old_position_object_nr - 9].bg_color = 4;
             else if (area[old_position_object_nr - 9].figure_color == 'E' && virtual_area[old_position_object_nr - 9].bg_color != 4)
                 area[old_position_object_nr - 9].bg_color = 3;
@@ -1832,7 +1832,7 @@ void paintAreaColorsKing()
         // TOP RIGHT SIDE
         if (area[old_position_object_nr].row > 1 && area[old_position_object_nr].column < 8)
         {
-            if (area[old_position_object_nr - 7].figure_color == 'B')
+            if (area[old_position_object_nr - 7].figure_color == 'B' && virtual_area[old_position_object_nr - 7].bg_color != 2)
                 area[old_position_object_nr - 7].bg_color = 4;
             else if (area[old_position_object_nr - 7].figure_color == 'E' && virtual_area[old_position_object_nr - 7].bg_color != 4)
                 area[old_position_object_nr - 7].bg_color = 3;
@@ -1841,7 +1841,7 @@ void paintAreaColorsKing()
         // BOTTOM LEFT SIDE
         if (area[old_position_object_nr].row < 8 && area[old_position_object_nr].column > 1)
         {
-            if (area[old_position_object_nr + 7].figure_color == 'B')
+            if (area[old_position_object_nr + 7].figure_color == 'B' && virtual_area[old_position_object_nr + 7].bg_color != 2)
                 area[old_position_object_nr + 7].bg_color = 4;
             else if (area[old_position_object_nr + 7].figure_color == 'E' && virtual_area[old_position_object_nr + 7].bg_color != 4)
                 area[old_position_object_nr + 7].bg_color = 3;
@@ -1850,7 +1850,7 @@ void paintAreaColorsKing()
         // BOTTOM RIGHT SIDE
         if (area[old_position_object_nr].row < 8 && area[old_position_object_nr].column < 8)
         {
-            if (area[old_position_object_nr + 9].figure_color == 'B')
+            if (area[old_position_object_nr + 9].figure_color == 'B' && virtual_area[old_position_object_nr + 9].bg_color != 2)
                 area[old_position_object_nr + 9].bg_color = 4;
             else if (area[old_position_object_nr + 9].figure_color == 'E' && virtual_area[old_position_object_nr + 9].bg_color != 4)
                 area[old_position_object_nr + 9].bg_color = 3;
@@ -1877,7 +1877,7 @@ void paintAreaColorsKing()
         // TOP SIDE
         if (area[old_position_object_nr].row > 1)
         {
-            if (area[old_position_object_nr - 8].figure_color == 'W')
+            if (area[old_position_object_nr - 8].figure_color == 'W' && virtual_area[old_position_object_nr - 8].bg_color != 2)
                 area[old_position_object_nr - 8].bg_color = 4;
             else if (area[old_position_object_nr - 8].figure_color == 'E' && virtual_area[old_position_object_nr - 8].bg_color != 4)
                 area[old_position_object_nr - 8].bg_color = 3;
@@ -1886,7 +1886,7 @@ void paintAreaColorsKing()
         // BOTTOM SIDE
         if (area[old_position_object_nr].row < 8)
         {
-            if (area[old_position_object_nr + 8].figure_color == 'W')
+            if (area[old_position_object_nr + 8].figure_color == 'W' && virtual_area[old_position_object_nr + 8].bg_color != 2)
                 area[old_position_object_nr + 8].bg_color = 4;
             else if (area[old_position_object_nr + 8].figure_color == 'E' && virtual_area[old_position_object_nr + 8].bg_color != 4)
                 area[old_position_object_nr + 8].bg_color = 3;
@@ -1895,7 +1895,7 @@ void paintAreaColorsKing()
         // LEFT SIDE
         if (area[old_position_object_nr].column > 1)
         {
-            if (area[old_position_object_nr - 1].figure_color == 'W')
+            if (area[old_position_object_nr - 1].figure_color == 'W' && virtual_area[old_position_object_nr - 1].bg_color != 2)
                 area[old_position_object_nr - 1].bg_color = 4;
             else if (area[old_position_object_nr - 1].figure_color == 'E' && virtual_area[old_position_object_nr - 1].bg_color != 4)
                 area[old_position_object_nr - 1].bg_color = 3;
@@ -1904,7 +1904,7 @@ void paintAreaColorsKing()
         // RIGHT SIDE
         if (area[old_position_object_nr].column < 8)
         {
-            if (area[old_position_object_nr + 1].figure_color == 'W')
+            if (area[old_position_object_nr + 1].figure_color == 'W' && virtual_area[old_position_object_nr + 1].bg_color != 2)
                 area[old_position_object_nr + 1].bg_color = 4;
             else if (area[old_position_object_nr + 1].figure_color == 'E' && virtual_area[old_position_object_nr + 1].bg_color != 4)
                 area[old_position_object_nr + 1].bg_color = 3;
@@ -1913,7 +1913,7 @@ void paintAreaColorsKing()
         // TOP LEFT SIDE
         if (area[old_position_object_nr].row > 1 && area[old_position_object_nr].column > 1)
         {
-            if (area[old_position_object_nr - 9].figure_color == 'W')
+            if (area[old_position_object_nr - 9].figure_color == 'W' && virtual_area[old_position_object_nr - 9].bg_color != 2)
                 area[old_position_object_nr - 9].bg_color = 4;
             else if (area[old_position_object_nr - 9].figure_color == 'E' && virtual_area[old_position_object_nr - 9].bg_color != 4)
                 area[old_position_object_nr - 9].bg_color = 3;
@@ -1922,7 +1922,7 @@ void paintAreaColorsKing()
         // TOP RIGHT SIDE
         if (area[old_position_object_nr].row > 1 && area[old_position_object_nr].column < 8)
         {
-            if (area[old_position_object_nr - 7].figure_color == 'W')
+            if (area[old_position_object_nr - 7].figure_color == 'W' && virtual_area[old_position_object_nr - 7].bg_color != 2)
                 area[old_position_object_nr - 7].bg_color = 4;
             else if (area[old_position_object_nr - 7].figure_color == 'E' && virtual_area[old_position_object_nr - 7].bg_color != 4)
                 area[old_position_object_nr - 7].bg_color = 3;
@@ -1931,7 +1931,7 @@ void paintAreaColorsKing()
         // BOTTOM LEFT SIDE
         if (area[old_position_object_nr].row < 8 && area[old_position_object_nr].column > 1)
         {
-            if (area[old_position_object_nr + 7].figure_color == 'W')
+            if (area[old_position_object_nr + 7].figure_color == 'W' && virtual_area[old_position_object_nr + 7].bg_color != 2)
                 area[old_position_object_nr + 7].bg_color = 4;
             else if (area[old_position_object_nr + 7].figure_color == 'E' && virtual_area[old_position_object_nr + 7].bg_color != 4)
                 area[old_position_object_nr + 7].bg_color = 3;
@@ -1940,7 +1940,7 @@ void paintAreaColorsKing()
         // BOTTOM RIGHT SIDE
         if (area[old_position_object_nr].row < 8 && area[old_position_object_nr].column < 8)
         {
-            if (area[old_position_object_nr + 9].figure_color == 'W')
+            if (area[old_position_object_nr + 9].figure_color == 'W' && virtual_area[old_position_object_nr + 9].bg_color != 2)
                 area[old_position_object_nr + 9].bg_color = 4;
             else if (area[old_position_object_nr + 9].figure_color == 'E' && virtual_area[old_position_object_nr + 9].bg_color != 4)
                 area[old_position_object_nr + 9].bg_color = 3;
@@ -2884,10 +2884,14 @@ void paintVirtualAreaColorsWhitePawn()
         // TOP LEFT
         if (virtual_area[virtual_position_object_nr - 9].figure_color != 'W' && virtual_area[virtual_position_object_nr].column > 1 && virtual_area[virtual_position_object_nr - 9].bg_color != 5)
             virtual_area[virtual_position_object_nr - 9].bg_color = 4;
+        else if (virtual_area[virtual_position_object_nr - 9].figure_color == 'W' && virtual_area[virtual_position_object_nr].column > 1 && virtual_area[virtual_position_object_nr - 9].bg_color != 5)
+            virtual_area[virtual_position_object_nr - 9].bg_color = 2;
 
         // TOP RIGHT
         if (virtual_area[virtual_position_object_nr - 7].figure_color != 'W' && virtual_area[virtual_position_object_nr].column < 8 && virtual_area[virtual_position_object_nr - 7].bg_color != 5)
             virtual_area[virtual_position_object_nr - 7].bg_color = 4;
+        else if (virtual_area[virtual_position_object_nr - 7].figure_color == 'W' && virtual_area[virtual_position_object_nr].column < 8 && virtual_area[virtual_position_object_nr - 7].bg_color != 5)
+            virtual_area[virtual_position_object_nr - 7].bg_color = 2;
     }
 }
 
@@ -2902,6 +2906,8 @@ void paintVirtualAreaColorsWhiteKnight()
             {
                 if (virtual_area[virtual_position_object_nr - 17].figure_color != 'W' && virtual_area[virtual_position_object_nr - 17].bg_color != 5)
                     virtual_area[virtual_position_object_nr - 17].bg_color = 4;
+                else if (virtual_area[virtual_position_object_nr - 17].figure_color == 'W' && virtual_area[virtual_position_object_nr - 17].bg_color != 5)
+                    virtual_area[virtual_position_object_nr - 17].bg_color = 2;
             }
         }
 
@@ -2912,6 +2918,8 @@ void paintVirtualAreaColorsWhiteKnight()
             {
                 if (virtual_area[virtual_position_object_nr - 15].figure_color != 'W' && virtual_area[virtual_position_object_nr - 15].bg_color != 5)
                     virtual_area[virtual_position_object_nr - 15].bg_color = 4;
+                else if (virtual_area[virtual_position_object_nr - 15].figure_color == 'W' && virtual_area[virtual_position_object_nr - 15].bg_color != 5)
+                    virtual_area[virtual_position_object_nr - 15].bg_color = 2;
             }
         }
 
@@ -2922,6 +2930,8 @@ void paintVirtualAreaColorsWhiteKnight()
             {
                 if (virtual_area[virtual_position_object_nr + 15].figure_color != 'W' && virtual_area[virtual_position_object_nr + 15].bg_color != 5)
                     virtual_area[virtual_position_object_nr + 15].bg_color = 4;
+                else if (virtual_area[virtual_position_object_nr + 15].figure_color == 'W' && virtual_area[virtual_position_object_nr + 15].bg_color != 5)
+                    virtual_area[virtual_position_object_nr + 15].bg_color = 2;
             }
         }
 
@@ -2932,6 +2942,8 @@ void paintVirtualAreaColorsWhiteKnight()
             {
                 if (virtual_area[virtual_position_object_nr + 17].figure_color != 'W' && virtual_area[virtual_position_object_nr + 17].bg_color != 5)
                     virtual_area[virtual_position_object_nr + 17].bg_color = 4;
+                else if (virtual_area[virtual_position_object_nr + 17].figure_color == 'W' && virtual_area[virtual_position_object_nr + 17].bg_color != 5)
+                    virtual_area[virtual_position_object_nr + 17].bg_color = 2;
             }
         }
 
@@ -2942,6 +2954,8 @@ void paintVirtualAreaColorsWhiteKnight()
             {
                 if (virtual_area[virtual_position_object_nr - 10].figure_color != 'W' && virtual_area[virtual_position_object_nr - 10].bg_color != 5)
                     virtual_area[virtual_position_object_nr - 10].bg_color = 4;
+                else if (virtual_area[virtual_position_object_nr - 10].figure_color == 'W' && virtual_area[virtual_position_object_nr - 10].bg_color != 5)
+                    virtual_area[virtual_position_object_nr - 10].bg_color = 2;
             }
         }
 
@@ -2952,6 +2966,8 @@ void paintVirtualAreaColorsWhiteKnight()
             {
                 if (virtual_area[virtual_position_object_nr + 6].figure_color != 'W' && virtual_area[virtual_position_object_nr + 6].bg_color != 5)
                     virtual_area[virtual_position_object_nr + 6].bg_color = 4;
+                else if (virtual_area[virtual_position_object_nr + 6].figure_color == 'W' && virtual_area[virtual_position_object_nr + 6].bg_color != 5)
+                    virtual_area[virtual_position_object_nr + 6].bg_color = 2;
             }
         }
 
@@ -2962,6 +2978,8 @@ void paintVirtualAreaColorsWhiteKnight()
             {
                 if (virtual_area[virtual_position_object_nr - 6].figure_color != 'W' && virtual_area[virtual_position_object_nr - 6].bg_color != 5)
                     virtual_area[virtual_position_object_nr - 6].bg_color = 4;
+                else if (virtual_area[virtual_position_object_nr - 6].figure_color == 'W' && virtual_area[virtual_position_object_nr - 6].bg_color != 5)
+                    virtual_area[virtual_position_object_nr - 6].bg_color = 2;
             }
         }
 
@@ -2972,6 +2990,8 @@ void paintVirtualAreaColorsWhiteKnight()
             {
                 if (virtual_area[virtual_position_object_nr + 10].figure_color != 'W' && virtual_area[virtual_position_object_nr + 10].bg_color != 5)
                     virtual_area[virtual_position_object_nr + 10].bg_color = 4;
+                else if (virtual_area[virtual_position_object_nr + 10].figure_color == 'W' && virtual_area[virtual_position_object_nr + 10].bg_color != 5)
+                    virtual_area[virtual_position_object_nr + 10].bg_color = 2;
             }
         }
     }
@@ -3023,6 +3043,8 @@ void paintVirtualAreaColorsWhiteKing()
         {
             if (virtual_area[virtual_position_object_nr - 8].figure_color != 'W')
                 virtual_area[virtual_position_object_nr - 8].bg_color = 4;
+            else if (virtual_area[virtual_position_object_nr - 8].figure_color == 'W')
+                virtual_area[virtual_position_object_nr - 8].bg_color = 2;
         }
 
         // BOTTOM SIDE
@@ -3030,6 +3052,8 @@ void paintVirtualAreaColorsWhiteKing()
         {
             if (virtual_area[virtual_position_object_nr + 8].figure_color != 'W')
                 virtual_area[virtual_position_object_nr + 8].bg_color = 4;
+            else if (virtual_area[virtual_position_object_nr + 8].figure_color == 'W')
+                virtual_area[virtual_position_object_nr + 8].bg_color = 2;
         }
 
         // LEFT SIDE
@@ -3037,6 +3061,8 @@ void paintVirtualAreaColorsWhiteKing()
         {
             if (virtual_area[virtual_position_object_nr - 1].figure_color != 'W')
                 virtual_area[virtual_position_object_nr - 1].bg_color = 4;
+            else if (virtual_area[virtual_position_object_nr - 1].figure_color == 'W')
+                virtual_area[virtual_position_object_nr - 1].bg_color = 2;
         }
 
         // RIGHT SIDE
@@ -3044,6 +3070,8 @@ void paintVirtualAreaColorsWhiteKing()
         {
             if (virtual_area[virtual_position_object_nr + 1].figure_color != 'W')
                 virtual_area[virtual_position_object_nr + 1].bg_color = 4;
+            else if (virtual_area[virtual_position_object_nr + 1].figure_color == 'W')
+                virtual_area[virtual_position_object_nr + 1].bg_color = 2;
         }
 
         // TOP LEFT SIDE
@@ -3051,6 +3079,8 @@ void paintVirtualAreaColorsWhiteKing()
         {
             if (virtual_area[virtual_position_object_nr - 9].figure_color != 'W')
                 virtual_area[virtual_position_object_nr - 9].bg_color = 4;
+            else if (virtual_area[virtual_position_object_nr - 9].figure_color == 'W')
+                virtual_area[virtual_position_object_nr - 9].bg_color = 2;
         }
 
         // TOP RIGHT SIDE
@@ -3058,6 +3088,8 @@ void paintVirtualAreaColorsWhiteKing()
         {
             if (virtual_area[virtual_position_object_nr - 7].figure_color != 'W')
                 virtual_area[virtual_position_object_nr - 7].bg_color = 4;
+            else if (virtual_area[virtual_position_object_nr - 7].figure_color == 'W')
+                virtual_area[virtual_position_object_nr - 7].bg_color = 2;
         }
 
         // BOTTOM LEFT SIDE
@@ -3065,6 +3097,8 @@ void paintVirtualAreaColorsWhiteKing()
         {
             if (virtual_area[virtual_position_object_nr + 7].figure_color != 'W')
                 virtual_area[virtual_position_object_nr + 7].bg_color = 4;
+            else if (virtual_area[virtual_position_object_nr + 7].figure_color == 'W')
+                virtual_area[virtual_position_object_nr + 7].bg_color = 2;
         }
 
         // BOTTOM RIGHT SIDE
@@ -3072,6 +3106,8 @@ void paintVirtualAreaColorsWhiteKing()
         {
             if (virtual_area[virtual_position_object_nr + 9].figure_color != 'W')
                 virtual_area[virtual_position_object_nr + 9].bg_color = 4;
+            else             if (virtual_area[virtual_position_object_nr + 9].figure_color == 'W')
+                virtual_area[virtual_position_object_nr + 9].bg_color = 2;
         }
     }
 }
@@ -3099,10 +3135,14 @@ void paintVirtualAreaColorsBlackPawn()
         // TOP LEFT
         if (virtual_area[virtual_position_object_nr + 7].figure_color != 'B' && virtual_area[virtual_position_object_nr].column > 1 && virtual_area[virtual_position_object_nr + 7].bg_color != 5)
             virtual_area[virtual_position_object_nr + 7].bg_color = 4;
+        else if (virtual_area[virtual_position_object_nr + 7].figure_color == 'B' && virtual_area[virtual_position_object_nr].column > 1 && virtual_area[virtual_position_object_nr + 7].bg_color != 5)
+            virtual_area[virtual_position_object_nr + 7].bg_color = 2;
 
         // TOP RIGHT
         if (virtual_area[virtual_position_object_nr + 9].figure_color != 'B' && virtual_area[virtual_position_object_nr].column < 8 && virtual_area[virtual_position_object_nr + 9].bg_color != 5)
             virtual_area[virtual_position_object_nr + 9].bg_color = 4;
+        else if (virtual_area[virtual_position_object_nr + 9].figure_color == 'B' && virtual_area[virtual_position_object_nr].column < 8 && virtual_area[virtual_position_object_nr + 9].bg_color != 5)
+            virtual_area[virtual_position_object_nr + 9].bg_color = 2;
     }
 }
 
@@ -3117,6 +3157,8 @@ void paintVirtualAreaColorsBlackKnight()
             {
                 if (virtual_area[virtual_position_object_nr - 17].figure_color != 'B' && virtual_area[virtual_position_object_nr - 17].bg_color != 5)
                     virtual_area[virtual_position_object_nr - 17].bg_color = 4;
+                else if (virtual_area[virtual_position_object_nr - 17].figure_color == 'B' && virtual_area[virtual_position_object_nr - 17].bg_color != 5)
+                    virtual_area[virtual_position_object_nr - 17].bg_color = 2;
             }
         }
 
@@ -3127,6 +3169,8 @@ void paintVirtualAreaColorsBlackKnight()
             {
                 if (virtual_area[virtual_position_object_nr - 15].figure_color != 'B' && virtual_area[virtual_position_object_nr - 15].bg_color != 5)
                     virtual_area[virtual_position_object_nr - 15].bg_color = 4;
+                else if (virtual_area[virtual_position_object_nr - 15].figure_color == 'B' && virtual_area[virtual_position_object_nr - 15].bg_color != 5)
+                    virtual_area[virtual_position_object_nr - 15].bg_color = 2;
             }
         }
 
@@ -3137,6 +3181,8 @@ void paintVirtualAreaColorsBlackKnight()
             {
                 if (virtual_area[virtual_position_object_nr + 15].figure_color != 'B' && virtual_area[virtual_position_object_nr + 15].bg_color != 5)
                     virtual_area[virtual_position_object_nr + 15].bg_color = 4;
+                else if (virtual_area[virtual_position_object_nr + 15].figure_color == 'B' && virtual_area[virtual_position_object_nr + 15].bg_color != 5)
+                    virtual_area[virtual_position_object_nr + 15].bg_color = 2;
             }
         }
 
@@ -3147,6 +3193,8 @@ void paintVirtualAreaColorsBlackKnight()
             {
                 if (virtual_area[virtual_position_object_nr + 17].figure_color != 'B' && virtual_area[virtual_position_object_nr + 17].bg_color != 5)
                     virtual_area[virtual_position_object_nr + 17].bg_color = 4;
+                else if (virtual_area[virtual_position_object_nr + 17].figure_color == 'B' && virtual_area[virtual_position_object_nr + 17].bg_color != 5)
+                    virtual_area[virtual_position_object_nr + 17].bg_color = 2;
             }
         }
 
@@ -3157,6 +3205,8 @@ void paintVirtualAreaColorsBlackKnight()
             {
                 if (virtual_area[virtual_position_object_nr - 10].figure_color != 'B' && virtual_area[virtual_position_object_nr - 10].bg_color != 5)
                     virtual_area[virtual_position_object_nr - 10].bg_color = 4;
+                else if (virtual_area[virtual_position_object_nr - 10].figure_color == 'B' && virtual_area[virtual_position_object_nr - 10].bg_color != 5)
+                    virtual_area[virtual_position_object_nr - 10].bg_color = 2;
             }
         }
 
@@ -3167,6 +3217,8 @@ void paintVirtualAreaColorsBlackKnight()
             {
                 if (virtual_area[virtual_position_object_nr + 6].figure_color != 'B' && virtual_area[virtual_position_object_nr + 6].bg_color != 5)
                     virtual_area[virtual_position_object_nr + 6].bg_color = 4;
+                else if (virtual_area[virtual_position_object_nr + 6].figure_color == 'B' && virtual_area[virtual_position_object_nr + 6].bg_color != 5)
+                    virtual_area[virtual_position_object_nr + 6].bg_color = 2;
             }
         }
 
@@ -3177,6 +3229,8 @@ void paintVirtualAreaColorsBlackKnight()
             {
                 if (virtual_area[virtual_position_object_nr - 6].figure_color != 'B' && virtual_area[virtual_position_object_nr - 6].bg_color != 5)
                     virtual_area[virtual_position_object_nr - 6].bg_color = 4;
+                else if (virtual_area[virtual_position_object_nr - 6].figure_color == 'B' && virtual_area[virtual_position_object_nr - 6].bg_color != 5)
+                    virtual_area[virtual_position_object_nr - 6].bg_color = 2;
             }
         }
 
@@ -3187,6 +3241,8 @@ void paintVirtualAreaColorsBlackKnight()
             {
                 if (virtual_area[virtual_position_object_nr + 10].figure_color != 'B' && virtual_area[virtual_position_object_nr + 10].bg_color != 5)
                     virtual_area[virtual_position_object_nr + 10].bg_color = 4;
+                else if (virtual_area[virtual_position_object_nr + 10].figure_color == 'B' && virtual_area[virtual_position_object_nr + 10].bg_color != 5)
+                    virtual_area[virtual_position_object_nr + 10].bg_color = 2;
             }
         }
     }
@@ -3238,6 +3294,8 @@ void paintVirtualAreaColorsBlackKing()
         {
             if (virtual_area[virtual_position_object_nr - 8].figure_color != 'B')
                 virtual_area[virtual_position_object_nr - 8].bg_color = 4;
+            else if (virtual_area[virtual_position_object_nr - 8].figure_color == 'B')
+                virtual_area[virtual_position_object_nr - 8].bg_color = 2;
         }
 
         // BOTTOM SIDE
@@ -3245,6 +3303,8 @@ void paintVirtualAreaColorsBlackKing()
         {
             if (virtual_area[virtual_position_object_nr + 8].figure_color != 'B')
                 virtual_area[virtual_position_object_nr + 8].bg_color = 4;
+            else if (virtual_area[virtual_position_object_nr + 8].figure_color == 'B')
+                virtual_area[virtual_position_object_nr + 8].bg_color = 2;
         }
 
         // LEFT SIDE
@@ -3252,6 +3312,8 @@ void paintVirtualAreaColorsBlackKing()
         {
             if (virtual_area[virtual_position_object_nr - 1].figure_color != 'B')
                 virtual_area[virtual_position_object_nr - 1].bg_color = 4;
+            else if (virtual_area[virtual_position_object_nr - 1].figure_color == 'B')
+                virtual_area[virtual_position_object_nr - 1].bg_color = 2;
         }
 
         // RIGHT SIDE
@@ -3259,6 +3321,8 @@ void paintVirtualAreaColorsBlackKing()
         {
             if (virtual_area[virtual_position_object_nr + 1].figure_color != 'B')
                 virtual_area[virtual_position_object_nr + 1].bg_color = 4;
+            else if (virtual_area[virtual_position_object_nr + 1].figure_color == 'B')
+                virtual_area[virtual_position_object_nr + 1].bg_color = 2;
         }
 
         // TOP LEFT SIDE
@@ -3266,6 +3330,8 @@ void paintVirtualAreaColorsBlackKing()
         {
             if (virtual_area[virtual_position_object_nr - 9].figure_color != 'B')
                 virtual_area[virtual_position_object_nr - 9].bg_color = 4;
+            else if (virtual_area[virtual_position_object_nr - 9].figure_color == 'B')
+                virtual_area[virtual_position_object_nr - 9].bg_color = 2;
         }
 
         // TOP RIGHT SIDE
@@ -3273,6 +3339,8 @@ void paintVirtualAreaColorsBlackKing()
         {
             if (virtual_area[virtual_position_object_nr - 7].figure_color != 'B')
                 virtual_area[virtual_position_object_nr - 7].bg_color = 4;
+            else if (virtual_area[virtual_position_object_nr - 7].figure_color == 'B')
+                virtual_area[virtual_position_object_nr - 7].bg_color = 2;
         }
 
         // BOTTOM LEFT SIDE
@@ -3280,6 +3348,8 @@ void paintVirtualAreaColorsBlackKing()
         {
             if (virtual_area[virtual_position_object_nr + 7].figure_color != 'B')
                 virtual_area[virtual_position_object_nr + 7].bg_color = 4;
+            else if (virtual_area[virtual_position_object_nr + 7].figure_color == 'B')
+                virtual_area[virtual_position_object_nr + 7].bg_color = 2;
         }
 
         // BOTTOM RIGHT SIDE
@@ -3287,6 +3357,8 @@ void paintVirtualAreaColorsBlackKing()
         {
             if (virtual_area[virtual_position_object_nr + 9].figure_color != 'B')
                 virtual_area[virtual_position_object_nr + 9].bg_color = 4;
+            else if (virtual_area[virtual_position_object_nr + 9].figure_color == 'B')
+                virtual_area[virtual_position_object_nr + 9].bg_color = 2;
         }
     }
 }
@@ -3333,8 +3405,11 @@ void virtualWhiteTopSide()
                     }
                 }
             }
-            else
+            else if (virtual_area[virtual_position_object_nr - 8 * i].bg_color != 5)
+            {
+                virtual_area[virtual_position_object_nr - 8 * i].bg_color = 2;
                 break;
+            }
             if (stop == true)
                 break;
         }
@@ -3390,8 +3465,11 @@ void virtualWhiteBottomSide()
                     }
                 }
             }
-            else
+            else if (virtual_area[virtual_position_object_nr + 8 * i].bg_color != 5)
+            {
+                virtual_area[virtual_position_object_nr + 8 * i].bg_color = 2;
                 break;
+            }
             if (stop == true)
                 break;
         }
@@ -3447,8 +3525,11 @@ void virtualWhiteLeftSide()
                     }
                 }
             }
-            else
+            else if (virtual_area[virtual_position_object_nr - 1 * i].bg_color != 5)
+            {
+                virtual_area[virtual_position_object_nr - 1 * i].bg_color = 2;
                 break;
+            }
             if (stop == true)
                 break;
         }
@@ -3504,8 +3585,11 @@ void virtualWhiteRightSide()
                     }
                 }
             }
-            else
+            else if (virtual_area[virtual_position_object_nr + 1 * i].bg_color != 5)
+            {
+                virtual_area[virtual_position_object_nr + 1 * i].bg_color = 2;
                 break;
+            }
             if (stop == true)
                 break;
         }
@@ -3561,8 +3645,11 @@ void virtualWhiteTopLeftSide()
                     }
                 }
             }
-            else
+            else if (virtual_area[virtual_position_object_nr - 9 * i].bg_color != 5)
+            {
+                virtual_area[virtual_position_object_nr - 9 * i].bg_color = 2;
                 break;
+            }
             if (stop == true)
                 break;
         }
@@ -3618,8 +3705,11 @@ void virtualWhiteTopRightSide()
                     }
                 }
             }
-            else
+            else if (virtual_area[virtual_position_object_nr - 7 * i].bg_color != 5)
+            {
+                virtual_area[virtual_position_object_nr - 7 * i].bg_color = 2;
                 break;
+            }
             if (stop == true)
                 break;
         }
@@ -3675,8 +3765,11 @@ void virtualWhiteBottomLeftSide()
                     }
                 }
             }
-            else
+            else if (virtual_area[virtual_position_object_nr + 7 * i].bg_color != 5)
+            {
+                virtual_area[virtual_position_object_nr + 7 * i].bg_color = 2;
                 break;
+            }
             if (stop == true)
                 break;
         }
@@ -3732,8 +3825,11 @@ void virtualWhiteBottomRightSide()
                     }
                 }
             }
-            else
+            else if (virtual_area[virtual_position_object_nr + 9 * i].bg_color != 5)
+            {
+                virtual_area[virtual_position_object_nr + 9 * i].bg_color = 2;
                 break;
+            }
             if (stop == true)
                 break;
         }
@@ -3789,8 +3885,11 @@ void virtualBlackTopSide()
                     }
                 }
             }
-            else
+            else if (virtual_area[virtual_position_object_nr - 8 * i].bg_color != 5)
+            {
+                virtual_area[virtual_position_object_nr - 8 * i].bg_color = 2;
                 break;
+            }
             if (stop == true)
                 break;
         }
@@ -3846,8 +3945,11 @@ void virtualBlackBottomSide()
                     }
                 }
             }
-            else
+            else if (virtual_area[virtual_position_object_nr + 8 * i].bg_color != 5)
+            {
+                virtual_area[virtual_position_object_nr + 8 * i].bg_color = 2;
                 break;
+            }
             if (stop == true)
                 break;
         }
@@ -3903,8 +4005,11 @@ void virtualBlackLeftSide()
                     }
                 }
             }
-            else
+            else if (virtual_area[virtual_position_object_nr - 1 * i].bg_color != 5)
+            {
+                virtual_area[virtual_position_object_nr - 1 * i].bg_color = 2;
                 break;
+            }
             if (stop == true)
                 break;
         }
@@ -3960,8 +4065,11 @@ void virtualBlackRightSide()
                     }
                 }
             }
-            else
+            else if (virtual_area[virtual_position_object_nr + 1 * i].bg_color != 5)
+            {
+                virtual_area[virtual_position_object_nr + 1 * i].bg_color = 2;
                 break;
+            }
             if (stop == true)
                 break;
         }
@@ -4017,8 +4125,11 @@ void virtualBlackTopLeftSide()
                     }
                 }
             }
-            else
+            else if (virtual_area[virtual_position_object_nr - 9 * i].bg_color != 5)
+            {
+                virtual_area[virtual_position_object_nr - 9 * i].bg_color = 2;
                 break;
+            }
             if (stop == true)
                 break;
         }
@@ -4074,8 +4185,11 @@ void virtualBlackTopRightSide()
                     }
                 }
             }
-            else
+            else if (virtual_area[virtual_position_object_nr - 7 * i].bg_color != 5)
+            {
+                virtual_area[virtual_position_object_nr - 7 * i].bg_color = 2;
                 break;
+            }
             if (stop == true)
                 break;
         }
@@ -4131,8 +4245,11 @@ void virtualBlackBottomLeftSide()
                     }
                 }
             }
-            else
+            else if (virtual_area[virtual_position_object_nr + 7 * i].bg_color != 5)
+            {
+                virtual_area[virtual_position_object_nr + 7 * i].bg_color = 2;
                 break;
+            }
             if (stop == true)
                 break;
         }
@@ -4188,8 +4305,11 @@ void virtualBlackBottomRightSide()
                     }
                 }
             }
-            else
+            else if (virtual_area[virtual_position_object_nr + 9 * i].bg_color != 5)
+            {
+                virtual_area[virtual_position_object_nr + 9 * i].bg_color = 2;
                 break;
+            }
             if (stop == true)
                 break;
         }
