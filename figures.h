@@ -14,7 +14,6 @@ public:
     char figure_color;
     char figure;
     string big_figure;
-    short pinned;
     short id;
 
 private:
@@ -25,7 +24,7 @@ private:
 
 public:
 
-    Area(string="", short=0, short=0, short=0, char='E', char=' ', string="", bool=0, short=0, short=0, char=' ', char=' ', string="");
+    Area(string="", short=0, short=0, short=0, char='E', char=' ', string="", short=0, short=0, char=' ', char=' ', string="");
     ~Area();
 
     void show();
