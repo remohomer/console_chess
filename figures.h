@@ -15,6 +15,8 @@ public:
     char figure;
     string big_figure;
     short id;
+    bool checking;
+    bool en_passant;
 
 private:
     short started_bg_color;
@@ -24,12 +26,14 @@ private:
 
 public:
 
-    Area(string="", short=0, short=0, short=0, char='E', char=' ', string="", short=0, short=0, char=' ', char=' ', string="");
+    Area(string="", short=0, short=0, short=0, char='E', char=' ', string="", short=0, bool=false, bool=false, short=0, char=' ', char=' ', string="");
     ~Area();
 
     void show();
     void resetFigures();
     void resetBgColor();
+    void resetChecking();
+    void resetEnPassant();
     void drawArea();
 
     void drawAreaID();

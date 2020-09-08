@@ -7,7 +7,7 @@
 using namespace std;
 
 // ----------------- AREA -----------------
-Area::Area(string pos, short r, short c, short started_bg_c, char started_f_c, char started_f, string started_b_f, short i, short b_c, char f_c, char f, string b_f)
+Area::Area(string pos, short r, short c, short started_bg_c, char started_f_c, char started_f, string started_b_f, short i, bool check, bool en, short b_c, char f_c, char f, string b_f)
 {
     position = pos;
     row = r;
@@ -17,6 +17,8 @@ Area::Area(string pos, short r, short c, short started_bg_c, char started_f_c, c
     started_figure = started_f;
     started_big_figure = started_b_f;
     id = i;
+    checking = check;
+    en_passant = en;
 
     bg_color = b_c;
     figure_color = f_c;
@@ -48,6 +50,16 @@ void Area::resetFigures()
 void Area::resetBgColor()
 {
     bg_color = started_bg_color;
+}
+
+void Area::resetChecking()
+{
+    checking = false;
+}
+
+void Area::resetEnPassant()
+{
+    en_passant = false;
 }
 
 void Area::drawArea()
@@ -114,6 +126,16 @@ void Area::drawArea()
     else if (bg_color == 5 && figure_color == 'B' || bg_color == 5 && figure_color == 'E')
     {
         SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_BLUE);
+        cout << " " << figure << " ";
+    }
+    else if (bg_color == 6 && figure_color == 'W')
+    {
+        SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_BLUE | BACKGROUND_INTENSITY | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_INTENSITY);
+        cout << " " << figure << " ";
+    }
+    else if (bg_color == 6 && figure_color == 'B' || bg_color == 6 && figure_color == 'E')
+    {
+        SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_BLUE | BACKGROUND_INTENSITY);
         cout << " " << figure << " ";
     }
     else
