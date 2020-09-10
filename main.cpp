@@ -2,6 +2,8 @@
 #include <windows.h>
 #include <time.h>
 #include <stdlib.h>
+#include <fstream>
+#include <conio.h>
 #include "figures.h"
 
 using namespace std;
@@ -11,7 +13,7 @@ void newGame();
 void resumeGame();
 void rematch();
 void howToPlay();
-void gamesStory();
+void loadScore();
 
 void gamePlay();
 void resetArea();
@@ -27,6 +29,8 @@ void whiteKingCheck();
 void blackKingCheck();
 void isCheckMate();
 void isDraw();
+void saveScore();
+void clearScore();
 
 void checkingMoveFigures();
 void moveFigures();
@@ -115,6 +119,7 @@ void textColorStandard();
 void textColorBlue();
 void textColorRed();
 void textColorYellow();
+void textColorGreen();
 
 void bgColorAquaTextColorWhite();
 void bgColorAquaTextColorBlack();
@@ -149,6 +154,10 @@ bool black_king_move{false};
 
 bool white_king_check{false};
 bool black_king_check{false};
+
+time_t cur_time;
+struct tm *date;
+char hour[80];
 
 HANDLE hOut;
 
@@ -295,82 +304,235 @@ int main()
 
 void mainMenu()
 {
-    string choice{};
+    bool active_choice[6]{
+        true,
+        false,
+        false,
+        false,
+        false,
+        false};
+    bool push_active{false};
+    bool push_exit(false);
+    short choice{};
 
     do
     {
         system("cls");
 
-        textColorStandard();
-        cout << "1. NOWA GRA\n";
-
-        if (winner == 'P')
+        if (active_choice[0] == true)
         {
-            textColorYellow();
-            cout << "2. WZNOW GRE\n";
-            textColorStandard();
-        }
-        else if (winner != ' ')
-        {
-            textColorBlue();
-            cout << "2. REWANZ\n";
+            bgColorBlueTextColorWhite();
+            cout << "NOWA GRA\n";
             textColorStandard();
         }
         else
         {
-            textColorRed();
-            cout << "2. REWANZ\n";
             textColorStandard();
+            cout << "NOWA GRA\n";
         }
 
-        cout << "3. JAK GRAC\n";
-        cout << "4. HISTORIA GIER\n";
-        cout << "5. WYJSCIE\n\n";
-        textColorYellow();
-        cout << "Twoj wybor: ";
-        textColorRed();
-        cin >> choice;
-        textColorStandard();
-
-        if (choice == "1")
-        {
-            newGame();
-        }
-        else if (choice == "2")
+        if (active_choice[1] == true)
         {
             if (winner == 'P')
-                resumeGame();
-            else if (winner == 'E' || winner == '1' || winner == '2' || winner == 'R')
-                rematch();
+            {
+                bgColorBlueTextColorWhite();
+                cout << "WZNOW GRE\n";
+                textColorStandard();
+            }
+            else if (winner == '1' || winner == '2' || winner == 'R' || winner == 'E')
+            {
+                bgColorBlueTextColorWhite();
+                cout << "REWANZ\n";
+                textColorStandard();
+            }
+        }
+        else
+        {
+            if (winner == 'P')
+            {
+                textColorBlue();
+                cout << "WZNOW GRE\n";
+                textColorStandard();
+            }
+            else if (winner == '1' || winner == '2' || winner == 'R' || winner == 'E')
+            {
+                textColorBlue();
+                cout << "REWANZ\n";
+                textColorStandard();
+            }
             else
             {
                 textColorRed();
-                cout << "\nMusisz najpierw rozegrac gre by uzyc tej opcji . . .";
+                cout << "REWANZ\n";
                 textColorStandard();
-                Sleep(1500);
             }
         }
-        else if (choice == "3")
+
+        if (active_choice[2] == true)
         {
-            howToPlay();
-        }
-        else if (choice == "4")
-        {
-            gamesStory();
-        }
-        else if (choice == "5")
-        {
-            cout << "Dziekuje za gre i zapraszam ponownie . . .";
-            Sleep(1500);
+            bgColorBlueTextColorWhite();
+            cout << "JAK GRAC\n";
+            textColorStandard();
         }
         else
         {
-            textColorRed();
-            cout << "\nBledny wybor! Sprobuj jeszcze raz . . .";
-            textColorStandard();
-            Sleep(1500);
+            cout << "JAK GRAC\n";
         }
-    } while (choice != "5");
+
+        if (active_choice[3] == true)
+        {
+            bgColorBlueTextColorWhite();
+            cout << "HISTORIA GIER\n";
+            textColorStandard();
+        }
+        else
+        {
+            cout << "HISTORIA GIER\n";
+        }
+
+        if (active_choice[4] == true)
+        {
+            bgColorBlueTextColorWhite();
+            cout << "WYCZYSC HISTORIE\n";
+            textColorStandard();
+        }
+        else
+        {
+            cout << "WYCZYSC HISTORIE\n";
+        }
+
+        if (active_choice[5] == true)
+        {
+            bgColorBlueTextColorWhite();
+            cout << "WYJSCIE\n";
+            textColorStandard();
+        }
+        else
+        {
+            cout << "WYJSCIE\n";
+        }
+
+        unsigned char sign = getch();
+        switch (sign)
+        {
+        case 0:   //klawisze specjalne (czasem zero czasem 224 - zależne od pc'ta chyba)
+        case 224: //klawisze specjalne
+            sign = getch();
+            switch (sign)
+            {
+            case 72: //strzałka w górę
+            {
+                for (int i = 0; i < 6; i++)
+                {
+                    if (active_choice[i] == true && i == 0)
+                    {
+                        active_choice[0] = false;
+                        active_choice[5] = true;
+                        break;
+                    }
+                    else if (active_choice[i] == true && i == 2 && winner == ' ')
+                    {
+                        active_choice[2] = false;
+                        active_choice[0] = true;
+                        break;
+                    }
+                    else if (active_choice[i] == true)
+                    {
+                        active_choice[i] = false;
+                        active_choice[i - 1] = true;
+                        break;
+                    }
+                }
+                Sleep(50);
+                break;
+            }
+            case 80: //strzałka w dół
+            {
+                for (int i = 0; i < 6; i++)
+                {
+                    if (active_choice[i] == true && i == 5)
+                    {
+                        active_choice[5] = false;
+                        active_choice[0] = true;
+                        break;
+                    }
+                    else if (active_choice[i] == true && i == 0 && winner == ' ')
+                    {
+                        active_choice[0] = false;
+                        active_choice[2] = true;
+                        break;
+                    }
+                    else if (active_choice[i] == true)
+                    {
+                        active_choice[i] = false;
+                        active_choice[i + 1] = true;
+                        break;
+                    }
+                }
+                Sleep(50);
+                break;
+            }
+            }
+            sign = 0;
+            break;
+        case 13: //ENTER
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                if (active_choice[i] == true)
+                    choice = i;
+            }
+
+            if (choice == 0)
+            {
+                newGame();
+            }
+            else if (choice == 1)
+            {
+                if (winner == 'P')
+                    resumeGame();
+                else if (winner == 'E' || winner == '1' || winner == '2' || winner == 'R')
+                    rematch();
+                else
+                {
+                    textColorRed();
+                    cout << "\nMusisz najpierw rozegrac gre by uzyc tej opcji . . .";
+                    textColorStandard();
+                    Sleep(1500);
+                }
+            }
+            else if (choice == 2)
+            {
+                howToPlay();
+            }
+            else if (choice == 3)
+            {
+                loadScore();
+            }
+
+            else if (choice == 4)
+            {
+                clearScore();
+            }
+
+            else if (choice == 5)
+            {
+                textColorYellow();
+                cout << "\n\nDziekuje za gre i zapraszam ponownie . . .";
+                Sleep(1500);
+                push_exit = true;
+            }
+            break;
+        }
+
+        case 27: //
+        {
+            push_exit = true;
+            break;
+        }
+        }
+
+    } while (push_exit != true);
 }
 
 void newGame()
@@ -408,13 +570,13 @@ void howToPlay()
 {
     system("cls");
     textColorYellow();
-    cout << "Poruszanie sie figurami po szachownicy odbywa sie\nza pomoca komend slownych.\n\n";
+    cout << "Poruszanie sie figurami po szachownicy odbywa sie za pomoca komend slownych.\n\n";
     textColorStandard();
     cout << "W pozycji";
     textColorRed();
     cout << " \"Ktora figure poruszyc\" ";
     textColorStandard();
-    cout << "nalezy wpisac\npolozenie na szachownicy figury, ktora chcemy \nzlapac (np.";
+    cout << "nalezy wpisac\npolozenie figury na szachownicy, ktora chcemy zlapac (np.";
     textColorYellow();
     cout << " e2 ";
     textColorStandard();
@@ -422,11 +584,11 @@ void howToPlay()
     textColorRed();
     cout << " \"Gdzie postawic figure\" ";
     textColorStandard();
-    cout << "nalezy\nwpisac polozenie na szachownicy, na ktora chcemy \nprzesunac figure (np.";
+    cout << "nalezy wpisac na ktore miejsce na szachownicy chcemy przesunac figure (np.";
     textColorYellow();
     cout << " e4 ";
     textColorStandard();
-    cout << ").\n\nAby zmienic juz wybrana figure na inna wpisz\nkomende";
+    cout << ").\n\nAby zmienic juz wybrana figure na inna wpisz komende";
     textColorYellow();
     cout << " again ";
 
@@ -434,7 +596,6 @@ void howToPlay()
     {
         textColorStandard();
         cout << "\n\n\nWcisnij ENTER by wrocic do Menu Glownego . . .";
-        getchar();
         getchar();
     }
     else
@@ -445,16 +606,6 @@ void howToPlay()
         getchar();
         gamePlay();
     }
-}
-void gamesStory()
-{
-    system("cls");
-    textColorYellow();
-    cout << "Poki co nie ma historii gier...\nWybacz!";
-    textColorStandard();
-    cout << "\n\nWcisnij ENTER by wrocic do Menu Glownego . . .";
-    getchar();
-    getchar();
 }
 
 void gamePlay()
@@ -670,25 +821,23 @@ void refreshArea()
     textColorStandard();
     cout << "\twyjdz z gry";
 
-    textColorYellow();
-    cout << "\n\nDEV COMMANDS: ";
+    // textColorYellow();
+    // cout << "\n\nDEV COMMANDS: ";
 
-    textColorRed();
-    cout << "\nshowb";
-    textColorStandard();
-    cout << "\twyswietla zawartosc zmiennych typu 'bool'";
+    // textColorRed();
+    // cout << "\nshowb";
+    // textColorStandard();
+    // cout << "\twyswietla zawartosc zmiennych typu 'bool'";
 
-    textColorRed();
-    cout << "\nshowv";
-    textColorStandard();
-    cout << "\twyswietla podglad virtualnej szachownicy";
+    // textColorRed();
+    // cout << "\nshowv";
+    // textColorStandard();
+    // cout << "\twyswietla podglad virtualnej szachownicy";
 
-    textColorRed();
-    cout << "\nshowa";
-    textColorStandard();
-    cout << "\twyswietla podglad parametrow szachownicy";
-
-    textColorStandard();
+    // textColorRed();
+    // cout << "\nshowa";
+    // textColorStandard();
+    // cout << "\twyswietla podglad parametrow szachownicy";
 }
 
 void refreshVirtualArea()
@@ -909,7 +1058,7 @@ void isDraw()
 {
     bool is_draw{true};
 
-    if (whith_player % 2 == 1 || black_king_check == false)
+    if (whith_player % 2 == 1 && black_king_check == false)
     {
         for (int i = 0; i < 64; i++)
         {
@@ -930,7 +1079,7 @@ void isDraw()
             winner = 'R';
     }
 
-    else if (whith_player % 2 == 0 || white_king_check == false)
+    else if (whith_player % 2 == 0 && white_king_check == false)
     {
         for (int i = 0; i < 64; i++)
         {
@@ -950,6 +1099,150 @@ void isDraw()
         if (is_draw == true)
             winner = 'R';
     }
+}
+
+void saveScore()
+{
+    string who_win{};
+    fstream file;
+    file.open("story.txt", ios::out | ios::app);
+
+    file << player_1 << endl;
+    file << player_2 << endl;
+    if (winner == '1')
+        who_win = "1";
+    else if (winner == '2')
+        who_win = "2";
+    else if (winner == 'R')
+        who_win = "R";
+    file << who_win << endl;
+    file << hour << endl;
+
+    file.close();
+}
+
+void loadScore()
+{
+    string *p1;
+    p1 = new string[1000];
+
+    string *p2;
+    p2 = new string[1000];
+
+    string *t;
+    t = new string[1000];
+
+    int *ww;
+    ww = new int[1000];
+
+    for (int i = 0; i < 1000; i++)
+    {
+        ww[i] = 3;
+    }
+
+    fstream plik;
+    plik.open("story.txt", ios::in);
+
+    if (plik.good() == false)
+    {
+        textColorRed();
+        cout << endl
+             << "Nie ma jeszcze historii . . .";
+        textColorStandard();
+        Sleep(1500);
+    }
+    else
+    {
+        string linia; //pamiec tymczasowa, ktora przechowuje aktualnie zczytywana linie tekstu z pliku
+        int nr_switch = 1;
+
+        int nr_tab = 0;
+        while (getline(plik, linia)) //wczytuje po kolei wszystkie linie z pliku tekstowego
+        {
+
+            switch (nr_switch)
+            {
+            case 1:
+                p1[nr_tab] = linia;
+                break; //zapisuje zawartosc 1 linii w zmiennej p1
+            case 2:
+                p2[nr_tab] = linia;
+                break; //zapisuje zawartosc 1 linii w zmiennej p2
+            case 3:
+                ww[nr_tab] = atoi(linia.c_str());
+                break; //zapisuje zawartosc 1 linii w zmiennej ww
+            case 4:
+                t[nr_tab] = linia;
+                break; //zapisuje zawartosc 1 linii w zmiennej time
+            }
+
+            if (nr_switch % 4 == 0)
+                nr_tab++;
+            nr_switch++;
+            if (nr_switch > 4)
+                nr_switch = 1;
+        }
+
+        system("cls");
+
+        for (int j = 0; j < 100; j++)
+        {
+            if (ww[j] == 3)
+                break;
+            cout << endl
+                 << j + 1 << ". ";
+            textColorYellow();
+            cout << t[j];
+            textColorStandard();
+            cout << " | ";
+            textColorGreen();
+            cout << p1[j];
+            textColorStandard();
+            cout << " vs ";
+            textColorRed();
+            cout << p2[j];
+            textColorStandard();
+            cout << " | ";
+            if (ww[j] == 1)
+            {
+                cout << "Wygral: ";
+                bgColorBlueTextColorWhite();
+                cout << p1[j] << endl;
+                textColorStandard();
+            }
+            else if (ww[j] == 2)
+            {
+                cout << "Wygral: ";
+                bgColorBlueTextColorWhite();
+                cout << p2[j] << endl;
+                textColorStandard();
+            }
+            else if (ww[j] == 0)
+            {
+                textColorBlue();
+                cout << "REMIS" << endl;
+                textColorStandard();
+            }
+        }
+
+        plik.close();
+        cout << endl
+             << endl
+             << "Nacisnij ENTER aby wrocic do menu glownego...";
+
+        getchar();
+    }
+}
+
+void clearScore()
+{
+    textColorRed();
+    cout << endl
+         << "Historia gier zostala wyczyszczona . . .";
+    textColorStandard();
+    Sleep(1000);
+
+    remove("story.txt");
 }
 
 void checkingMoveFigures()
@@ -1536,7 +1829,13 @@ void moveFigures_VirtualArea()
 
 void whoWins()
 {
-
+    if (winner == '1' || winner == '2' || winner == 'R')
+    {
+        time(&cur_time);
+        date = localtime(&cur_time);
+        strftime(hour, 80, "%x %H:%M:%S.", date);
+        saveScore();
+    }
     if (winner == '1')
     {
         textColorYellow();
@@ -1557,7 +1856,7 @@ void whoWins()
         cout << "\n\nREMIS!";
     }
 
-    if (winner == '1' || winner == '2' || winner == '3')
+    if (winner == '1' || winner == '2' || winner == 'R')
     {
         active_game = false;
         textColorStandard();
@@ -4658,7 +4957,7 @@ void virtualWhiteTopLeftSide()
             break;
         if (virtual_area[virtual_position_object_nr - 9 * i].figure_color != 'E')
         {
-            
+
             if (virtual_area[virtual_position_object_nr - 9 * i].big_figure == "blackKing")
             {
                 if (virtual_area[virtual_position_object_nr - 9 * i].row != 1 && virtual_area[virtual_position_object_nr - 9 * i].column != 1 && virtual_area[virtual_position_object_nr - 9 * (i + 1)].figure_color == 'E')
@@ -4673,7 +4972,7 @@ void virtualWhiteTopLeftSide()
                 virtual_area[virtual_position_object_nr].checking = true;
                 break;
             }
-            
+
             else if (virtual_area[virtual_position_object_nr - 9 * i].figure_color == 'B')
             {
                 for (int k = 1; k < 7; k++)
@@ -5559,6 +5858,11 @@ void textColorRed()
 void textColorYellow()
 {
     SetConsoleTextAttribute(hOut, FOREGROUND_GREEN | FOREGROUND_RED);
+}
+
+void textColorGreen()
+{
+    SetConsoleTextAttribute(hOut, FOREGROUND_GREEN);
 }
 
 // AREA COLORS
