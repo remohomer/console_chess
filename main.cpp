@@ -14,6 +14,7 @@ void resumeGame();
 void rematch();
 void howToPlay();
 void loadScore();
+bool yesNoChoice();
 
 void gamePlay();
 void resetArea();
@@ -39,11 +40,11 @@ void whoWins();
 
 // --------------- DEV TOOLS --------------- //
 
-void refreshAreaID();
-void refreshAreaPosition();
-void refreshAreaNR();
-void showAreaStats();
-void showBools();
+void refreshAreaID();       // showa command
+void refreshAreaPosition(); // showa command
+void refreshAreaNR();       // showa command
+void showAreaStats();       // shows command
+void showBools();           // showb command
 
 // --------------- PAINT COLORS --------------- //
 
@@ -154,6 +155,9 @@ bool black_king_move{false};
 
 bool white_king_check{false};
 bool black_king_check{false};
+
+string yes_no_choice_type{};
+bool score_exist;
 
 time_t cur_time;
 struct tm *date;
@@ -319,6 +323,17 @@ void mainMenu()
     {
         system("cls");
 
+        fstream plik;
+        plik.open("story.txt", ios::in);
+
+        if (plik.good() == false)
+            score_exist = false;
+        else
+        {
+            score_exist = true;
+            plik.close();
+        }
+
         if (active_choice[0] == true)
         {
             bgColorBlueTextColorWhite();
@@ -363,7 +378,7 @@ void mainMenu()
             else
             {
                 textColorRed();
-                cout << "REWANZ\n";
+                cout << "WZNOW GRE\n";
                 textColorStandard();
             }
         }
@@ -387,7 +402,16 @@ void mainMenu()
         }
         else
         {
-            cout << "HISTORIA GIER\n";
+            if (score_exist == false)
+            {
+                textColorRed();
+                cout << "HISTORIA GIER\n";
+                textColorStandard();
+            }
+            else
+            {
+                cout << "HISTORIA GIER\n";
+            }
         }
 
         if (active_choice[4] == true)
@@ -398,7 +422,16 @@ void mainMenu()
         }
         else
         {
-            cout << "WYCZYSC HISTORIE\n";
+            if (score_exist == false)
+            {
+                textColorRed();
+                cout << "WYCZYSC HISTORIE\n";
+                textColorStandard();
+            }
+            else
+            {
+                cout << "WYCZYSC HISTORIE\n";
+            }
         }
 
         if (active_choice[5] == true)
@@ -415,12 +448,11 @@ void mainMenu()
         unsigned char sign = getch();
         switch (sign)
         {
-        case 0:   //klawisze specjalne (czasem zero czasem 224 - zależne od pc'ta chyba)
-        case 224: //klawisze specjalne
+        case 224:
             sign = getch();
             switch (sign)
             {
-            case 72: //strzałka w górę
+            case 72: // UP
             {
                 for (int i = 0; i < 6; i++)
                 {
@@ -430,10 +462,16 @@ void mainMenu()
                         active_choice[5] = true;
                         break;
                     }
-                    else if (active_choice[i] == true && i == 2 && winner == ' ')
+                    else if (active_choice[2] == true && i == 2 && winner == ' ')
                     {
                         active_choice[2] = false;
                         active_choice[0] = true;
+                        break;
+                    }
+                    else if (active_choice[5] == true && i == 0 && score_exist == false)
+                    {
+                        active_choice[5] = false;
+                        active_choice[2] = true;
                         break;
                     }
                     else if (active_choice[i] == true)
@@ -446,7 +484,7 @@ void mainMenu()
                 Sleep(50);
                 break;
             }
-            case 80: //strzałka w dół
+            case 80: // DOWN
             {
                 for (int i = 0; i < 6; i++)
                 {
@@ -456,10 +494,16 @@ void mainMenu()
                         active_choice[0] = true;
                         break;
                     }
-                    else if (active_choice[i] == true && i == 0 && winner == ' ')
+                    else if (active_choice[0] == true && i == 0 && winner == ' ')
                     {
                         active_choice[0] = false;
                         active_choice[2] = true;
+                        break;
+                    }
+                    else if (active_choice[2] == true && i == 0 && score_exist == false)
+                    {
+                        active_choice[2] = false;
+                        active_choice[5] = true;
                         break;
                     }
                     else if (active_choice[i] == true)
@@ -475,7 +519,7 @@ void mainMenu()
             }
             sign = 0;
             break;
-        case 13: //ENTER
+        case 13: // ENTER
         {
             for (int i = 0; i < 6; i++)
             {
@@ -512,26 +556,39 @@ void mainMenu()
 
             else if (choice == 4)
             {
-                clearScore();
+                yes_no_choice_type = "clear";
+                if (yesNoChoice() == false)
+                    clearScore();
             }
 
             else if (choice == 5)
             {
-                textColorYellow();
-                cout << "\n\nDziekuje za gre i zapraszam ponownie . . .";
-                Sleep(1500);
-                push_exit = true;
+                yes_no_choice_type = "exit";
+                if (yesNoChoice() == false)
+                {
+                    push_exit = true;
+                    break;
+                }
+
+                else
+                    break;
             }
             break;
         }
 
-        case 27: //
+        case 27: // ESC
         {
-            push_exit = true;
-            break;
-        }
-        }
+            yes_no_choice_type = "exit";
+            if (yesNoChoice() == false)
+            {
+                push_exit = true;
+                break;
+            }
 
+            else
+                break;
+        }
+        }
     } while (push_exit != true);
 }
 
@@ -606,6 +663,112 @@ void howToPlay()
         getchar();
         gamePlay();
     }
+}
+
+bool yesNoChoice()
+{
+    bool ret{};
+    bool push_exit = false;
+    bool yes_no_active[2]{
+        false,
+        true,
+    };
+
+    while (push_exit == false)
+    {
+        system("cls");
+        if (yes_no_choice_type == "exit")
+            cout << "Czy napewno chcesz opuscic gre?\n";
+
+        else if (yes_no_choice_type == "clear")
+            cout << "Czy napewno chcesz wyczyscic historie gier?\n";
+
+        if (yes_no_active[0] == false)
+        {
+            bgColorBlueTextColorWhite();
+            cout << "NIE\n";
+            textColorStandard();
+            cout << "TAK\n";
+        }
+        else
+        {
+            textColorStandard();
+            cout << "NIE\n";
+            bgColorBlueTextColorWhite();
+            cout << "TAK\n";
+            textColorStandard();
+        }
+
+        unsigned char are_you_sure = getch();
+        switch (are_you_sure)
+        {
+        case 224:
+            are_you_sure = getch();
+            switch (are_you_sure)
+            {
+            case 72: // UP
+            {
+                if (yes_no_active[0] == true)
+                {
+                    yes_no_active[0] = false;
+                    yes_no_active[1] = true;
+                }
+                else
+                {
+                    yes_no_active[0] = true;
+                    yes_no_active[1] = false;
+                }
+                Sleep(50);
+                break;
+            }
+            case 80: // DOWN
+            {
+                if (yes_no_active[0] == true)
+                {
+                    yes_no_active[0] = false;
+                    yes_no_active[1] = true;
+                }
+                else
+                {
+                    yes_no_active[0] = true;
+                    yes_no_active[1] = false;
+                }
+                Sleep(50);
+                break;
+            }
+            }
+            break;
+
+        case 13: // ENTER
+        {
+            if (yes_no_active[0] == true)
+            {
+                push_exit = true;
+                ret = false;
+                break;
+            }
+
+            else
+            {
+                push_exit = true;
+                ret = true;
+                break;
+            }
+        }
+        case 27: // ESC
+        {
+            push_exit = true;
+            ret = true;
+            break;
+        }
+        }
+    }
+
+    if (ret == false)
+        return false;
+
+    else
+        return true;
 }
 
 void gamePlay()
@@ -820,24 +983,6 @@ void refreshArea()
     cout << "\nexit";
     textColorStandard();
     cout << "\twyjdz z gry";
-
-    // textColorYellow();
-    // cout << "\n\nDEV COMMANDS: ";
-
-    // textColorRed();
-    // cout << "\nshowb";
-    // textColorStandard();
-    // cout << "\twyswietla zawartosc zmiennych typu 'bool'";
-
-    // textColorRed();
-    // cout << "\nshowv";
-    // textColorStandard();
-    // cout << "\twyswietla podglad virtualnej szachownicy";
-
-    // textColorRed();
-    // cout << "\nshowa";
-    // textColorStandard();
-    // cout << "\twyswietla podglad parametrow szachownicy";
 }
 
 void refreshVirtualArea()
@@ -1056,10 +1201,22 @@ void isCheckMate()
 
 void isDraw()
 {
-    bool is_draw{true};
+    bool is_draw;
+    short figures_counter{0};
 
-    if (whith_player % 2 == 1 && black_king_check == false)
+    for (int i = 0; i < 64; i++)
     {
+        if (area[i].figure != ' ')
+            figures_counter++;
+    }
+    if (figures_counter > 2)
+        is_draw = false;
+
+    if (figures_counter == 2)
+        is_draw = true;
+    else if (whith_player % 2 == 1 && black_king_check == false)
+    {
+        is_draw == true;
         for (int i = 0; i < 64; i++)
         {
             old_position_object_nr = i;
@@ -1081,6 +1238,7 @@ void isDraw()
 
     else if (whith_player % 2 == 0 && white_king_check == false)
     {
+        is_draw == true;
         for (int i = 0; i < 64; i++)
         {
             old_position_object_nr = i;
@@ -1153,26 +1311,26 @@ void loadScore()
     }
     else
     {
-        string linia; //pamiec tymczasowa, ktora przechowuje aktualnie zczytywana linie tekstu z pliku
+        string line; //pamiec tymczasowa, ktora przechowuje aktualnie zczytywana linie tekstu z pliku
         int nr_switch = 1;
 
         int nr_tab = 0;
-        while (getline(plik, linia)) //wczytuje po kolei wszystkie linie z pliku tekstowego
+        while (getline(plik, line)) //wczytuje po kolei wszystkie linie z pliku tekstowego
         {
 
             switch (nr_switch)
             {
             case 1:
-                p1[nr_tab] = linia;
+                p1[nr_tab] = line;
                 break; //zapisuje zawartosc 1 linii w zmiennej p1
             case 2:
-                p2[nr_tab] = linia;
+                p2[nr_tab] = line;
                 break; //zapisuje zawartosc 1 linii w zmiennej p2
             case 3:
-                ww[nr_tab] = atoi(linia.c_str());
+                ww[nr_tab] = atoi(line.c_str());
                 break; //zapisuje zawartosc 1 linii w zmiennej ww
             case 4:
-                t[nr_tab] = linia;
+                t[nr_tab] = line;
                 break; //zapisuje zawartosc 1 linii w zmiennej time
             }
 
@@ -1347,7 +1505,7 @@ void checkingMoveFigures()
 
                     else
                     {
-                        /////////////////////////////////////// PRAWIDLOWO WYBRANA STARA POZYCJA ///////////////////////////////////////
+                        /////////////////////////////////////// correctly selected figure ///////////////////////////////////////
 
                         old_position_object_nr = i;
                         paintAreaColors();
@@ -1372,7 +1530,7 @@ void checkingMoveFigures()
 
     do
     {
-        if (check == "pause" || old_position == "PAUSE" || old_position == "exit" || old_position == "EXIT" || old_position == "how" || old_position == "HOW")
+        if (old_position == "pause" || old_position == "PAUSE" || old_position == "exit" || old_position == "EXIT" || old_position == "how" || old_position == "HOW")
         {
             break;
         }
@@ -1445,7 +1603,7 @@ void checkingMoveFigures()
                         }
                         else
                         {
-                            /////////////////////////////////////// PRAWIDLOWO WYBRANA NOWA POZYCJA ///////////////////////////////////////
+                            /////////////////////////////////////// correct selected new position ///////////////////////////////////////
                             new_position_object_nr = i;
 
                             if (area[i].bg_color == 3 || area[i].bg_color == 4)
@@ -4679,32 +4837,34 @@ void virtualWhiteTopSide()
             {
                 for (int k = 1; k < 7; k++)
                 {
-                    if (virtual_area[virtual_position_object_nr - 8 * (i + k)].figure_color == 'B')
+                    if (virtual_area[virtual_position_object_nr - 8 * (i + k)].row == 1 && virtual_area[virtual_position_object_nr - 8 * (i + k)].big_figure != "blackKing")
                     {
-                        if (virtual_area[virtual_position_object_nr - 8 * (i + k)].big_figure != "blackKing")
+                        stop = true;
+                        break;
+                    }
+                    else if (virtual_area[virtual_position_object_nr - 8 * (i + k)].big_figure != "blackKing")
+                    {
+                        if (virtual_area[virtual_position_object_nr - 8 * i].bg_color != 2 && virtual_area[virtual_position_object_nr - 8 * i].bg_color != 3 && virtual_area[virtual_position_object_nr - 8 * i].bg_color != 5)
                         {
-                            if (virtual_area[virtual_position_object_nr - 8 * i].bg_color != 2 && virtual_area[virtual_position_object_nr - 8 * i].bg_color != 3 && virtual_area[virtual_position_object_nr - 8 * i].bg_color != 5)
-                            {
-                                virtual_area[virtual_position_object_nr - 8 * i].bg_color = 4;
-                                stop = true;
-                                break;
-                            }
-                            else
-                            {
-                                stop = true;
-                                break;
-                            }
-                        }
-                        else
-                        {
-                            for (int j = (i + k - 1); j >= 1; j--)
-                            {
-                                virtual_area[virtual_position_object_nr - 8 * j].bg_color = 5;
-                            }
-                            virtual_area[virtual_position_object_nr].bg_color = 5;
+                            virtual_area[virtual_position_object_nr - 8 * i].bg_color = 4;
                             stop = true;
                             break;
                         }
+                        else
+                        {
+                            stop = true;
+                            break;
+                        }
+                    }
+                    else if (virtual_area[virtual_position_object_nr - 8 * (i + k)].big_figure == "blackKing")
+                    {
+                        for (int j = (i + k - 1); j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr - 8 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
+                        stop = true;
+                        break;
                     }
                 }
             }
@@ -4753,32 +4913,34 @@ void virtualWhiteBottomSide()
             {
                 for (int k = 1; k < 7; k++)
                 {
-                    if (virtual_area[virtual_position_object_nr + 8 * (i + k)].figure_color == 'B')
+                    if (virtual_area[virtual_position_object_nr + 8 * (i + k)].row == 8 && virtual_area[virtual_position_object_nr + 8 * (i + k)].big_figure != "blackKing")
                     {
-                        if (virtual_area[virtual_position_object_nr + 8 * (i + k)].big_figure != "blackKing")
+                        stop = true;
+                        break;
+                    }
+                    else if (virtual_area[virtual_position_object_nr + 8 * (i + k)].big_figure != "blackKing")
+                    {
+                        if (virtual_area[virtual_position_object_nr + 8 * i].bg_color != 2 && virtual_area[virtual_position_object_nr + 8 * i].bg_color != 3 && virtual_area[virtual_position_object_nr + 8 * i].bg_color != 5)
                         {
-                            if (virtual_area[virtual_position_object_nr + 8 * i].bg_color != 2 && virtual_area[virtual_position_object_nr + 8 * i].bg_color != 3 && virtual_area[virtual_position_object_nr + 8 * i].bg_color != 5)
-                            {
-                                virtual_area[virtual_position_object_nr + 8 * i].bg_color = 4;
-                                stop = true;
-                                break;
-                            }
-                            else
-                            {
-                                stop = true;
-                                break;
-                            }
-                        }
-                        else
-                        {
-                            for (int j = (i + k - 1); j >= 1; j--)
-                            {
-                                virtual_area[virtual_position_object_nr + 8 * j].bg_color = 5;
-                            }
-                            virtual_area[virtual_position_object_nr].bg_color = 5;
+                            virtual_area[virtual_position_object_nr + 8 * i].bg_color = 4;
                             stop = true;
                             break;
                         }
+                        else
+                        {
+                            stop = true;
+                            break;
+                        }
+                    }
+                    else if (virtual_area[virtual_position_object_nr + 8 * (i + k)].big_figure == "blackKing")
+                    {
+                        for (int j = (i + k - 1); j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr + 8 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
+                        stop = true;
+                        break;
                     }
                 }
             }
@@ -4827,32 +4989,34 @@ void virtualWhiteLeftSide()
             {
                 for (int k = 1; k < 7; k++)
                 {
-                    if (virtual_area[virtual_position_object_nr - 1 * (i + k)].figure_color == 'B')
+                    if (virtual_area[virtual_position_object_nr - 1 * (i + k)].column == 1 && virtual_area[virtual_position_object_nr - 1 * (i + k)].big_figure != "blackKing")
                     {
-                        if (virtual_area[virtual_position_object_nr - 1 * (i + k)].big_figure != "blackKing")
+                        stop = true;
+                        break;
+                    }
+                    else if (virtual_area[virtual_position_object_nr - 1 * (i + k)].big_figure != "blackKing")
+                    {
+                        if (virtual_area[virtual_position_object_nr - 1 * i].bg_color != 2 && virtual_area[virtual_position_object_nr - 1 * i].bg_color != 3 && virtual_area[virtual_position_object_nr - 1 * i].bg_color != 5)
                         {
-                            if (virtual_area[virtual_position_object_nr - 8 * i].bg_color != 2 && virtual_area[virtual_position_object_nr + 1 * i].bg_color != 3 && virtual_area[virtual_position_object_nr + 1 * i].bg_color != 5)
-                            {
-                                virtual_area[virtual_position_object_nr - 1 * i].bg_color = 4;
-                                stop = true;
-                                break;
-                            }
-                            else
-                            {
-                                stop = true;
-                                break;
-                            }
-                        }
-                        else
-                        {
-                            for (int j = (i + k - 1); j >= 1; j--)
-                            {
-                                virtual_area[virtual_position_object_nr - 1 * j].bg_color = 5;
-                            }
-                            virtual_area[virtual_position_object_nr].bg_color = 5;
+                            virtual_area[virtual_position_object_nr - 1 * i].bg_color = 4;
                             stop = true;
                             break;
                         }
+                        else
+                        {
+                            stop = true;
+                            break;
+                        }
+                    }
+                    else if (virtual_area[virtual_position_object_nr - 1 * (i + k)].big_figure == "blackKing")
+                    {
+                        for (int j = (i + k - 1); j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr - 1 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
+                        stop = true;
+                        break;
                     }
                 }
             }
@@ -4901,32 +5065,34 @@ void virtualWhiteRightSide()
             {
                 for (int k = 1; k < 7; k++)
                 {
-                    if (virtual_area[virtual_position_object_nr + 1 * (i + k)].figure_color == 'B')
+                    if (virtual_area[virtual_position_object_nr + 1 * (i + k)].column == 8 && virtual_area[virtual_position_object_nr + 1 * (i + k)].big_figure != "blackKing")
                     {
-                        if (virtual_area[virtual_position_object_nr + 1 * (i + k)].big_figure != "blackKing")
+                        stop = true;
+                        break;
+                    }
+                    else if (virtual_area[virtual_position_object_nr + 1 * (i + k)].big_figure != "blackKing")
+                    {
+                        if (virtual_area[virtual_position_object_nr + 1 * i].bg_color != 2 && virtual_area[virtual_position_object_nr + 1 * i].bg_color != 3 && virtual_area[virtual_position_object_nr + 1 * i].bg_color != 5)
                         {
-                            if (virtual_area[virtual_position_object_nr + 1 * i].bg_color != 2 && virtual_area[virtual_position_object_nr + 1 * i].bg_color != 3 && virtual_area[virtual_position_object_nr + 1 * i].bg_color != 5)
-                            {
-                                virtual_area[virtual_position_object_nr + 1 * i].bg_color = 4;
-                                stop = true;
-                                break;
-                            }
-                            else
-                            {
-                                stop = true;
-                                break;
-                            }
-                        }
-                        else
-                        {
-                            for (int j = (i + k - 1); j >= 1; j--)
-                            {
-                                virtual_area[virtual_position_object_nr + 1 * j].bg_color = 5;
-                            }
-                            virtual_area[virtual_position_object_nr].bg_color = 5;
+                            virtual_area[virtual_position_object_nr + 1 * i].bg_color = 4;
                             stop = true;
                             break;
                         }
+                        else
+                        {
+                            stop = true;
+                            break;
+                        }
+                    }
+                    else if (virtual_area[virtual_position_object_nr + 1 * (i + k)].big_figure == "blackKing")
+                    {
+                        for (int j = (i + k - 1); j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr + 1 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
+                        stop = true;
+                        break;
                     }
                 }
             }
@@ -4977,32 +5143,34 @@ void virtualWhiteTopLeftSide()
             {
                 for (int k = 1; k < 7; k++)
                 {
-                    if (virtual_area[virtual_position_object_nr - 9 * (i + k)].figure_color == 'B')
+                    if (virtual_area[virtual_position_object_nr - 9 * (i + k)].row == 1 && virtual_area[virtual_position_object_nr - 9 * (i + k)].column == 1 && virtual_area[virtual_position_object_nr - 9 * (i + k)].big_figure != "blackKing")
                     {
-                        if (virtual_area[virtual_position_object_nr - 9 * (i + k)].big_figure != "blackKing")
+                        stop = true;
+                        break;
+                    }
+                    else if (virtual_area[virtual_position_object_nr - 9 * (i + k)].big_figure != "blackKing")
+                    {
+                        if (virtual_area[virtual_position_object_nr - 9 * i].bg_color != 2 && virtual_area[virtual_position_object_nr - 9 * i].bg_color != 3 && virtual_area[virtual_position_object_nr - 9 * i].bg_color != 5)
                         {
-                            if (virtual_area[virtual_position_object_nr - 9 * i].bg_color != 2 && virtual_area[virtual_position_object_nr - 9 * i].bg_color != 3 && virtual_area[virtual_position_object_nr - 9 * i].bg_color != 5)
-                            {
-                                virtual_area[virtual_position_object_nr - 9 * i].bg_color = 4;
-                                stop = true;
-                                break;
-                            }
-                            else
-                            {
-                                stop = true;
-                                break;
-                            }
-                        }
-                        else
-                        {
-                            for (int j = (i + k - 1); j >= 1; j--)
-                            {
-                                virtual_area[virtual_position_object_nr - 9 * j].bg_color = 5;
-                            }
-                            virtual_area[virtual_position_object_nr].bg_color = 5;
+                            virtual_area[virtual_position_object_nr - 9 * i].bg_color = 4;
                             stop = true;
                             break;
                         }
+                        else
+                        {
+                            stop = true;
+                            break;
+                        }
+                    }
+                    else if (virtual_area[virtual_position_object_nr - 9 * (i + k)].big_figure == "blackKing")
+                    {
+                        for (int j = (i + k - 1); j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr - 9 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
+                        stop = true;
+                        break;
                     }
                 }
             }
@@ -5051,32 +5219,34 @@ void virtualWhiteTopRightSide()
             {
                 for (int k = 1; k < 7; k++)
                 {
-                    if (virtual_area[virtual_position_object_nr - 7 * (i + k)].figure_color == 'B')
+                    if (virtual_area[virtual_position_object_nr - 9 * (i + k)].row == 1 && virtual_area[virtual_position_object_nr - 9 * (i + k)].column == 8 && virtual_area[virtual_position_object_nr - 7 * (i + k)].big_figure != "blackKing")
                     {
-                        if (virtual_area[virtual_position_object_nr - 7 * (i + k)].big_figure != "blackKing")
+                        stop = true;
+                        break;
+                    }
+                    else if (virtual_area[virtual_position_object_nr - 7 * (i + k)].big_figure != "blackKing")
+                    {
+                        if (virtual_area[virtual_position_object_nr - 7 * i].bg_color != 2 && virtual_area[virtual_position_object_nr - 7 * i].bg_color != 3 && virtual_area[virtual_position_object_nr - 7 * i].bg_color != 5)
                         {
-                            if (virtual_area[virtual_position_object_nr - 7 * i].bg_color != 2 && virtual_area[virtual_position_object_nr - 7 * i].bg_color != 3 && virtual_area[virtual_position_object_nr - 7 * i].bg_color != 5)
-                            {
-                                virtual_area[virtual_position_object_nr - 7 * i].bg_color = 4;
-                                stop = true;
-                                break;
-                            }
-                            else
-                            {
-                                stop = true;
-                                break;
-                            }
-                        }
-                        else
-                        {
-                            for (int j = (i + k - 1); j >= 1; j--)
-                            {
-                                virtual_area[virtual_position_object_nr - 7 * j].bg_color = 5;
-                            }
-                            virtual_area[virtual_position_object_nr].bg_color = 5;
+                            virtual_area[virtual_position_object_nr - 7 * i].bg_color = 4;
                             stop = true;
                             break;
                         }
+                        else
+                        {
+                            stop = true;
+                            break;
+                        }
+                    }
+                    else if (virtual_area[virtual_position_object_nr - 7 * (i + k)].big_figure == "blackKing")
+                    {
+                        for (int j = (i + k - 1); j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr - 7 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
+                        stop = true;
+                        break;
                     }
                 }
             }
@@ -5125,32 +5295,34 @@ void virtualWhiteBottomLeftSide()
             {
                 for (int k = 1; k < 7; k++)
                 {
-                    if (virtual_area[virtual_position_object_nr + 7 * (i + k)].figure_color == 'B')
+                    if (virtual_area[virtual_position_object_nr - 9 * (i + k)].row == 8 && virtual_area[virtual_position_object_nr - 9 * (i + k)].column == 1 && virtual_area[virtual_position_object_nr - 8 * (i + k)].big_figure != "blackKing")
                     {
-                        if (virtual_area[virtual_position_object_nr + 7 * (i + k)].big_figure != "blackKing")
+                        stop = true;
+                        break;
+                    }
+                    else if (virtual_area[virtual_position_object_nr - 8 * (i + k)].big_figure != "blackKing")
+                    {
+                        if (virtual_area[virtual_position_object_nr - 8 * i].bg_color != 2 && virtual_area[virtual_position_object_nr - 8 * i].bg_color != 3 && virtual_area[virtual_position_object_nr - 8 * i].bg_color != 5)
                         {
-                            if (virtual_area[virtual_position_object_nr + 7 * i].bg_color != 2 && virtual_area[virtual_position_object_nr + 7 * i].bg_color != 3 && virtual_area[virtual_position_object_nr + 7 * i].bg_color != 5)
-                            {
-                                virtual_area[virtual_position_object_nr + 7 * i].bg_color = 4;
-                                stop = true;
-                                break;
-                            }
-                            else
-                            {
-                                stop = true;
-                                break;
-                            }
-                        }
-                        else
-                        {
-                            for (int j = (i + k - 1); j >= 1; j--)
-                            {
-                                virtual_area[virtual_position_object_nr + 7 * j].bg_color = 5;
-                            }
-                            virtual_area[virtual_position_object_nr].bg_color = 5;
+                            virtual_area[virtual_position_object_nr - 8 * i].bg_color = 4;
                             stop = true;
                             break;
                         }
+                        else
+                        {
+                            stop = true;
+                            break;
+                        }
+                    }
+                    else if (virtual_area[virtual_position_object_nr - 8 * (i + k)].big_figure == "blackKing")
+                    {
+                        for (int j = (i + k - 1); j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr - 8 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
+                        stop = true;
+                        break;
                     }
                 }
             }
@@ -5199,32 +5371,34 @@ void virtualWhiteBottomRightSide()
             {
                 for (int k = 1; k < 7; k++)
                 {
-                    if (virtual_area[virtual_position_object_nr + 9 * (i + k)].figure_color == 'B')
+                    if (virtual_area[virtual_position_object_nr - 9 * (i + k)].row == 8 && virtual_area[virtual_position_object_nr - 9 * (i + k)].column == 8 && virtual_area[virtual_position_object_nr - 8 * (i + k)].big_figure != "blackKing")
                     {
-                        if (virtual_area[virtual_position_object_nr + 9 * (i + k)].big_figure != "blackKing")
+                        stop = true;
+                        break;
+                    }
+                    else if (virtual_area[virtual_position_object_nr - 8 * (i + k)].big_figure != "blackKing")
+                    {
+                        if (virtual_area[virtual_position_object_nr - 8 * i].bg_color != 2 && virtual_area[virtual_position_object_nr - 8 * i].bg_color != 3 && virtual_area[virtual_position_object_nr - 8 * i].bg_color != 5)
                         {
-                            if (virtual_area[virtual_position_object_nr + 9 * i].bg_color != 2 && virtual_area[virtual_position_object_nr + 9 * i].bg_color != 3 && virtual_area[virtual_position_object_nr + 9 * i].bg_color != 5)
-                            {
-                                virtual_area[virtual_position_object_nr + 9 * i].bg_color = 4;
-                                stop = true;
-                                break;
-                            }
-                            else
-                            {
-                                stop = true;
-                                break;
-                            }
-                        }
-                        else
-                        {
-                            for (int j = (i + k - 1); j >= 1; j--)
-                            {
-                                virtual_area[virtual_position_object_nr + 9 * j].bg_color = 5;
-                            }
-                            virtual_area[virtual_position_object_nr].bg_color = 5;
+                            virtual_area[virtual_position_object_nr - 8 * i].bg_color = 4;
                             stop = true;
                             break;
                         }
+                        else
+                        {
+                            stop = true;
+                            break;
+                        }
+                    }
+                    else if (virtual_area[virtual_position_object_nr - 8 * (i + k)].big_figure == "blackKing")
+                    {
+                        for (int j = (i + k - 1); j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr - 8 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
+                        stop = true;
+                        break;
                     }
                 }
             }
@@ -5273,32 +5447,34 @@ void virtualBlackTopSide()
             {
                 for (int k = 1; k < 7; k++)
                 {
-                    if (virtual_area[virtual_position_object_nr - 8 * (i + k)].figure_color == 'W')
+                    if (virtual_area[virtual_position_object_nr - 8 * (i + k)].row == 1 && virtual_area[virtual_position_object_nr - 8 * (i + k)].big_figure != "whiteKing")
                     {
-                        if (virtual_area[virtual_position_object_nr - 8 * (i + k)].big_figure != "whiteKing")
+                        stop = true;
+                        break;
+                    }
+                    else if (virtual_area[virtual_position_object_nr - 8 * (i + k)].big_figure != "whiteKing")
+                    {
+                        if (virtual_area[virtual_position_object_nr - 8 * i].bg_color != 2 && virtual_area[virtual_position_object_nr - 8 * i].bg_color != 3 && virtual_area[virtual_position_object_nr - 8 * i].bg_color != 5)
                         {
-                            if (virtual_area[virtual_position_object_nr - 8 * i].bg_color != 2 && virtual_area[virtual_position_object_nr - 8 * i].bg_color != 3 && virtual_area[virtual_position_object_nr - 8 * i].bg_color != 5)
-                            {
-                                virtual_area[virtual_position_object_nr - 8 * i].bg_color = 4;
-                                stop = true;
-                                break;
-                            }
-                            else
-                            {
-                                stop = true;
-                                break;
-                            }
-                        }
-                        else
-                        {
-                            for (int j = (i + k - 1); j >= 1; j--)
-                            {
-                                virtual_area[virtual_position_object_nr - 8 * j].bg_color = 5;
-                            }
-                            virtual_area[virtual_position_object_nr].bg_color = 5;
+                            virtual_area[virtual_position_object_nr - 8 * i].bg_color = 4;
                             stop = true;
                             break;
                         }
+                        else
+                        {
+                            stop = true;
+                            break;
+                        }
+                    }
+                    else if (virtual_area[virtual_position_object_nr - 8 * (i + k)].big_figure == "whiteKing")
+                    {
+                        for (int j = (i + k - 1); j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr - 8 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
+                        stop = true;
+                        break;
                     }
                 }
             }
@@ -5347,32 +5523,34 @@ void virtualBlackBottomSide()
             {
                 for (int k = 1; k < 7; k++)
                 {
-                    if (virtual_area[virtual_position_object_nr + 8 * (i + k)].figure_color == 'W')
+                    if (virtual_area[virtual_position_object_nr + 8 * (i + k)].row == 8 && virtual_area[virtual_position_object_nr + 8 * (i + k)].big_figure != "whiteKing")
                     {
-                        if (virtual_area[virtual_position_object_nr + 8 * (i + k)].big_figure != "whiteKing")
+                        stop = true;
+                        break;
+                    }
+                    else if (virtual_area[virtual_position_object_nr + 8 * (i + k)].big_figure != "whiteKing")
+                    {
+                        if (virtual_area[virtual_position_object_nr + 8 * i].bg_color != 2 && virtual_area[virtual_position_object_nr + 8 * i].bg_color != 3 && virtual_area[virtual_position_object_nr + 8 * i].bg_color != 5)
                         {
-                            if (virtual_area[virtual_position_object_nr + 8 * i].bg_color != 2 && virtual_area[virtual_position_object_nr + 8 * i].bg_color != 3 && virtual_area[virtual_position_object_nr + 8 * i].bg_color != 5)
-                            {
-                                virtual_area[virtual_position_object_nr + 8 * i].bg_color = 4;
-                                stop = true;
-                                break;
-                            }
-                            else
-                            {
-                                stop = true;
-                                break;
-                            }
-                        }
-                        else
-                        {
-                            for (int j = (i + k - 1); j >= 1; j--)
-                            {
-                                virtual_area[virtual_position_object_nr + 8 * j].bg_color = 5;
-                            }
-                            virtual_area[virtual_position_object_nr].bg_color = 5;
+                            virtual_area[virtual_position_object_nr + 8 * i].bg_color = 4;
                             stop = true;
                             break;
                         }
+                        else
+                        {
+                            stop = true;
+                            break;
+                        }
+                    }
+                    else if (virtual_area[virtual_position_object_nr + 8 * (i + k)].big_figure == "whiteKing")
+                    {
+                        for (int j = (i + k - 1); j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr + 8 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
+                        stop = true;
+                        break;
                     }
                 }
             }
@@ -5421,32 +5599,34 @@ void virtualBlackLeftSide()
             {
                 for (int k = 1; k < 7; k++)
                 {
-                    if (virtual_area[virtual_position_object_nr - 1 * (i + k)].figure_color == 'W')
+                    if (virtual_area[virtual_position_object_nr - 1 * (i + k)].column == 1 && virtual_area[virtual_position_object_nr - 1 * (i + k)].big_figure != "whiteKing")
                     {
-                        if (virtual_area[virtual_position_object_nr - 1 * (i + k)].big_figure != "whiteKing")
+                        stop = true;
+                        break;
+                    }
+                    else if (virtual_area[virtual_position_object_nr - 1 * (i + k)].big_figure != "whiteKing")
+                    {
+                        if (virtual_area[virtual_position_object_nr - 1 * i].bg_color != 2 && virtual_area[virtual_position_object_nr - 1 * i].bg_color != 3 && virtual_area[virtual_position_object_nr - 1 * i].bg_color != 5)
                         {
-                            if (virtual_area[virtual_position_object_nr - 1 * i].bg_color != 2 && virtual_area[virtual_position_object_nr - 1 * i].bg_color != 3 && virtual_area[virtual_position_object_nr - 1 * i].bg_color != 5)
-                            {
-                                virtual_area[virtual_position_object_nr - 1 * i].bg_color = 4;
-                                stop = true;
-                                break;
-                            }
-                            else
-                            {
-                                stop = true;
-                                break;
-                            }
-                        }
-                        else
-                        {
-                            for (int j = (i + k - 1); j >= 1; j--)
-                            {
-                                virtual_area[virtual_position_object_nr - 1 * j].bg_color = 5;
-                            }
-                            virtual_area[virtual_position_object_nr].bg_color = 5;
+                            virtual_area[virtual_position_object_nr - 1 * i].bg_color = 4;
                             stop = true;
                             break;
                         }
+                        else
+                        {
+                            stop = true;
+                            break;
+                        }
+                    }
+                    else if (virtual_area[virtual_position_object_nr - 1 * (i + k)].big_figure == "whiteKing")
+                    {
+                        for (int j = (i + k - 1); j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr - 1 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
+                        stop = true;
+                        break;
                     }
                 }
             }
@@ -5495,32 +5675,34 @@ void virtualBlackRightSide()
             {
                 for (int k = 1; k < 7; k++)
                 {
-                    if (virtual_area[virtual_position_object_nr + 1 * (i + k)].figure_color == 'W')
+                    if (virtual_area[virtual_position_object_nr + 1 * (i + k)].column == 8 && virtual_area[virtual_position_object_nr + 1 * (i + k)].big_figure != "whiteKing")
                     {
-                        if (virtual_area[virtual_position_object_nr + 1 * (i + k)].big_figure != "whiteKing")
+                        stop = true;
+                        break;
+                    }
+                    else if (virtual_area[virtual_position_object_nr + 1 * (i + k)].big_figure != "whiteKing")
+                    {
+                        if (virtual_area[virtual_position_object_nr + 1 * i].bg_color != 2 && virtual_area[virtual_position_object_nr + 1 * i].bg_color != 3 && virtual_area[virtual_position_object_nr + 1 * i].bg_color != 5)
                         {
-                            if (virtual_area[virtual_position_object_nr + 1 * i].bg_color != 2 && virtual_area[virtual_position_object_nr + 1 * i].bg_color != 3 && virtual_area[virtual_position_object_nr + 1 * i].bg_color != 5)
-                            {
-                                virtual_area[virtual_position_object_nr + 1 * i].bg_color = 4;
-                                stop = true;
-                                break;
-                            }
-                            else
-                            {
-                                stop = true;
-                                break;
-                            }
-                        }
-                        else
-                        {
-                            for (int j = (i + k - 1); j >= 1; j--)
-                            {
-                                virtual_area[virtual_position_object_nr + 1 * j].bg_color = 5;
-                            }
-                            virtual_area[virtual_position_object_nr].bg_color = 5;
+                            virtual_area[virtual_position_object_nr + 1 * i].bg_color = 4;
                             stop = true;
                             break;
                         }
+                        else
+                        {
+                            stop = true;
+                            break;
+                        }
+                    }
+                    else if (virtual_area[virtual_position_object_nr + 1 * (i + k)].big_figure == "whiteKing")
+                    {
+                        for (int j = (i + k - 1); j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr + 1 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
+                        stop = true;
+                        break;
                     }
                 }
             }
@@ -5569,32 +5751,34 @@ void virtualBlackTopLeftSide()
             {
                 for (int k = 1; k < 7; k++)
                 {
-                    if (virtual_area[virtual_position_object_nr - 9 * (i + k)].figure_color == 'W')
+                    if (virtual_area[virtual_position_object_nr - 9 * (i + k)].row == 1 && virtual_area[virtual_position_object_nr - 9 * (i + k)].column == 1 && virtual_area[virtual_position_object_nr - 9 * (i + k)].big_figure != "whiteKing")
                     {
-                        if (virtual_area[virtual_position_object_nr - 9 * (i + k)].big_figure != "whiteKing")
+                        stop = true;
+                        break;
+                    }
+                    else if (virtual_area[virtual_position_object_nr - 9 * (i + k)].big_figure != "whiteKing")
+                    {
+                        if (virtual_area[virtual_position_object_nr - 9 * i].bg_color != 2 && virtual_area[virtual_position_object_nr - 9 * i].bg_color != 3 && virtual_area[virtual_position_object_nr - 9 * i].bg_color != 5)
                         {
-                            if (virtual_area[virtual_position_object_nr - 9 * i].bg_color != 2 && virtual_area[virtual_position_object_nr - 9 * i].bg_color != 3 && virtual_area[virtual_position_object_nr - 9 * i].bg_color != 5)
-                            {
-                                virtual_area[virtual_position_object_nr - 9 * i].bg_color = 4;
-                                stop = true;
-                                break;
-                            }
-                            else
-                            {
-                                stop = true;
-                                break;
-                            }
-                        }
-                        else
-                        {
-                            for (int j = (i + k - 1); j >= 1; j--)
-                            {
-                                virtual_area[virtual_position_object_nr - 9 * j].bg_color = 5;
-                            }
-                            virtual_area[virtual_position_object_nr].bg_color = 5;
+                            virtual_area[virtual_position_object_nr - 9 * i].bg_color = 4;
                             stop = true;
                             break;
                         }
+                        else
+                        {
+                            stop = true;
+                            break;
+                        }
+                    }
+                    else if (virtual_area[virtual_position_object_nr - 9 * (i + k)].big_figure == "whiteKing")
+                    {
+                        for (int j = (i + k - 1); j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr - 9 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
+                        stop = true;
+                        break;
                     }
                 }
             }
@@ -5643,32 +5827,34 @@ void virtualBlackTopRightSide()
             {
                 for (int k = 1; k < 7; k++)
                 {
-                    if (virtual_area[virtual_position_object_nr - 7 * (i + k)].figure_color == 'W')
+                    if (virtual_area[virtual_position_object_nr - 9 * (i + k)].row == 1 && virtual_area[virtual_position_object_nr - 9 * (i + k)].column == 8 && virtual_area[virtual_position_object_nr - 7 * (i + k)].big_figure != "whiteKing")
                     {
-                        if (virtual_area[virtual_position_object_nr - 7 * (i + k)].big_figure != "whiteKing")
+                        stop = true;
+                        break;
+                    }
+                    else if (virtual_area[virtual_position_object_nr - 7 * (i + k)].big_figure != "whiteKing")
+                    {
+                        if (virtual_area[virtual_position_object_nr - 7 * i].bg_color != 2 && virtual_area[virtual_position_object_nr - 7 * i].bg_color != 3 && virtual_area[virtual_position_object_nr - 7 * i].bg_color != 5)
                         {
-                            if (virtual_area[virtual_position_object_nr - 7 * i].bg_color != 2 && virtual_area[virtual_position_object_nr - 7 * i].bg_color != 3 && virtual_area[virtual_position_object_nr - 7 * i].bg_color != 5)
-                            {
-                                virtual_area[virtual_position_object_nr - 7 * i].bg_color = 4;
-                                stop = true;
-                                break;
-                            }
-                            else
-                            {
-                                stop = true;
-                                break;
-                            }
-                        }
-                        else
-                        {
-                            for (int j = (i + k - 1); j >= 1; j--)
-                            {
-                                virtual_area[virtual_position_object_nr - 7 * j].bg_color = 5;
-                            }
-                            virtual_area[virtual_position_object_nr].bg_color = 5;
+                            virtual_area[virtual_position_object_nr - 7 * i].bg_color = 4;
                             stop = true;
                             break;
                         }
+                        else
+                        {
+                            stop = true;
+                            break;
+                        }
+                    }
+                    else if (virtual_area[virtual_position_object_nr - 7 * (i + k)].big_figure == "whiteKing")
+                    {
+                        for (int j = (i + k - 1); j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr - 7 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
+                        stop = true;
+                        break;
                     }
                 }
             }
@@ -5717,32 +5903,34 @@ void virtualBlackBottomLeftSide()
             {
                 for (int k = 1; k < 7; k++)
                 {
-                    if (virtual_area[virtual_position_object_nr + 7 * (i + k)].figure_color == 'W')
+                    if (virtual_area[virtual_position_object_nr - 9 * (i + k)].row == 8 && virtual_area[virtual_position_object_nr - 9 * (i + k)].column == 1 && virtual_area[virtual_position_object_nr - 8 * (i + k)].big_figure != "whiteKing")
                     {
-                        if (virtual_area[virtual_position_object_nr + 7 * (i + k)].big_figure != "whiteKing")
+                        stop = true;
+                        break;
+                    }
+                    else if (virtual_area[virtual_position_object_nr - 8 * (i + k)].big_figure != "whiteKing")
+                    {
+                        if (virtual_area[virtual_position_object_nr - 8 * i].bg_color != 2 && virtual_area[virtual_position_object_nr - 8 * i].bg_color != 3 && virtual_area[virtual_position_object_nr - 8 * i].bg_color != 5)
                         {
-                            if (virtual_area[virtual_position_object_nr + 7 * i].bg_color != 2 && virtual_area[virtual_position_object_nr + 7 * i].bg_color != 3 && virtual_area[virtual_position_object_nr + 7 * i].bg_color != 5)
-                            {
-                                virtual_area[virtual_position_object_nr + 7 * i].bg_color = 4;
-                                stop = true;
-                                break;
-                            }
-                            else
-                            {
-                                stop = true;
-                                break;
-                            }
-                        }
-                        else
-                        {
-                            for (int j = (i + k - 1); j >= 1; j--)
-                            {
-                                virtual_area[virtual_position_object_nr + 7 * j].bg_color = 5;
-                            }
-                            virtual_area[virtual_position_object_nr].bg_color = 5;
+                            virtual_area[virtual_position_object_nr - 8 * i].bg_color = 4;
                             stop = true;
                             break;
                         }
+                        else
+                        {
+                            stop = true;
+                            break;
+                        }
+                    }
+                    else if (virtual_area[virtual_position_object_nr - 8 * (i + k)].big_figure == "whiteKing")
+                    {
+                        for (int j = (i + k - 1); j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr - 8 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
+                        stop = true;
+                        break;
                     }
                 }
             }
@@ -5791,32 +5979,34 @@ void virtualBlackBottomRightSide()
             {
                 for (int k = 1; k < 7; k++)
                 {
-                    if (virtual_area[virtual_position_object_nr + 9 * (i + k)].figure_color == 'W')
+                    if (virtual_area[virtual_position_object_nr - 9 * (i + k)].row == 8 && virtual_area[virtual_position_object_nr - 9 * (i + k)].column == 8 && virtual_area[virtual_position_object_nr - 8 * (i + k)].big_figure != "whiteKing")
                     {
-                        if (virtual_area[virtual_position_object_nr + 9 * (i + k)].big_figure != "whiteKing")
+                        stop = true;
+                        break;
+                    }
+                    else if (virtual_area[virtual_position_object_nr - 8 * (i + k)].big_figure != "whiteKing")
+                    {
+                        if (virtual_area[virtual_position_object_nr - 8 * i].bg_color != 2 && virtual_area[virtual_position_object_nr - 8 * i].bg_color != 3 && virtual_area[virtual_position_object_nr - 8 * i].bg_color != 5)
                         {
-                            if (virtual_area[virtual_position_object_nr + 9 * i].bg_color != 2 && virtual_area[virtual_position_object_nr + 9 * i].bg_color != 3 && virtual_area[virtual_position_object_nr + 9 * i].bg_color != 5)
-                            {
-                                virtual_area[virtual_position_object_nr + 9 * i].bg_color = 4;
-                                stop = true;
-                                break;
-                            }
-                            else
-                            {
-                                stop = true;
-                                break;
-                            }
-                        }
-                        else
-                        {
-                            for (int j = (i + k - 1); j >= 1; j--)
-                            {
-                                virtual_area[virtual_position_object_nr + 9 * j].bg_color = 5;
-                            }
-                            virtual_area[virtual_position_object_nr].bg_color = 5;
+                            virtual_area[virtual_position_object_nr - 8 * i].bg_color = 4;
                             stop = true;
                             break;
                         }
+                        else
+                        {
+                            stop = true;
+                            break;
+                        }
+                    }
+                    else if (virtual_area[virtual_position_object_nr - 8 * (i + k)].big_figure == "whiteKing")
+                    {
+                        for (int j = (i + k - 1); j >= 1; j--)
+                        {
+                            virtual_area[virtual_position_object_nr - 8 * j].bg_color = 5;
+                        }
+                        virtual_area[virtual_position_object_nr].bg_color = 5;
+                        stop = true;
+                        break;
                     }
                 }
             }
