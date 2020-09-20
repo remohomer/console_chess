@@ -5,6 +5,8 @@
 #include <fstream>
 #include <conio.h>
 #include "figures.h"
+#include <string>
+#include <algorithm>
 
 using namespace std;
 
@@ -354,7 +356,7 @@ void mainMenu()
                 cout << "WZNOW GRE\n";
                 textColorStandard();
             }
-            else if (winner == '1' || winner == '2' || winner == 'R' || winner == 'E')
+            else if (winner == '1' || winner == '2' || winner == 'D' || winner == 'E')
             {
                 bgColorBlueTextColorWhite();
                 cout << "REWANZ\n";
@@ -369,7 +371,7 @@ void mainMenu()
                 cout << "WZNOW GRE\n";
                 textColorStandard();
             }
-            else if (winner == '1' || winner == '2' || winner == 'R' || winner == 'E')
+            else if (winner == '1' || winner == '2' || winner == 'D' || winner == 'E')
             {
                 textColorBlue();
                 cout << "REWANZ\n";
@@ -535,7 +537,7 @@ void mainMenu()
             {
                 if (winner == 'P')
                     resumeGame();
-                else if (winner == 'E' || winner == '1' || winner == '2' || winner == 'R')
+                else if (winner == 'E' || winner == '1' || winner == '2' || winner == 'D')
                     rematch();
                 else
                 {
@@ -674,15 +676,38 @@ bool yesNoChoice()
         true,
     };
 
+    if (yes_no_choice_type == "remis")
+        whith_player++;
+
     while (push_exit == false)
     {
         system("cls");
+
         if (yes_no_choice_type == "exit")
             cout << "Czy napewno chcesz opuscic gre?\n";
-
         else if (yes_no_choice_type == "clear")
             cout << "Czy napewno chcesz wyczyscic historie gier?\n";
-
+        else if (yes_no_choice_type == "remis")
+        {
+            refreshArea();
+            if (whith_player % 2 == 0)
+            {
+                textColorBlue();
+                cout << endl
+                     << endl
+                     << player_2;
+                textColorStandard();
+            }
+            else
+            {
+                textColorBlue();
+                cout << endl
+                     << endl
+                     << player_1;
+                textColorStandard();
+            }
+            cout << " zaproponowal remis. Czy sie na to zgadzasz?\n";
+        }
         if (yes_no_active[0] == false)
         {
             bgColorBlueTextColorWhite();
@@ -764,6 +789,9 @@ bool yesNoChoice()
         }
     }
 
+    if (yes_no_choice_type == "remis")
+        whith_player--;
+
     if (ret == false)
         return false;
 
@@ -781,7 +809,7 @@ void gamePlay()
 
     refreshArea();
 
-    while (winner == ' ')
+    while (winner == ' ' || winner == 'R' || winner == 'D')
     {
         resetVirtualAreaChecking();
         resetVirtualAreaColors();
@@ -806,12 +834,12 @@ void gamePlay()
         isDraw();
         whoWins();
 
-        if (winner == '1' || winner == '2' || winner == 'R')
+        if (winner == '1' || winner == '2' || winner == 'D')
             break;
 
         resetAreaColors();
         checkingMoveFigures();
-        if (winner != 'E' && winner != 'P')
+        if (winner != 'E' && winner != 'P' && winner != 'D' && winner != 'R')
         {
             moveFigures();
             moveFigures_VirtualArea();
@@ -965,22 +993,32 @@ void refreshArea()
     cout << "\n\nSPIS KOMEND: ";
 
     textColorRed();
-    cout << "\nhow";
+    cout << "\njak";
     textColorStandard();
     cout << "\tjak grac?";
 
     textColorRed();
-    cout << "\nagain";
+    cout << "\npowtorz";
     textColorStandard();
     cout << "\twybierz inna figure";
 
     textColorRed();
-    cout << "\npause";
+    cout << "\nremis";
+    textColorStandard();
+    cout << "\tzaproponuj remis";
+
+    textColorRed();
+    cout << "\npoddaj";
+    textColorStandard();
+    cout << "\tpoddaj partie";
+
+    textColorRed();
+    cout << "\nstop";
     textColorStandard();
     cout << "\twstrzymaj gre";
 
     textColorRed();
-    cout << "\nexit";
+    cout << "\nwyjdz";
     textColorStandard();
     cout << "\twyjdz z gry";
 }
@@ -1233,7 +1271,7 @@ void isDraw()
             }
         }
         if (is_draw == true)
-            winner = 'R';
+            winner = 'D';
     }
 
     else if (whith_player % 2 == 0 && white_king_check == false)
@@ -1255,7 +1293,7 @@ void isDraw()
             }
         }
         if (is_draw == true)
-            winner = 'R';
+            winner = 'D';
     }
 }
 
@@ -1271,7 +1309,7 @@ void saveScore()
         who_win = "1";
     else if (winner == '2')
         who_win = "2";
-    else if (winner == 'R')
+    else if (winner == 'D')
         who_win = "R";
     file << who_win << endl;
     file << hour << endl;
@@ -1417,21 +1455,22 @@ void checkingMoveFigures()
         cout << "\n\nKtora figure poruszyc?: ";
         textColorRed();
         cin >> old_position;
+        transform(old_position.begin(),old_position.end(),old_position.begin(),::tolower);
 
-        if (old_position == "pause" || old_position == "PAUSE")
+        if (old_position == "p" || old_position == "pause" || old_position == "stop")
         {
             winner = 'P';
             check = "pause";
         }
 
-        else if (old_position == "exit" || old_position == "EXIT")
+        else if (old_position == "e" || old_position == "exit" || old_position == "w" || old_position == "wyjscie" || old_position == "wyjdz")
         {
             winner = 'E';
             check = "exit";
             active_game = false;
         }
 
-        else if (old_position == "again" || old_position == "AGAIN")
+        else if (old_position == "a" || old_position == "again" || old_position == "powtorz")
         {
             check = "again";
             textColorRed();
@@ -1441,14 +1480,35 @@ void checkingMoveFigures()
             refreshArea();
         }
 
-        else if (old_position == "how" || old_position == "HOW")
+        else if (old_position == "j" || old_position == "jak" || old_position == "how")
         {
             winner = 'P';
             check = "how";
             howToPlay();
         }
 
-        else if (old_position == "showb" || old_position == "SHOWB")
+        else if (old_position == "r" || old_position == "resign" || old_position == "poddaj")
+        {
+            winner = 'R';
+
+            check = "resign";
+        }
+        else if (old_position == "remis")
+        {
+            yes_no_choice_type = "remis";
+            if (yesNoChoice() == false)
+            {
+                winner = 'D';
+                check = "remis";
+            }
+            else
+            {
+                check = "again";
+                refreshArea();
+            }
+        }
+
+        else if (old_position == "showb")
         {
             showBools();
             system("pause");
@@ -1456,7 +1516,7 @@ void checkingMoveFigures()
             check = "again";
         }
 
-        else if (old_position == "showv" || old_position == "SHOWV")
+        else if (old_position == "showv")
         {
             system("cls");
             refreshVirtualArea();
@@ -1465,7 +1525,7 @@ void checkingMoveFigures()
             refreshArea();
             check = "again";
         }
-        else if (old_position == "showa" || old_position == "SHOWA")
+        else if (old_position == "showa")
         {
             system("cls");
             refreshAreaID();
@@ -1530,7 +1590,7 @@ void checkingMoveFigures()
 
     do
     {
-        if (old_position == "pause" || old_position == "PAUSE" || old_position == "exit" || old_position == "EXIT" || old_position == "how" || old_position == "HOW")
+        if (old_position == "p" || old_position == "pause" || old_position == "stop" || old_position == "e" || old_position == "exit" || old_position == "w" || old_position == "wyjscie" || old_position == "wyjdz" || old_position == "j" || old_position == "jak" || old_position == "how" || old_position == "r" || old_position == "resign" || old_position == "poddaj" || old_position == "remis")
         {
             break;
         }
@@ -1540,34 +1600,41 @@ void checkingMoveFigures()
             cout << "\n\nGdzie postawic figure? ";
             textColorRed();
             cin >> new_position;
+            transform(new_position.begin(),new_position.end(),new_position.begin(),::tolower);
 
-            if (new_position == "again" || new_position == "AGAIN")
+            if (new_position == "a" || new_position == "again" || new_position == "powtorz")
             {
                 resetAreaColors();
                 checkingMoveFigures();
                 check = "pass";
             }
 
-            else if (new_position == "how" || old_position == "HOW")
+            else if (new_position == "j" || new_position == "jak" || new_position == "how")
             {
                 winner = 'P';
                 check = "how";
                 howToPlay();
             }
 
-            else if (new_position == "pause" || old_position == "PAUSE")
+            else if (new_position == "p" || new_position == "pause" || new_position == "stop")
             {
                 winner = 'P';
                 check = "pause";
             }
 
-            else if (new_position == "exit" || old_position == "EXIT")
+            else if (new_position == "e" || new_position == "exit" || new_position == "w" || new_position == "wyjscie" || new_position == "wyjdz")
             {
                 winner = 'E';
                 check = "exit";
             }
 
-            else if (old_position == "showb" || old_position == "SHOWB")
+            else if (new_position == "r" || new_position == "resign" || new_position == "poddaj")
+            {
+                winner = 'R';
+                check = "resign";
+            }
+
+            else if (new_position == "showb")
             {
                 showBools();
                 system("pause");
@@ -1575,7 +1642,7 @@ void checkingMoveFigures()
                 check = "again";
             }
 
-            else if (old_position == "showv" || old_position == "SHOWV")
+            else if (new_position == "showv")
             {
                 system("cls");
                 refreshVirtualArea();
@@ -1987,7 +2054,15 @@ void moveFigures_VirtualArea()
 
 void whoWins()
 {
-    if (winner == '1' || winner == '2' || winner == 'R')
+    if (winner == 'R')
+    {
+        if (whith_player % 2 == 0)
+            winner = '1';
+        else
+            winner = '2';
+    }
+
+    if (winner == '1' || winner == '2' || winner == 'D')
     {
         time(&cur_time);
         date = localtime(&cur_time);
@@ -2008,13 +2083,13 @@ void whoWins()
         bgColorBlueTextColorWhite();
         cout << player_2;
     }
-    else if (winner == 'R')
+    else if (winner == 'D')
     {
         textColorYellow();
         cout << "\n\nREMIS!";
     }
 
-    if (winner == '1' || winner == '2' || winner == 'R')
+    if (winner == '1' || winner == '2' || winner == 'D')
     {
         active_game = false;
         textColorStandard();
