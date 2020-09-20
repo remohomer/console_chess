@@ -161,6 +161,17 @@ bool black_king_check{false};
 string yes_no_choice_type{};
 bool score_exist;
 
+const short top{-8};
+const short bottom{8};
+const short left{-1};
+const short right{1};
+const short top_left{-9};
+const short top_right{-7};
+const short bottom_left{7};
+const short bottom_right{9};
+const short top_top{-16};
+const short bottom_bottom{16};
+
 time_t cur_time;
 struct tm *date;
 char hour[80];
@@ -1455,7 +1466,7 @@ void checkingMoveFigures()
         cout << "\n\nKtora figure poruszyc?: ";
         textColorRed();
         cin >> old_position;
-        transform(old_position.begin(),old_position.end(),old_position.begin(),::tolower);
+        transform(old_position.begin(), old_position.end(), old_position.begin(), ::tolower);
 
         if (old_position == "p" || old_position == "pause" || old_position == "stop")
         {
@@ -1600,7 +1611,7 @@ void checkingMoveFigures()
             cout << "\n\nGdzie postawic figure? ";
             textColorRed();
             cin >> new_position;
-            transform(new_position.begin(),new_position.end(),new_position.begin(),::tolower);
+            transform(new_position.begin(), new_position.end(), new_position.begin(), ::tolower);
 
             if (new_position == "a" || new_position == "again" || new_position == "powtorz")
             {
@@ -5294,7 +5305,7 @@ void virtualWhiteTopRightSide()
             {
                 for (int k = 1; k < 7; k++)
                 {
-                    if (virtual_area[virtual_position_object_nr - 9 * (i + k)].row == 1 && virtual_area[virtual_position_object_nr - 9 * (i + k)].column == 8 && virtual_area[virtual_position_object_nr - 7 * (i + k)].big_figure != "blackKing")
+                    if (virtual_area[virtual_position_object_nr - 7 * (i + k)].row == 1 && virtual_area[virtual_position_object_nr - 7 * (i + k)].column == 8 && virtual_area[virtual_position_object_nr - 7 * (i + k)].big_figure != "blackKing")
                     {
                         stop = true;
                         break;
@@ -5370,16 +5381,16 @@ void virtualWhiteBottomLeftSide()
             {
                 for (int k = 1; k < 7; k++)
                 {
-                    if (virtual_area[virtual_position_object_nr - 9 * (i + k)].row == 8 && virtual_area[virtual_position_object_nr - 9 * (i + k)].column == 1 && virtual_area[virtual_position_object_nr - 8 * (i + k)].big_figure != "blackKing")
+                    if (virtual_area[virtual_position_object_nr + 7 * (i + k)].row == 8 && virtual_area[virtual_position_object_nr + 7 * (i + k)].column == 1 && virtual_area[virtual_position_object_nr + 7 * (i + k)].big_figure != "blackKing")
                     {
                         stop = true;
                         break;
                     }
-                    else if (virtual_area[virtual_position_object_nr - 8 * (i + k)].big_figure != "blackKing")
+                    else if (virtual_area[virtual_position_object_nr + 7 * (i + k)].big_figure != "blackKing")
                     {
-                        if (virtual_area[virtual_position_object_nr - 8 * i].bg_color != 2 && virtual_area[virtual_position_object_nr - 8 * i].bg_color != 3 && virtual_area[virtual_position_object_nr - 8 * i].bg_color != 5)
+                        if (virtual_area[virtual_position_object_nr + 7 * i].bg_color != 2 && virtual_area[virtual_position_object_nr + 7 * i].bg_color != 3 && virtual_area[virtual_position_object_nr + 7 * i].bg_color != 5)
                         {
-                            virtual_area[virtual_position_object_nr - 8 * i].bg_color = 4;
+                            virtual_area[virtual_position_object_nr + 7 * i].bg_color = 4;
                             stop = true;
                             break;
                         }
@@ -5389,11 +5400,11 @@ void virtualWhiteBottomLeftSide()
                             break;
                         }
                     }
-                    else if (virtual_area[virtual_position_object_nr - 8 * (i + k)].big_figure == "blackKing")
+                    else if (virtual_area[virtual_position_object_nr + 7 * (i + k)].big_figure == "blackKing")
                     {
                         for (int j = (i + k - 1); j >= 1; j--)
                         {
-                            virtual_area[virtual_position_object_nr - 8 * j].bg_color = 5;
+                            virtual_area[virtual_position_object_nr + 7 * j].bg_color = 5;
                         }
                         virtual_area[virtual_position_object_nr].bg_color = 5;
                         stop = true;
@@ -5446,16 +5457,16 @@ void virtualWhiteBottomRightSide()
             {
                 for (int k = 1; k < 7; k++)
                 {
-                    if (virtual_area[virtual_position_object_nr - 9 * (i + k)].row == 8 && virtual_area[virtual_position_object_nr - 9 * (i + k)].column == 8 && virtual_area[virtual_position_object_nr - 8 * (i + k)].big_figure != "blackKing")
+                    if (virtual_area[virtual_position_object_nr + 9 * (i + k)].row == 8 && virtual_area[virtual_position_object_nr + 9 * (i + k)].column == 8 && virtual_area[virtual_position_object_nr + 9 * (i + k)].big_figure != "blackKing")
                     {
                         stop = true;
                         break;
                     }
-                    else if (virtual_area[virtual_position_object_nr - 8 * (i + k)].big_figure != "blackKing")
+                    else if (virtual_area[virtual_position_object_nr + 9 * (i + k)].big_figure != "blackKing")
                     {
-                        if (virtual_area[virtual_position_object_nr - 8 * i].bg_color != 2 && virtual_area[virtual_position_object_nr - 8 * i].bg_color != 3 && virtual_area[virtual_position_object_nr - 8 * i].bg_color != 5)
+                        if (virtual_area[virtual_position_object_nr + 9 * i].bg_color != 2 && virtual_area[virtual_position_object_nr + 9 * i].bg_color != 3 && virtual_area[virtual_position_object_nr + 9 * i].bg_color != 5)
                         {
-                            virtual_area[virtual_position_object_nr - 8 * i].bg_color = 4;
+                            virtual_area[virtual_position_object_nr + 9 * i].bg_color = 4;
                             stop = true;
                             break;
                         }
@@ -5465,11 +5476,11 @@ void virtualWhiteBottomRightSide()
                             break;
                         }
                     }
-                    else if (virtual_area[virtual_position_object_nr - 8 * (i + k)].big_figure == "blackKing")
+                    else if (virtual_area[virtual_position_object_nr + 9 * (i + k)].big_figure == "blackKing")
                     {
                         for (int j = (i + k - 1); j >= 1; j--)
                         {
-                            virtual_area[virtual_position_object_nr - 8 * j].bg_color = 5;
+                            virtual_area[virtual_position_object_nr + 9 * j].bg_color = 5;
                         }
                         virtual_area[virtual_position_object_nr].bg_color = 5;
                         stop = true;
@@ -5902,7 +5913,7 @@ void virtualBlackTopRightSide()
             {
                 for (int k = 1; k < 7; k++)
                 {
-                    if (virtual_area[virtual_position_object_nr - 9 * (i + k)].row == 1 && virtual_area[virtual_position_object_nr - 9 * (i + k)].column == 8 && virtual_area[virtual_position_object_nr - 7 * (i + k)].big_figure != "whiteKing")
+                    if (virtual_area[virtual_position_object_nr - 7 * (i + k)].row == 1 && virtual_area[virtual_position_object_nr - 7 * (i + k)].column == 8 && virtual_area[virtual_position_object_nr - 7 * (i + k)].big_figure != "whiteKing")
                     {
                         stop = true;
                         break;
@@ -5978,16 +5989,16 @@ void virtualBlackBottomLeftSide()
             {
                 for (int k = 1; k < 7; k++)
                 {
-                    if (virtual_area[virtual_position_object_nr - 9 * (i + k)].row == 8 && virtual_area[virtual_position_object_nr - 9 * (i + k)].column == 1 && virtual_area[virtual_position_object_nr - 8 * (i + k)].big_figure != "whiteKing")
+                    if (virtual_area[virtual_position_object_nr + 7 * (i + k)].row == 8 && virtual_area[virtual_position_object_nr + 7 * (i + k)].column == 1 && virtual_area[virtual_position_object_nr + 7 * (i + k)].big_figure != "whiteKing")
                     {
                         stop = true;
                         break;
                     }
-                    else if (virtual_area[virtual_position_object_nr - 8 * (i + k)].big_figure != "whiteKing")
+                    else if (virtual_area[virtual_position_object_nr + 7 * (i + k)].big_figure != "whiteKing")
                     {
-                        if (virtual_area[virtual_position_object_nr - 8 * i].bg_color != 2 && virtual_area[virtual_position_object_nr - 8 * i].bg_color != 3 && virtual_area[virtual_position_object_nr - 8 * i].bg_color != 5)
+                        if (virtual_area[virtual_position_object_nr + 7 * i].bg_color != 2 && virtual_area[virtual_position_object_nr + 7 * i].bg_color != 3 && virtual_area[virtual_position_object_nr + 7 * i].bg_color != 5)
                         {
-                            virtual_area[virtual_position_object_nr - 8 * i].bg_color = 4;
+                            virtual_area[virtual_position_object_nr + 7 * i].bg_color = 4;
                             stop = true;
                             break;
                         }
@@ -5997,11 +6008,11 @@ void virtualBlackBottomLeftSide()
                             break;
                         }
                     }
-                    else if (virtual_area[virtual_position_object_nr - 8 * (i + k)].big_figure == "whiteKing")
+                    else if (virtual_area[virtual_position_object_nr + 7 * (i + k)].big_figure == "whiteKing")
                     {
                         for (int j = (i + k - 1); j >= 1; j--)
                         {
-                            virtual_area[virtual_position_object_nr - 8 * j].bg_color = 5;
+                            virtual_area[virtual_position_object_nr + 7 * j].bg_color = 5;
                         }
                         virtual_area[virtual_position_object_nr].bg_color = 5;
                         stop = true;
@@ -6054,16 +6065,16 @@ void virtualBlackBottomRightSide()
             {
                 for (int k = 1; k < 7; k++)
                 {
-                    if (virtual_area[virtual_position_object_nr - 9 * (i + k)].row == 8 && virtual_area[virtual_position_object_nr - 9 * (i + k)].column == 8 && virtual_area[virtual_position_object_nr - 8 * (i + k)].big_figure != "whiteKing")
+                    if (virtual_area[virtual_position_object_nr + 9 * (i + k)].row == 8 && virtual_area[virtual_position_object_nr + 9 * (i + k)].column == 8 && virtual_area[virtual_position_object_nr + 9 * (i + k)].big_figure != "whiteKing")
                     {
                         stop = true;
                         break;
                     }
-                    else if (virtual_area[virtual_position_object_nr - 8 * (i + k)].big_figure != "whiteKing")
+                    else if (virtual_area[virtual_position_object_nr + 9 * (i + k)].big_figure != "whiteKing")
                     {
-                        if (virtual_area[virtual_position_object_nr - 8 * i].bg_color != 2 && virtual_area[virtual_position_object_nr - 8 * i].bg_color != 3 && virtual_area[virtual_position_object_nr - 8 * i].bg_color != 5)
+                        if (virtual_area[virtual_position_object_nr + 9 * i].bg_color != 2 && virtual_area[virtual_position_object_nr + 9 * i].bg_color != 3 && virtual_area[virtual_position_object_nr + 9 * i].bg_color != 5)
                         {
-                            virtual_area[virtual_position_object_nr - 8 * i].bg_color = 4;
+                            virtual_area[virtual_position_object_nr + 9 * i].bg_color = 4;
                             stop = true;
                             break;
                         }
@@ -6073,11 +6084,11 @@ void virtualBlackBottomRightSide()
                             break;
                         }
                     }
-                    else if (virtual_area[virtual_position_object_nr - 8 * (i + k)].big_figure == "whiteKing")
+                    else if (virtual_area[virtual_position_object_nr + 9 * (i + k)].big_figure == "whiteKing")
                     {
                         for (int j = (i + k - 1); j >= 1; j--)
                         {
-                            virtual_area[virtual_position_object_nr - 8 * j].bg_color = 5;
+                            virtual_area[virtual_position_object_nr + 9 * j].bg_color = 5;
                         }
                         virtual_area[virtual_position_object_nr].bg_color = 5;
                         stop = true;
