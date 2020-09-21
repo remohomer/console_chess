@@ -4,6 +4,15 @@
 #include <windows.h>
 #include <time.h>
 
+// BG COLOR
+#define BLUE 0
+#define AQUA 1
+
+// FIGURE COLOR
+#define EMPTY 69
+#define WHITE 87
+#define BLACK 66
+
 using namespace std;
 
 // ----------------- AREA -----------------
@@ -36,7 +45,7 @@ void Area::show()
     else
         cout << id;
     cout << " - " << position << " [" << row << "." << column << "]"
-         << " | bg color: " << bg_color << " | started bg color: " << started_bg_color << " | figure color: " << figure_color << " | figure: " << figure << " | big figure: " << big_figure << endl;
+         << "\tbg color: " << bg_color << "\tfigure color: " << figure_color << "\tfigure: " << figure << "\tchecking: " << checking << "\ten_passant: " << en_passant << endl;
 }
 
 void Area::resetFigures()
@@ -68,72 +77,72 @@ void Area::drawArea()
 
     hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
-    if (bg_color == 0 && figure_color == 'W')
+    if (bg_color == BLUE && figure_color == WHITE)
     {
         SetConsoleTextAttribute(hOut, BACKGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_INTENSITY);
         cout << " " << figure << " ";
     }
-    else if (bg_color == 0 && figure_color == 'B' || bg_color == 0 && figure_color == 'E')
+    else if (bg_color == BLUE && figure_color == BLACK || bg_color == BLUE && figure_color == EMPTY)
     {
         SetConsoleTextAttribute(hOut, BACKGROUND_BLUE);
         cout << " " << figure << " ";
     }
-    else if (bg_color == 1 && figure_color == 'W')
+    else if (bg_color == AQUA && figure_color == WHITE)
     {
         SetConsoleTextAttribute(hOut, BACKGROUND_GREEN | BACKGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_INTENSITY);
         cout << " " << figure << " ";
     }
-    else if (bg_color == 1 && figure_color == 'B' || bg_color == 1 && figure_color == 'E')
+    else if (bg_color == AQUA && figure_color == BLACK || bg_color == AQUA && figure_color == EMPTY)
     {
         SetConsoleTextAttribute(hOut, BACKGROUND_GREEN | BACKGROUND_BLUE);
         cout << " " << figure << " ";
     }
-    else if (bg_color == 2 && figure_color == 'W')
+    else if (bg_color == 2 && figure_color == WHITE)
     {
         SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_INTENSITY);
         cout << " " << figure << " ";
     }
-    else if (bg_color == 2 && figure_color == 'B' || bg_color == 2 && figure_color == 'E')
+    else if (bg_color == 2 && figure_color == BLACK || bg_color == 2 && figure_color == EMPTY)
     {
         SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN);
         cout << " " << figure << " ";
     }
-    else if (bg_color == 3 && figure_color == 'W')
+    else if (bg_color == 3 && figure_color == WHITE)
     {
         SetConsoleTextAttribute(hOut, BACKGROUND_GREEN | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_INTENSITY);
         cout << " " << figure << " ";
     }
-    else if (bg_color == 3 && figure_color == 'B' || bg_color == 3 && figure_color == 'E')
+    else if (bg_color == 3 && figure_color == BLACK || bg_color == 3 && figure_color == EMPTY)
     {
         SetConsoleTextAttribute(hOut, BACKGROUND_GREEN);
         cout << " " << figure << " ";
     }
-    else if (bg_color == 4 && figure_color == 'W')
+    else if (bg_color == 4 && figure_color == WHITE)
     {
         SetConsoleTextAttribute(hOut, BACKGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_INTENSITY);
         cout << " " << figure << " ";
     }
-    else if (bg_color == 4 && figure_color == 'B' || bg_color == 4 && figure_color == 'E')
+    else if (bg_color == 4 && figure_color == BLACK || bg_color == 4 && figure_color == EMPTY)
     {
         SetConsoleTextAttribute(hOut, BACKGROUND_RED);
         cout << " " << figure << " ";
     }
-    else if (bg_color == 5 && figure_color == 'W')
+    else if (bg_color == 5 && figure_color == WHITE)
     {
         SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_INTENSITY);
         cout << " " << figure << " ";
     }
-    else if (bg_color == 5 && figure_color == 'B' || bg_color == 5 && figure_color == 'E')
+    else if (bg_color == 5 && figure_color == BLACK || bg_color == 5 && figure_color == EMPTY)
     {
         SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_BLUE);
         cout << " " << figure << " ";
     }
-    else if (bg_color == 6 && figure_color == 'W')
+    else if (bg_color == 6 && figure_color == WHITE)
     {
         SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_BLUE | BACKGROUND_INTENSITY | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_INTENSITY);
         cout << " " << figure << " ";
     }
-    else if (bg_color == 6 && figure_color == 'B' || bg_color == 6 && figure_color == 'E')
+    else if (bg_color == 6 && figure_color == BLACK || bg_color == 6 && figure_color == EMPTY)
     {
         SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_BLUE | BACKGROUND_INTENSITY);
         cout << " " << figure << " ";
@@ -142,7 +151,6 @@ void Area::drawArea()
     {
         cout << "\nNiezdefiniowany kolor tla lub figury\n";
     }
-    cout << flush;
 }
 
 void Area::drawAreaID()
@@ -151,15 +159,15 @@ void Area::drawAreaID()
 
     hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
-    if (bg_color == 0 && figure_color == 'W')
+    if (bg_color == BLUE && figure_color == WHITE)
     {
-        SetConsoleTextAttribute(hOut, BACKGROUND_GREEN | BACKGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_INTENSITY);
+        SetConsoleTextAttribute(hOut, BACKGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_INTENSITY);
         if (id > 10)
             cout << " " << id-1;
         else
             cout << "  " << id-1;
     }
-    else if (bg_color == 0 && figure_color == 'B' || bg_color == 0 && figure_color == 'E')
+    else if (bg_color == BLUE && figure_color == BLACK || bg_color == BLUE && figure_color == EMPTY)
     {
         SetConsoleTextAttribute(hOut, BACKGROUND_BLUE);
         if (id > 10)
@@ -167,7 +175,7 @@ void Area::drawAreaID()
         else
             cout << "  " << id-1;
     }
-    else if (bg_color == 1 && figure_color == 'W')
+    else if (bg_color == AQUA && figure_color == WHITE)
     {
         SetConsoleTextAttribute(hOut, BACKGROUND_GREEN | BACKGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_INTENSITY);
         if (id > 10)
@@ -175,7 +183,7 @@ void Area::drawAreaID()
         else
             cout << "  " << id-1;
     }
-    else if (bg_color == 1 && figure_color == 'B' || bg_color == 1 && figure_color == 'E')
+    else if (bg_color == AQUA && figure_color == BLACK || bg_color == AQUA && figure_color == EMPTY)
     {
         SetConsoleTextAttribute(hOut, BACKGROUND_GREEN | BACKGROUND_BLUE);
         if (id > 10)
@@ -187,7 +195,6 @@ void Area::drawAreaID()
     {
         cout << "\nNiezdefiniowany kolor tla lub figury\n";
     }
-    cout << flush;
 }
 
 void Area::drawAreaPosition()
@@ -196,22 +203,22 @@ void Area::drawAreaPosition()
 
     hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
-    if (bg_color == 0 && figure_color == 'W')
+    if (bg_color == BLUE && figure_color == WHITE)
     {
         SetConsoleTextAttribute(hOut, BACKGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_INTENSITY);
         cout << " " << position;
     }
-    else if (bg_color == 0 && figure_color == 'B' || bg_color == 0 && figure_color == 'E')
+    else if (bg_color == BLUE && figure_color == BLACK || bg_color == BLUE && figure_color == EMPTY)
     {
         SetConsoleTextAttribute(hOut, BACKGROUND_BLUE);
         cout << " " << position;
     }
-    else if (bg_color == 1 && figure_color == 'W')
+    else if (bg_color == AQUA && figure_color == WHITE)
     {
         SetConsoleTextAttribute(hOut, BACKGROUND_GREEN | BACKGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_INTENSITY);
         cout << " " << position;
     }
-    else if (bg_color == 1 && figure_color == 'B' || bg_color == 1 && figure_color == 'E')
+    else if (bg_color == AQUA && figure_color == BLACK || bg_color == AQUA && figure_color == EMPTY)
     {
         SetConsoleTextAttribute(hOut, BACKGROUND_GREEN | BACKGROUND_BLUE);
         cout << " " << position;
@@ -220,7 +227,6 @@ void Area::drawAreaPosition()
     {
         cout << "\nNiezdefiniowany kolor tla lub figury\n";
     }
-    cout << flush;
 }
 
 void Area::drawAreaNR()
@@ -229,22 +235,22 @@ void Area::drawAreaNR()
 
     hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
-    if (bg_color == 0 && figure_color == 'W')
+    if (bg_color == BLUE && figure_color == WHITE)
     {
         SetConsoleTextAttribute(hOut, BACKGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_INTENSITY);
         cout << row << "." << column;
     }
-    else if (bg_color == 0 && figure_color == 'B' || bg_color == 0 && figure_color == 'E')
+    else if (bg_color == BLUE && figure_color == BLACK || bg_color == BLUE && figure_color == EMPTY)
     {
         SetConsoleTextAttribute(hOut, BACKGROUND_BLUE);
         cout << row << "." << column;
     }
-    else if (bg_color == 1 && figure_color == 'W')
+    else if (bg_color == AQUA && figure_color == WHITE)
     {
         SetConsoleTextAttribute(hOut, BACKGROUND_GREEN | BACKGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_INTENSITY);
         cout << row << "." << column;
     }
-    else if (bg_color == 1 && figure_color == 'B' || bg_color == 1 && figure_color == 'E')
+    else if (bg_color == AQUA && figure_color == BLACK || bg_color == AQUA && figure_color == EMPTY)
     {
         SetConsoleTextAttribute(hOut, BACKGROUND_GREEN | BACKGROUND_BLUE);
         cout << row << "." << column;
@@ -253,5 +259,4 @@ void Area::drawAreaNR()
     {
         cout << "\nNiezdefiniowany kolor tla lub figury\n";
     }
-    cout << flush;
 }
