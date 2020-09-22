@@ -614,8 +614,10 @@ void mainMenu()
             {
                 yes_no_choice_type = "clear";
                 if (yesNoChoice() == false)
+                {
                     clearScore();
-                resetActiveChoice();
+                    resetActiveChoice();
+                }
             }
 
             else if (choice == 5)
@@ -3221,8 +3223,8 @@ void pawnBottomBottomSide()
         ;
     else if (black_king_check == true)
     {
-        if (virtual_area[old_position_object_nr + TOP_TOP].bg_color == GREEN)
-            area[old_position_object_nr + TOP_TOP].bg_color = GREEN;
+        if (virtual_area[old_position_object_nr + BOTTOM_BOTTOM].bg_color == GREEN)
+            area[old_position_object_nr + BOTTOM_BOTTOM].bg_color = GREEN;
     }
     else if (virtual_area[old_position_object_nr].bg_color == PURPLE)
     {

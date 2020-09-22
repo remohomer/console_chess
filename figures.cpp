@@ -16,23 +16,23 @@
 using namespace std;
 
 // ----------------- AREA -----------------
-Area::Area(string pos, short r, short c, short started_bg_c, char started_f_c, char started_f, string started_b_f, short i, bool check, bool en, short b_c, char f_c, char f, string b_f)
+Area::Area(string position_a, short row_a, short column_a, short started_bg_color_a, char started_figure_color_a, char started_figure_a, string started_big_figure_a, short id_a, bool checking_a, bool en_passant_a, short bg_color_a, char figure_color_a, char figure_a, string big_figure_a)
 {
-    position = pos;
-    row = r;
-    column = c;
-    started_bg_color = started_bg_c;
-    started_figure_color = started_f_c;
-    started_figure = started_f;
-    started_big_figure = started_b_f;
-    id = i;
-    checking = check;
-    en_passant = en;
+    position = position_a;
+    row = row_a;
+    column = column_a;
+    started_bg_color = started_bg_color_a;
+    started_figure_color = started_figure_color_a;
+    started_figure = started_figure_a;
+    started_big_figure = started_big_figure_a;
+    id = id_a;
+    checking = checking_a;
+    en_passant = en_passant_a;
 
-    bg_color = b_c;
-    figure_color = f_c;
-    figure = f;
-    big_figure = b_f;
+    bg_color = bg_color_a;
+    figure_color = figure_color_a;
+    figure = figure_a;
+    big_figure = big_figure_a;
 }
 Area::~Area()
 {
