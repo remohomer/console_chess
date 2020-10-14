@@ -111,6 +111,7 @@ void paintAreaColorsRook();   // rook
 void paintAreaColorsQueen();  // queen
 void paintAreaColorsKing();   // king
 
+//void pawnSide(int side);
 void pawnTopSide();               // pawn top
 void pawnTopTopSide();            // pawn top top
 void pawnTopLeftSide();           // pawn top left
@@ -124,6 +125,7 @@ void pawnBottomRigtSide();        // pawn bottom right
 void pawnBottomLeft_enPassant();  // pawn bottom left EN PASSANT
 void pawnBottomRight_enPassant(); // pawn bottom right EN PASSANT
 
+//void loopSide(int side);
 void topSide();         // top
 void bottomSide();      // bottom
 void leftSide();        // left
@@ -2894,6 +2896,10 @@ void paintAreaColorsKnight()
 }
 void paintAreaColorsBishop()
 {
+    // loopSide(TOP_LEFT);
+    // loopSide(TOP_RIGHT);
+    // loopSide(BOTTOM_LEFT);
+    // loopSide(BOTTOM_RIGHT);
     topLeftSide();
     topRighttSide();
     bottomLeftSide();
@@ -2901,6 +2907,10 @@ void paintAreaColorsBishop()
 }
 void paintAreaColorsRook()
 {
+    // loopSide(TOP);
+    // loopSide(BOTTOM);
+    // loopSide(LEFT);
+    // loopSide(RIGHT);
     topSide();
     bottomSide();
     leftSide();
@@ -2908,6 +2918,14 @@ void paintAreaColorsRook()
 }
 void paintAreaColorsQueen()
 {
+    // loopSide(TOP);
+    // loopSide(BOTTOM);
+    // loopSide(LEFT);
+    // loopSide(RIGHT);
+    // loopSide(TOP_LEFT);
+    // loopSide(TOP_RIGHT);
+    // loopSide(BOTTOM_LEFT);
+    // loopSide(BOTTOM_RIGHT);
     topSide();
     bottomSide();
     leftSide();
@@ -3099,6 +3117,13 @@ void paintAreaColorsKing()
         }
     }
 }
+
+/*
+void pawnSide(int side)
+{
+
+}
+*/
 
 void pawnTopSide()
 {
@@ -3292,6 +3317,156 @@ void pawnBottomRight_enPassant()
         area[old_position_object_nr + BOTTOM_RIGHT].bg_color = RED;
 }
 
+
+void loopSide(int side)
+{
+   // WHITE
+    if (area[old_position_object_nr].figure_color == WHITE)
+    {
+        if (white_king_check == true && virtual_area[old_position_object_nr].bg_color == PURPLE)
+            ;
+        else if (white_king_check == true)
+        {
+            for (int i = 1; i <= 8; i++)
+            {
+                if (area[old_position_object_nr].row == 1)
+                    break;
+                if (area[old_position_object_nr + side * i].figure_color != EMPTY)
+                {
+                    if (area[old_position_object_nr + side * i].figure_color == BLACK && virtual_area[old_position_object_nr + side * i].bg_color == GREEN || virtual_area[old_position_object_nr + side * i].checking == true)
+                    {
+                        area[old_position_object_nr + side * i].bg_color = RED;
+                        break;
+                    }
+                    else
+                        break;
+                }
+                else if (old_position_object_nr >= 8 && virtual_area[old_position_object_nr + side * i].bg_color == GREEN)
+                    area[old_position_object_nr + side * i].bg_color = GREEN;
+                if (area[old_position_object_nr + side * i].row == 1)
+                    break;
+            }
+        }
+        else if (virtual_area[old_position_object_nr].bg_color == PURPLE)
+        {
+            for (int i = 1; i <= 8; i++)
+            {
+                if (area[old_position_object_nr].row == 1)
+                    break;
+                if (area[old_position_object_nr + side * i].figure_color != EMPTY)
+                {
+                    if (area[old_position_object_nr + side * i].figure_color == BLACK && virtual_area[old_position_object_nr + side * i].bg_color == PURPLE)
+                    {
+                        area[old_position_object_nr + side * i].bg_color = RED;
+                        break;
+                    }
+                    else
+                        break;
+                }
+                else if (old_position_object_nr >= 8 && virtual_area[old_position_object_nr + side * i].bg_color == PURPLE)
+                    area[old_position_object_nr + side * i].bg_color = GREEN;
+                if (area[old_position_object_nr + side * i].row == 1)
+                    break;
+            }
+        }
+        else
+        {
+            for (int i = 1; i <= 8; i++)
+            {
+                if (area[old_position_object_nr].row == 1)
+                    break;
+                if (area[old_position_object_nr + side * i].figure_color != EMPTY)
+                {
+                    if (area[old_position_object_nr + side * i].figure_color == BLACK)
+                    {
+                        area[old_position_object_nr + side * i].bg_color = RED;
+                        break;
+                    }
+                    else
+                        break;
+                }
+                else if (old_position_object_nr >= 8)
+                    area[old_position_object_nr + side * i].bg_color = GREEN;
+                if (area[old_position_object_nr + side * i].row == 1)
+                    break;
+            }
+        }
+    }
+    // BLACK
+    if (area[old_position_object_nr].figure_color == BLACK)
+    {
+        if (black_king_check == true && virtual_area[old_position_object_nr].bg_color == PURPLE)
+            ;
+        else if (black_king_check == true)
+        {
+            for (int i = 1; i <= 8; i++)
+            {
+                if (area[old_position_object_nr].row == 1)
+                    break;
+                if (area[old_position_object_nr + side * i].figure_color != EMPTY)
+                {
+                    if (area[old_position_object_nr + side * i].figure_color == WHITE && virtual_area[old_position_object_nr + side * i].bg_color == GREEN || virtual_area[old_position_object_nr + side * i].checking == true)
+                    {
+                        area[old_position_object_nr + side * i].bg_color = RED;
+                        break;
+                    }
+                    else
+                        break;
+                }
+                else if (old_position_object_nr >= 8 && virtual_area[old_position_object_nr + side * i].bg_color == GREEN)
+                    area[old_position_object_nr + side * i].bg_color = GREEN;
+                if (area[old_position_object_nr + side * i].row == 1)
+                    break;
+            }
+        }
+        else if (virtual_area[old_position_object_nr].bg_color == PURPLE)
+        {
+            for (int i = 1; i <= 8; i++)
+            {
+                if (area[old_position_object_nr].row == 1)
+                    break;
+                if (area[old_position_object_nr + side * i].figure_color != EMPTY)
+                {
+                    if (area[old_position_object_nr + side * i].figure_color == WHITE && virtual_area[old_position_object_nr + side * i].bg_color == PURPLE)
+                    {
+                        area[old_position_object_nr + side * i].bg_color = RED;
+                        break;
+                    }
+                    else
+                        break;
+                }
+                else if (old_position_object_nr >= 8 && virtual_area[old_position_object_nr + side * i].bg_color == PURPLE)
+                    area[old_position_object_nr + side * i].bg_color = GREEN;
+                if (area[old_position_object_nr + side * i].row == 1)
+                    break;
+            }
+        }
+        else
+        {
+            for (int i = 1; i <= 8; i++)
+            {
+                if (area[old_position_object_nr].row == 1)
+                    break;
+                if (area[old_position_object_nr + side * i].figure_color != EMPTY)
+                {
+                    if (area[old_position_object_nr + side * i].figure_color == WHITE)
+                    {
+                        area[old_position_object_nr + side * i].bg_color = RED;
+                        break;
+                    }
+                    else
+                        break;
+                }
+                else if (old_position_object_nr >= 8)
+                    area[old_position_object_nr + side * i].bg_color = GREEN;
+                if (area[old_position_object_nr + side * i].row == 1)
+                    break;
+            }
+        }
+    }
+}
+
+
 void topSide()
 {
     // WHITE
@@ -3439,6 +3614,7 @@ void topSide()
         }
     }
 }
+
 
 void bottomSide()
 {
