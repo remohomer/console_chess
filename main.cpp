@@ -3103,14 +3103,14 @@ void paintAreaColorsKing()
         }
 
         // QUEEN SIDE CASTLING
-        if (active_black_left_castling == true && white_king_check == false && virtual_area[1].figure == ' ' && virtual_area[2].bg_color != RED && virtual_area[3].bg_color != RED)
+        if (active_black_left_castling == true && black_king_check == false && virtual_area[1].figure == ' ' && virtual_area[2].bg_color != RED && virtual_area[3].bg_color != RED)
         {
             if (area[2].figure_color == EMPTY)
                 area[2].bg_color = GREEN;
         }
 
         // KING SIDE CASTLING
-        if (active_black_right_castling == true && white_king_check == false && virtual_area[5].bg_color != RED && virtual_area[6].bg_color != RED)
+        if (active_black_right_castling == true && black_king_check == false && virtual_area[5].bg_color != RED && virtual_area[6].bg_color != RED)
         {
             if (area[6].figure_color == EMPTY)
                 area[6].bg_color = GREEN;
@@ -3465,7 +3465,6 @@ void loopSide(int side)
         }
     }
 }
-
 
 void topSide()
 {
